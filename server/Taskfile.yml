@@ -1,0 +1,8 @@
+# github.com/go-task/task
+
+version: '3'
+
+vars:
+  BINARY_NAME: builder-server
+  VERSION: v0.1.0
+tasks:
