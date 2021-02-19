@@ -89,17 +89,17 @@ export default {
   },
 
   methods: {
-    // onCmCursorActivity(codemirror) {
-    //   //     console.debug("onCmCursorActivity", codemirror);
+    // onCmCursorActivity(code) {
+    //   //     console.debug("onCmCursorActivity", code);
     // },
-    // onCmReady(codemirror) {
-    //   //     console.debug("onCmReady", codemirror);
+    // onCmReady(code) {
+    //   //     console.debug("onCmReady", code);
     // },
-    // onCmFocus(codemirror) {
-    //   //    console.debug("onCmFocus", codemirror);
+    // onCmFocus(code) {
+    //   //    console.debug("onCmFocus", code);
     // },
-    // onCmBlur(codemirror) {
-    //   //      console.debug("onCmBlur", codemirror);
+    // onCmBlur(code) {
+    //   //      console.debug("onCmBlur", code);
     // }
   },
   computed: {

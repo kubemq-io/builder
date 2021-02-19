@@ -119,7 +119,7 @@ const clusterState = {
 const getters = {
   // getGeneralModel: state => state.clusterConfig.generalModel,
   // getAuthenticationModel: state => state.clusterConfig.authenticationModel,
-  configToShow: state => {
+  configToShowCluster: state => {
     return JSON.stringify(state.clusterConfig, null, "\t");
   }
 };

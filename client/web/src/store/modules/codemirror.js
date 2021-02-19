@@ -11,6 +11,15 @@ const actions = {};
 const mutations = {
   setCodeFromCluster(state, currentModel) {
     state.code = Vue.prototype.$go.parse(currentModel, "cluster");
+  },
+  setCodeFromBridges(state, currentModel) {
+    state.code = Vue.prototype.$go.parse(currentModel, "bridges");
+  },
+  setCodeFromTargets(state, currentModel) {
+    state.code = Vue.prototype.$go.parse(currentModel, "targets");
+  },
+  setCodeFromSources(state, currentModel) {
+    state.code = Vue.prototype.$go.parse(currentModel, "sources");
   }
 };
 
