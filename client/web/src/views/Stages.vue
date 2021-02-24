@@ -2,15 +2,15 @@
   <v-stepper :value="currentStage" alt-labels>
     <v-stepper-header>
       <v-stepper-step :complete="currentStage > 1" step="1">
-        Select
+        Start
       </v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step :complete="currentStage > 2" step="2">
-        Config
+        Select
       </v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step :complete="currentStage > 3" step="3">
-        View
+        Config
       </v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step step="4">
@@ -19,17 +19,16 @@
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1">
-        <SelectStage></SelectStage>
+        <Start></Start>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <Config />
+        <SelectStage />
       </v-stepper-content>
       <v-stepper-content step="3">
         <div class="mb-7">
-          <ViewStage></ViewStage>
+          <Config></Config>
         </div>
       </v-stepper-content>
-
       <v-stepper-content step="4">
         <div class="mb-7">
           <Deploy />
@@ -40,18 +39,18 @@
 </template>
 
 <script>
-import SelectStage from "@/views/Select";
 import { mapMutations } from "vuex";
-import ViewStage from "@/views/View";
 import Deploy from "@/views/Deploy";
+import SelectStage from "@/views/Select";
+import Start from "@/views/Start";
 import Config from "@/views/Config";
 export default {
   name: "Stages",
   components: {
     Config,
-    Deploy,
-    ViewStage,
-    SelectStage
+    Start,
+    SelectStage,
+    Deploy
   },
   data() {
     return {};

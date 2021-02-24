@@ -37,7 +37,6 @@ const defaultSchema = {
     {
       title: "Disabled",
       "x-cols": 6,
-
       properties: {
         authorizationSchemaKey: {
           type: "string",

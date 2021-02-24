@@ -1,7 +1,8 @@
 const bridgesState = {
   bridgesConfig: {
     name: "kubemq-bridges",
-    namespace: "kubemq"
+    namespace: "kubemq",
+    bindings: []
   }
 };
 const getters = {

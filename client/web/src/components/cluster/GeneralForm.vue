@@ -22,16 +22,7 @@ export default {
   created() {
     this.model = this.$store.state.cluster.clusterConfig.generalModel;
   },
-  computed: {
-    stateModel() {
-      this.rendering = this.$store.state.cluster.clusterConfig;
-      this.$nextTick(() => {
-        //   this.model = this.rendering;
-      });
-      console.log(this.rendering);
-      return this.rendering;
-    }
-  }
+  computed: {}
 };
 
 const defaultOptions = {};

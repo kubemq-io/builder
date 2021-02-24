@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import VJsf from "@koumoul/vjsf/lib/VJsf.js";
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 import ClusterVolume from "@/components/cluster/VolumeForm";
@@ -46,8 +45,7 @@ export default {
     ClusterResource,
     ClusterHealth,
     ClusterImage,
-    ClusterVolume,
-    VJsf
+    ClusterVolume
   },
   data: function() {
     return {};

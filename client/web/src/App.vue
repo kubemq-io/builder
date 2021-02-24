@@ -30,9 +30,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <div class="container">
-        <Home />
-      </div>
+      <Home />
     </v-main>
   </v-app>
 </template>

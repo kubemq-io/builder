@@ -1,6 +1,11 @@
 const stagesState = {
   stageStep: 1,
-  selectedConfig: ""
+  selectedConfig: {
+    type: "",
+    subType: "",
+    metadata: {}
+  },
+  configModel: {}
 };
 
 const getters = {
@@ -11,12 +16,14 @@ const getters = {
 const actions = {};
 const mutations = {
   setSelectedConfig: function(state, selected) {
-    console.log(selected);
     state.selectedConfig = selected;
-    state.stageStep = 2;
   },
   setStage: function(state, value) {
     state.stageStep = value;
+  },
+  setConfigModel: function(state, model) {
+    state.configModel = JSON.stringify(model, null, "\t");
+    console.log(state.configModel);
   }
 };
 

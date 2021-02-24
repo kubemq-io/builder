@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-row justify="center">
-      deploy
+      {{ config }}
     </v-row>
     <v-row justify="space-between">
       <div class="mb-4 ml-4">
@@ -32,8 +32,14 @@ export default {
       valid: false
     };
   },
+  computed: {
+    config() {
+      return this.$store.state.stages.configModel;
+    }
+  },
   methods: {
     ...mapMutations(["setStage"]),
+
     next: function() {
       this.setStage(1);
     },
