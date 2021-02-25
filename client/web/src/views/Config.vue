@@ -11,11 +11,7 @@
       </v-col>
     </v-row>
     <v-row justify="space-between">
-      <div class="mb-4 ml-4">
-        <v-btn color="gray" outlined @click="back">
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-      </div>
+      <div class="mb-4 ml-4"></div>
     </v-row>
   </v-card>
 </template>

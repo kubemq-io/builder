@@ -1,12 +1,18 @@
 <template>
-  <Stages />
+  <!--  <Stages />-->
+  <!--  <Integrations />-->
+  <div>
+    <Schema />
+    <AggregateForm></AggregateForm>
+  </div>
 </template>
 
 <script>
-import Stages from "@/views/Stages";
+import Schema from "@/views/Schema";
+import AggregateForm from "@/components/bridges/AggregateForm";
 export default {
   name: "Home",
-  components: { Stages },
+  components: { AggregateForm, Schema },
   data: function() {
     return {
       valid: false

@@ -1,7 +1,9 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="5" class="flex-grow-0 flex-shrink-0">
+    <div
+      class="container d-flex justify-center align-center align-content-center"
+    >
+      <div class="card">
         <v-card elevation="1">
           <v-list-item>
             <v-list-item-avatar color="secondary" size="36">
@@ -19,13 +21,11 @@
             </v-form>
           </v-card-text>
         </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-list-item-avatar>
-          <img src="@/assets/bridge.svg" alt="bridge" />
-        </v-list-item-avatar>
-      </v-col>
-      <v-col cols="5">
+      </div>
+      <div class="icon">
+        <img src="@/assets/bridge.svg" alt="bridge" />
+      </div>
+      <div class="card">
         <v-card elevation="1">
           <v-list-item>
             <v-list-item-avatar color="accent" size="36">
@@ -43,14 +43,16 @@
             </v-form>
           </v-card-text>
         </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-container row class="mt-2">
-        <v-spacer></v-spacer>
+      </div>
+    </div>
+    <div class="container d-flex justify-space-between">
+      <div>
+        <v-btn color="primary" @click="back">Back</v-btn>
+      </div>
+      <div>
         <v-btn color="primary" @click="deploy">Deploy</v-btn>
-      </v-container>
-    </v-row>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -105,6 +107,9 @@ export default {
         this.setConfigModel(bridgeConfig);
         this.setStage(4);
       }
+    },
+    back: function() {
+      this.setStage(2);
     }
   }
 };
@@ -830,4 +835,12 @@ const targetSchema = {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.card {
+  flex-basis: 95%;
+}
+.icon {
+  flex-basis: 10%;
+  margin: 10px;
+}
+</style>

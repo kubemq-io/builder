@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="container">
+    <div
+      class="container d-flex justify-center align-center align-content-center"
+    >
       <div class="card">
         <v-card elevation="1">
           <v-list-item>
@@ -21,9 +23,7 @@
         </v-card>
       </div>
       <div id="icon" class="icon">
-        <v-list-item-avatar>
-          <img src="@/assets/transform.svg" alt="transform" />
-        </v-list-item-avatar>
+        <img src="@/assets/transform.svg" alt="transform" />
       </div>
       <div class="card">
         <v-card>
@@ -45,11 +45,13 @@
         </v-card>
       </div>
     </div>
-    <div>
-      <v-container row class="mt-2">
-        <v-spacer></v-spacer>
+    <div class="container d-flex justify-space-between">
+      <div>
+        <v-btn color="primary" @click="back">Back</v-btn>
+      </div>
+      <div>
         <v-btn color="primary" @click="deploy">Deploy</v-btn>
-      </v-container>
+      </div>
     </div>
   </div>
 </template>
@@ -124,6 +126,9 @@ export default {
         this.setConfigModel(bridgeConfig);
         this.setStage(4);
       }
+    },
+    back: function() {
+      this.setStage(2);
     }
   }
 };
@@ -131,7 +136,6 @@ export default {
 const sourceSchema = {
   title: "Source Type",
   type: "object",
-
   oneOf: [
     {
       title: "Queue",
@@ -168,7 +172,6 @@ const sourceSchema = {
                 default: true
               }
             },
-
             if: {
               required: ["setDefaults"],
               properties: {
@@ -329,59 +332,60 @@ const sourceSchema = {
             type: "object",
             required: ["address", "channel"],
             description: "Query Source Connection",
-            address: {
-              type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
-            },
-
-            channel: {
-              type: "string",
-              title: "Source Channel",
-              default: "queries"
-            },
-            setDefaults: {
-              type: "boolean",
-              "x-display": "checkbox",
-              title: "Set Default Properties",
-              default: true
-            }
-          },
-
-          if: {
-            required: ["setDefaults"],
             properties: {
+              address: {
+                type: "string",
+                title: "Source Address",
+                default: "kubemq-cluster-grpc:50000"
+              },
+              channel: {
+                type: "string",
+                title: "Source Channel",
+                default: "queries"
+              },
               setDefaults: {
-                const: false
+                type: "boolean",
+                "x-display": "checkbox",
+                title: "Set Default Properties",
+                default: true
               }
-            }
-          },
-          then: {
-            properties: {
-              client_id: {
-                type: "string",
-                title: "Client ID",
-                default: "",
-                description: "Connection Client ID"
-              },
-              auth_token: {
-                type: "string",
-                title: "Client Authentication Token",
-                default: "",
-                description: "Connection Authentication Token"
-              },
-              sources: {
-                type: "integer",
-                title: "Concurrent Connections",
-                default: 1,
-                description: "How many concurrent channel connections",
-                minimum: 1
-              },
-              group: {
-                type: "string",
-                title: "Channel Group",
-                default: "",
-                description: "Subscribers Group"
+            },
+
+            if: {
+              required: ["setDefaults"],
+              properties: {
+                setDefaults: {
+                  const: false
+                }
+              }
+            },
+            then: {
+              properties: {
+                client_id: {
+                  type: "string",
+                  title: "Client ID",
+                  default: "",
+                  description: "Connection Client ID"
+                },
+                auth_token: {
+                  type: "string",
+                  title: "Client Authentication Token",
+                  default: "",
+                  description: "Connection Authentication Token"
+                },
+                sources: {
+                  type: "integer",
+                  title: "Concurrent Connections",
+                  default: 1,
+                  description: "How many concurrent channel connections",
+                  minimum: 1
+                },
+                group: {
+                  type: "string",
+                  title: "Channel Group",
+                  default: "",
+                  description: "Subscribers Group"
+                }
               }
             }
           }
@@ -404,59 +408,61 @@ const sourceSchema = {
             type: "object",
             required: ["address", "channel"],
             description: "Command Source Connection",
-            address: {
-              type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
-            },
-
-            channel: {
-              type: "string",
-              title: "Source Channel",
-              default: "commands"
-            },
-            setDefaults: {
-              type: "boolean",
-              "x-display": "checkbox",
-              title: "Set Default Properties",
-              default: true
-            }
-          },
-
-          if: {
-            required: ["setDefaults"],
             properties: {
+              address: {
+                type: "string",
+                title: "Source Address",
+                default: "kubemq-cluster-grpc:50000"
+              },
+
+              channel: {
+                type: "string",
+                title: "Source Channel",
+                default: "commands"
+              },
               setDefaults: {
-                const: false
+                type: "boolean",
+                "x-display": "checkbox",
+                title: "Set Default Properties",
+                default: true
               }
-            }
-          },
-          then: {
-            properties: {
-              client_id: {
-                type: "string",
-                title: "Client ID",
-                default: "",
-                description: "Connection Client ID"
-              },
-              auth_token: {
-                type: "string",
-                title: "Client Authentication Token",
-                default: "",
-                description: "Connection Authentication Token"
-              },
-              sources: {
-                type: "integer",
-                title: "Concurrent Connections",
-                default: 1,
-                description: "How many concurrent channel connections",
-                minimum: 1
-              },
-              group: {
-                type: "string",
-                title: "Channel Group",
-                default: "",
-                description: "Subscribers Group"
+            },
+
+            if: {
+              required: ["setDefaults"],
+              properties: {
+                setDefaults: {
+                  const: false
+                }
+              }
+            },
+            then: {
+              properties: {
+                client_id: {
+                  type: "string",
+                  title: "Client ID",
+                  default: "",
+                  description: "Connection Client ID"
+                },
+                auth_token: {
+                  type: "string",
+                  title: "Client Authentication Token",
+                  default: "",
+                  description: "Connection Authentication Token"
+                },
+                sources: {
+                  type: "integer",
+                  title: "Concurrent Connections",
+                  default: 1,
+                  description: "How many concurrent channel connections",
+                  minimum: 1
+                },
+                group: {
+                  type: "string",
+                  title: "Channel Group",
+                  default: "",
+                  description: "Subscribers Group"
+                }
               }
             }
           }
@@ -479,59 +485,61 @@ const sourceSchema = {
             type: "object",
             required: ["address", "channel"],
             description: "Events Source Connection",
-            address: {
-              type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
-            },
-
-            channel: {
-              type: "string",
-              title: "Source Channel",
-              default: "events"
-            },
-            setDefaults: {
-              type: "boolean",
-              "x-display": "checkbox",
-              title: "Set Default Properties",
-              default: true
-            }
-          },
-
-          if: {
-            required: ["setDefaults"],
             properties: {
+              address: {
+                type: "string",
+                title: "Source Address",
+                default: "kubemq-cluster-grpc:50000"
+              },
+
+              channel: {
+                type: "string",
+                title: "Source Channel",
+                default: "events"
+              },
               setDefaults: {
-                const: false
+                type: "boolean",
+                "x-display": "checkbox",
+                title: "Set Default Properties",
+                default: true
               }
-            }
-          },
-          then: {
-            properties: {
-              client_id: {
-                type: "string",
-                title: "Client ID",
-                default: "",
-                description: "Connection Client ID"
-              },
-              auth_token: {
-                type: "string",
-                title: "Client Authentication Token",
-                default: "",
-                description: "Connection Authentication Token"
-              },
-              sources: {
-                type: "integer",
-                title: "Concurrent Connections",
-                default: 1,
-                description: "How many concurrent channel connections",
-                minimum: 1
-              },
-              group: {
-                type: "string",
-                title: "Channel Group",
-                default: "",
-                description: "Subscribers Group"
+            },
+
+            if: {
+              required: ["setDefaults"],
+              properties: {
+                setDefaults: {
+                  const: false
+                }
+              }
+            },
+            then: {
+              properties: {
+                client_id: {
+                  type: "string",
+                  title: "Client ID",
+                  default: "",
+                  description: "Connection Client ID"
+                },
+                auth_token: {
+                  type: "string",
+                  title: "Client Authentication Token",
+                  default: "",
+                  description: "Connection Authentication Token"
+                },
+                sources: {
+                  type: "integer",
+                  title: "Concurrent Connections",
+                  default: 1,
+                  description: "How many concurrent channel connections",
+                  minimum: 1
+                },
+                group: {
+                  type: "string",
+                  title: "Channel Group",
+                  default: "",
+                  description: "Subscribers Group"
+                }
               }
             }
           }
@@ -553,58 +561,60 @@ const sourceSchema = {
             type: "object",
             required: ["address", "channel"],
             description: "Events Store Source Connection",
-            address: {
-              type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
-            },
+            properties: {
+              address: {
+                type: "string",
+                title: "Source Address",
+                default: "kubemq-cluster-grpc:50000"
+              },
 
-            channel: {
-              type: "string",
-              title: "Source Channel",
-              default: "events-store"
-            },
-            setDefaults: {
-              type: "boolean",
-              "x-display": "checkbox",
-              title: "Set Default Properties",
-              default: true
-            }
-          },
-          if: {
-            required: ["setDefaults"],
-            properties: {
+              channel: {
+                type: "string",
+                title: "Source Channel",
+                default: "events-store"
+              },
               setDefaults: {
-                const: false
+                type: "boolean",
+                "x-display": "checkbox",
+                title: "Set Default Properties",
+                default: true
               }
-            }
-          },
-          then: {
-            properties: {
-              client_id: {
-                type: "string",
-                title: "Client ID",
-                default: "",
-                description: "Connection Client ID"
-              },
-              auth_token: {
-                type: "string",
-                title: "Client Authentication Token",
-                default: "",
-                description: "Connection Authentication Token"
-              },
-              sources: {
-                type: "integer",
-                title: "Concurrent Connections",
-                default: 1,
-                description: "How many concurrent channel connections",
-                minimum: 1
-              },
-              group: {
-                type: "string",
-                title: "Channel Group",
-                default: "",
-                description: "Subscribers Group"
+            },
+            if: {
+              required: ["setDefaults"],
+              properties: {
+                setDefaults: {
+                  const: false
+                }
+              }
+            },
+            then: {
+              properties: {
+                client_id: {
+                  type: "string",
+                  title: "Client ID",
+                  default: "",
+                  description: "Connection Client ID"
+                },
+                auth_token: {
+                  type: "string",
+                  title: "Client Authentication Token",
+                  default: "",
+                  description: "Connection Authentication Token"
+                },
+                sources: {
+                  type: "integer",
+                  title: "Concurrent Connections",
+                  default: 1,
+                  description: "How many concurrent channel connections",
+                  minimum: 1
+                },
+                group: {
+                  type: "string",
+                  title: "Channel Group",
+                  default: "",
+                  description: "Subscribers Group"
+                }
               }
             }
           }
@@ -978,18 +988,11 @@ const targetSchema = {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .card {
   flex-basis: 95%;
 }
 .icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-basis: 10%;
+  margin: 10px;
 }
 </style>
