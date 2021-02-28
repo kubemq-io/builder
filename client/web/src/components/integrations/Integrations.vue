@@ -1,89 +1,94 @@
 <template>
-  <div class="container d-flex flex-column flex-grow-1">
-    <v-card>
-      <v-col cols="6" class="d-flex text-right align-center">
-        <v-text-field
-          v-model="searchQuery"
-          append-icon="mdi-magnify"
-          class="flex-grow-1 mr-md-2"
-          solo
-          hide-details
-          clearable
-          placeholder="search for integration, i.e. redis, cache, aws"
-          @keyup.enter="searchUser(searchQuery)"
-        ></v-text-field>
-      </v-col>
-      <v-data-table
-        v-model="selectedIntegrations"
-        :headers="headers"
-        solo
-        :items="users"
-        :search="searchQuery"
-        class="flex-grow-1"
-      >
-        <template v-slot:item.type="{ item }">
-          <Type :type="item.type"></Type>
-        </template>
-        <template v-slot:item.name="{ item }">
-          <Name :name="item.name"></Name>
-        </template>
+  <div class="container">
+    <v-dialog v-model="dialog" persistent max-width="1000px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+          Open Dialog
+        </v-btn>
+      </template>
+      <v-card>
+        <TransformForm></TransformForm>
+      </v-card>
+    </v-dialog>
 
-        <template v-slot:item.action="{}">
-          <div class="actions">
-            <v-btn icon to="/users/edit">
-              <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
-          </div>
-        </template>
-      </v-data-table>
-    </v-card>
+    <div>
+      <v-sheet>
+        <v-toolbar color="light-green" dark>
+          <v-toolbar-title>Configure KubeMQ Bridges</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+      </v-sheet>
+    </div>
+    <div class="pa-2">
+      <v-card>
+        <v-col cols="6" class="d-flex text-right align-center">
+          <v-text-field
+            v-model="searchQuery"
+            append-icon="mdi-magnify"
+            class="flex-grow-1 mr-md-2"
+            solo
+            hide-details
+            clearable
+            placeholder="search for integration, i.e. redis, cache, aws"
+            @keyup.enter="searchUser(searchQuery)"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-container
+            id="scroll-target"
+            style="max-height: 400px"
+            class="overflow-y-auto"
+          >
+            <v-row
+              v-scroll:#scroll-target="onScroll"
+              align="center"
+              justify="center"
+              style="height: 1000px"
+            >
+              <IntegrationBinding v-for="n in 10" :key="n"></IntegrationBinding>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-card>
+    </div>
+    <div class="pa-2">
+      <v-card>
+        <v-col>
+          <IntegrationBinding v-for="n in 10" :key="n"></IntegrationBinding>
+        </v-col>
+      </v-card>
+    </div>
   </div>
 </template>
 
 <script>
-import users from "./users";
-import Type from "@/components/integrations/table/Type";
-import Name from "@/components/integrations/table/Name";
-
+import IntegrationBinding from "@/components/integrations/binding/IntegrationBinding";
+import TransformForm from "@/components/bridges/TransformForm";
 export default {
   name: "Integrations",
-  components: { Type, Name },
+  components: { TransformForm, IntegrationBinding },
   data() {
     return {
       isLoading: false,
       searchQuery: "",
-      selectedIntegrations: [],
-      headers: [
-        { text: "Type", value: "type" },
-        { text: "Name", value: "name" },
-        { text: "Category", value: "category" },
-        { text: "Provider", value: "provider" }
-      ],
-      users
+      dialog: false
     };
   },
-  watch: {
-    selectedIntegrations() {}
-  },
+  watch: {},
   methods: {
-    searchUser() {},
     open(item) {
       console.log(item);
+    },
+    onScroll(e) {
+      this.offsetTop = e.target.scrollTop;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.slide-fade-enter-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.slide-fade-enter,
-.slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -1,18 +1,19 @@
 <template>
   <!--  <Stages />-->
-  <!--  <Integrations />-->
+
   <div>
-    <Schema />
-    <AggregateForm></AggregateForm>
+    <!--    <Schema />-->
+    <!--    <AggregateForm></AggregateForm>-->
+    <!--    <Integrations />-->
+    <Binding />
   </div>
 </template>
 
 <script>
-import Schema from "@/views/Schema";
-import AggregateForm from "@/components/bridges/AggregateForm";
+import Binding from "@/components/binding/Binding";
 export default {
   name: "Home",
-  components: { AggregateForm, Schema },
+  components: { Binding },
   data: function() {
     return {
       valid: false
