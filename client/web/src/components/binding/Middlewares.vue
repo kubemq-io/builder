@@ -1,0 +1,80 @@
+<template>
+  <div>
+    <v-row class="d-flex" dense>
+      <v-col cols="4">
+        <v-card>
+          <v-card-title>
+            <v-list-item-avatar color="accent" size="30">
+              <span class="white--text headline">L</span></v-list-item-avatar
+            >
+            <h5>
+              Logging
+            </h5>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="formMiddlewaresLogging" v-model="logging.IsValid">
+              <v-jsf :value="logging.Model" :schema="logging.Schema" />
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card>
+          <v-card-title>
+            <v-list-item-avatar color="accent" size="30">
+              <span class="white--text headline">R</span></v-list-item-avatar
+            >
+            <h5>
+              Retries
+            </h5>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="formMiddlewaresRetries" v-model="retries.IsValid">
+              <v-jsf :value="retries.Model" :schema="retries.Schema" />
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card>
+          <v-card-title>
+            <v-list-item-avatar color="accent" size="30">
+              <span class="white--text headline">R</span></v-list-item-avatar
+            >
+            <h5>
+              Rate Limiter
+            </h5>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="formMiddlewaresRate" v-model="rate.IsValid">
+              <v-jsf :value="rate.Model" :schema="rate.Schema" />
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
+</template>
+
+<script>
+import "@koumoul/vjsf/lib/VJsf.css";
+import "@koumoul/vjsf/lib/deps/third-party.js";
+import VJsf from "@koumoul/vjsf/lib/VJsf";
+import { MiddlewaresConfig } from "@/components/binding/middlewaresConfig";
+export default {
+  name: "Middlewares",
+  components: { VJsf },
+  props: {
+    config: MiddlewaresConfig
+  },
+  data: function() {
+    return {
+      logging: this.config.Logging,
+      retries: this.config.Retries,
+      rate: this.config.Rate
+    };
+  }
+};
+</script>
+
+<style scoped></style>
