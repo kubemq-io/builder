@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" :max-width="options.width" @keydown.esc="cancel">
     <v-card>
-      <v-toolbar color="secondary" dense flat>
-        <v-toolbar-title class="text-body-2 font-weight-bold white--text">
+      <v-toolbar color="primary" dense flat>
+        <v-toolbar-title class="text-body-3 font-weight-bold white--text">
           {{ title }}
         </v-toolbar-title>
       </v-toolbar>
@@ -15,15 +15,13 @@
         <v-spacer></v-spacer>
         <v-btn
           v-if="!options.noconfirm"
-          color="secondary"
+          color="primary"
           text
           rounded
           @click.native="cancel"
           >Cancel</v-btn
         >
-        <v-btn color="secondary" outlined rounded @click.native="agree"
-          >OK</v-btn
-        >
+        <v-btn color="primary" outlined rounded @click.native="agree">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

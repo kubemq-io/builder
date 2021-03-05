@@ -1,62 +1,69 @@
 <template>
-  <v-card class="d-flex ma-3">
-    <v-card-text>
-      <v-autocomplete
-        v-model="selectedItem"
-        :items="connectors"
-        :filter="customFilter"
-        label="Integration"
-        clearable
-        solo
-        rounded
-        @change="add"
-      >
-        <template v-slot:selection="data">
-          <v-list-item-avatar>
-            <img
-              v-if="data.item.type === 'sources'"
-              src="@/assets/source.svg"
-              alt="source"
-            />
-            <img
-              v-if="data.item.type === 'targets'"
-              src="@/assets/target.svg"
-              alt="target"
-            />
+  <v-card flat tile class="d-flex col-6 pa-0">
+    <v-autocomplete
+      v-model="selectedItem"
+      :items="connectors"
+      :filter="customFilter"
+      label="Search for an integration"
+      clearable
+      flat
+      @change="add"
+      prepend-inner-icon="fa-search"
+    >
+      <template v-slot:selection="data">
+        <div class="d-flex justify-center align-center align-content-center">
+          <v-list-item-avatar color="primary" size="25">
+            <span class="white--text">{{ data.item.getInitial() }}</span>
           </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>{{ data.item.name }}</v-list-item-title>
-            <v-list-item-subtitle>
+          <h3 class="secondary--text font-weight-bold pr-2">
+            {{ data.item.name }}
+          </h3>
+
+          <div class="pl-1">
+            <v-chip
+              v-if="data.item.provider"
+              x-small
+              color="primary font-weight-bold"
+              outlined
+            >
+              {{ data.item.provider }}
+            </v-chip>
+          </div>
+          <div class="pl-1">
+            <v-chip x-small color="accent font-weight-bold" outlined>
               {{ data.item.category }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
-        </template>
-        <template v-slot:item="data">
-          <v-list-item-avatar>
-            <img
-              v-if="data.item.type === 'sources'"
-              src="@/assets/source.svg"
-              alt="source"
-            />
-            <img
-              v-if="data.item.type === 'targets'"
-              src="@/assets/target.svg"
-              alt="target"
-            />
+            </v-chip>
+          </div>
+        </div>
+      </template>
+      <template v-slot:item="data">
+        <div class="d-flex justify-center align-center align-content-center">
+          <v-list-item-avatar color="primary" size="25">
+            <span class="white--text">{{ data.item.getInitial() }}</span>
           </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title v-html="data.item.name"></v-list-item-title>
-            <v-list-item-subtitle
-              v-html="data.item.category"
-            ></v-list-item-subtitle>
-          </v-list-item-content>
-        </template>
-      </v-autocomplete>
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-actions>
-      <BindingDlg ref="bindingDlg"></BindingDlg>
-    </v-card-actions>
+          <h3 class="secondary--text font-weight-bold pr-2">
+            {{ data.item.name }}
+          </h3>
+
+          <div class="pl-1">
+            <v-chip
+              v-if="data.item.provider"
+              x-small
+              color="primary font-weight-bold"
+              outlined
+            >
+              {{ data.item.provider }}
+            </v-chip>
+          </div>
+          <div class="pl-1">
+            <v-chip x-small color="accent font-weight-bold" outlined>
+              {{ data.item.category }}
+            </v-chip>
+          </div>
+        </div>
+      </template>
+    </v-autocomplete>
+    <BindingDlg ref="bindingDlg"></BindingDlg>
   </v-card>
 </template>
 <script>
@@ -128,3 +135,14 @@ export default {
   }
 };
 </script>
+<style scoped>
+.container {
+  border: 1px solid green;
+}
+.row {
+  border: 1px solid red;
+}
+.col {
+  border: 1px solid blue;
+}
+</style>

@@ -22,6 +22,9 @@ const actions = {
   }
 };
 const mutations = {
+  clearIntegrationList(state) {
+    state.currentBindingList = [];
+  },
   addBinding(state, val) {
     if (val) {
       state.currentBindingList.push(val.binding);

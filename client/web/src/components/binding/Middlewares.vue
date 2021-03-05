@@ -4,7 +4,7 @@
       <v-col cols="4">
         <v-card>
           <v-card-title>
-            <v-list-item-avatar color="secondary" size="30">
+            <v-list-item-avatar color="primary" size="30">
               <span class="white--text headline">L</span></v-list-item-avatar
             >
             <h5>
@@ -25,7 +25,7 @@
       <v-col cols="4">
         <v-card>
           <v-card-title>
-            <v-list-item-avatar color="secondary" size="30">
+            <v-list-item-avatar color="primary" size="30">
               <span class="white--text headline">R</span></v-list-item-avatar
             >
             <h5>
@@ -46,7 +46,7 @@
       <v-col cols="4">
         <v-card>
           <v-card-title>
-            <v-list-item-avatar color="secondary" size="30">
+            <v-list-item-avatar color="primary" size="30">
               <span class="white--text headline">R</span></v-list-item-avatar
             >
             <h5>

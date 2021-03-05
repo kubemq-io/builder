@@ -3,12 +3,12 @@
     <div class="side pl-0 pr-2 pt-0 pb-2 col-6">
       <v-card elevation="1" min-height="210px">
         <v-list-item class="pa-0">
-          <v-list-item-avatar color="secondary" size="30">
+          <v-list-item-avatar color="primary" size="30">
             <span class="white--text headline">{{
               source.Initial
             }}</span></v-list-item-avatar
           >
-          <h3 class="primary--text">
+          <h3 class="secondary--text">
             {{ source.Title }}
           </h3>
         </v-list-item>
@@ -26,12 +26,12 @@
     <div class="side pl-2 pr-0 pt-0 pb-2 col-6">
       <v-card elevation="1" min-height="210px">
         <v-list-item class="pa-0">
-          <v-list-item-avatar color="secondary" size="30">
+          <v-list-item-avatar color="primary" size="30">
             <span class="white--text headline">{{
               target.Initial
             }}</span></v-list-item-avatar
           >
-          <h3 class="primary--text">
+          <h3 class="secondary--text">
             {{ target.Title }}
           </h3>
         </v-list-item>

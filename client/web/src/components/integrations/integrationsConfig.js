@@ -94,6 +94,7 @@ class Connector {
   get type() {
     return this._type;
   }
+
   constructor() {
     this._category = "";
     this._provider = "";
@@ -101,6 +102,9 @@ class Connector {
     this._name = "";
     this._schema = {};
     this._type = "";
+  }
+  getInitial() {
+    return this._name.charAt(0).toUpperCase();
   }
 }
 export { IntegrationsConfig, Connector };

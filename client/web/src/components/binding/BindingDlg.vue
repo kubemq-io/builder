@@ -1,102 +1,94 @@
 <template>
   <v-dialog v-model="show" scrollable persistent width="960px">
-    <v-row no-gutters dense>
-      <v-card>
-        <BindingTitle :binding="bindingModel" :mode="mode" />
-        <v-card-text>
-          <v-card flat tile>
+    <v-card rounded>
+      <BindingTitle :binding="bindingModel" :mode="mode" />
+      <v-card-text>
+        <v-card flat tile>
+          <v-card-title class="pa-0">
+            <v-icon color="secondary">fa-link</v-icon>
+            <h4 class="pa-2 secondary--text">
+              Name
+            </h4>
+          </v-card-title>
+          <v-card-text class="pa-0">
+            <v-col cols="6" class="pt-0 pb-0">
+              <v-text-field
+                v-model="bindingModel.Name"
+                clearable
+                label="Integration Name"
+                :rules="[this.validateBindingName]"
+                ref="inputName"
+                :error="errorState"
+              ></v-text-field>
+            </v-col>
+          </v-card-text>
+        </v-card>
+        <v-card flat tile>
+          <v-card-title class="pa-0">
+            <v-icon color="secondary">fa-sliders-h</v-icon>
+            <h4 class="pa-2 secondary--text">
+              Properties
+            </h4>
+          </v-card-title>
+          <v-card-text class="pa-0">
+            <Properties
+              ref="properties"
+              :binding="bindingModel"
+              :options="options"
+              :show="show"
+            />
+          </v-card-text>
+        </v-card>
+        <v-card flat tile>
+          <v-card-title class="pt-0 pr-0 pl-0">
+            <v-switch
+              v-model="setMiddleware"
+              flat
+              dense
+              color="primary"
+            ></v-switch>
             <v-card-title class="pa-0">
-              <v-icon color="primary">fa-link</v-icon>
-              <h4 class="pa-2 primary--text">
-                Name
+              <h4 class="pa-2 secondary--text">
+                Middlewares
               </h4>
             </v-card-title>
-            <v-card-text class="pa-0">
-              <v-col cols="6" class="pa-0">
-                <v-text-field
-                  v-model="bindingModel.Name"
-                  clearable
-                  solo
-                  label="Set Integration Name"
-                  :rules="[this.validateBindingName]"
-                  ref="inputName"
-                  :error="errorState"
-                ></v-text-field>
-              </v-col>
-            </v-card-text>
-          </v-card>
-          <v-card flat tile>
-            <v-card-title class="pa-0">
-              <v-icon color="primary">fa-sliders-h</v-icon>
-              <h4 class="pa-2 primary--text">
-                Properties
-              </h4>
-            </v-card-title>
-            <v-card-text class="pa-0">
-              <Properties
-                ref="properties"
-                :binding="bindingModel"
-                :options="options"
+            <v-card-text v-if="setMiddleware" class="pa-0">
+              <Middlewares
+                :config="bindingModel.Middlewares"
                 :show="show"
-              />
+              ></Middlewares>
             </v-card-text>
-          </v-card>
-          <v-card flat tile>
-            <v-card-title class="pt-0 pr-0 pl-0">
-              <v-switch
-                v-model="setMiddleware"
-                flat
-                dense
-                color="secondary"
-              ></v-switch>
-              <v-card-title class="pa-0">
-                <h4 class="pa-2 primary--text">
-                  Middlewares
-                </h4>
-              </v-card-title>
-              <v-card-text v-if="setMiddleware" class="pa-0">
-                <Middlewares
-                  :config="bindingModel.Middlewares"
-                  :show="show"
-                ></Middlewares>
-              </v-card-text>
-            </v-card-title>
-          </v-card>
-          <v-card flat tile> </v-card>
-          <v-row
-            justify="end"
-            align-content="center"
-            align="center"
-            class="pa-2"
-          >
-            <div class="pa-2">
-              <v-btn color="secondary" text rounded @click.native="cancel"
-                >cancel</v-btn
-              >
-            </div>
-            <div class="pa-2">
-              <v-btn
-                color="secondary"
-                v-if="mode === 'add'"
-                outlined
-                rounded
-                @click="submit"
-                >Add</v-btn
-              >
-              <v-btn
-                color="secondary"
-                class=""
-                v-if="mode === 'edit'"
-                outlined
-                rounded
-                @click="submit"
-                >Edit</v-btn
-              >
-            </div>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-row>
+          </v-card-title>
+        </v-card>
+        <v-card flat tile> </v-card>
+        <v-row justify="end" align-content="center" align="center" class="pa-2">
+          <div class="pa-2">
+            <v-btn color="primary" text rounded @click.native="cancel"
+              >cancel</v-btn
+            >
+          </div>
+          <div class="pa-2">
+            <v-btn
+              color="primary"
+              v-if="mode === 'add'"
+              outlined
+              rounded
+              @click="submit"
+              >Add</v-btn
+            >
+            <v-btn
+              color="primary"
+              class=""
+              v-if="mode === 'edit'"
+              outlined
+              rounded
+              @click="submit"
+              >Edit</v-btn
+            >
+          </div>
+        </v-row>
+      </v-card-text>
+    </v-card>
   </v-dialog>
 </template>
 
