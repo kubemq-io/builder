@@ -65,7 +65,7 @@
 import IntegrationBinding from "@/components/integrations/binding/IntegrationBinding";
 import TransformForm from "@/components/bridges/TransformForm";
 export default {
-  name: "Integrations",
+  name: "IntegrationsOld",
   components: { TransformForm, IntegrationBinding },
   data() {
     return {

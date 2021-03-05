@@ -1,19 +1,14 @@
 <template>
-  <!--  <Stages />-->
-
-  <div>
-    <!--    <Schema />-->
-    <!--    <AggregateForm></AggregateForm>-->
-    <!--    <Integrations />-->
-    <Binding />
-  </div>
+  <v-main app>
+    <IntegrationsPage></IntegrationsPage>
+  </v-main>
 </template>
 
 <script>
-import Binding from "@/components/binding/Binding";
+import IntegrationsPage from "@/components/integrations/IntegrationsPage";
 export default {
   name: "Home",
-  components: { Binding },
+  components: { IntegrationsPage },
   data: function() {
     return {
       valid: false

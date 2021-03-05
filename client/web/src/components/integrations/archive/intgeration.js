@@ -46,5 +46,6 @@ class IntegrationSide {
     this._schema = {};
     this._model = {};
   }
+  toBinding() {}
 }
 export { Intgeration, IntegrationSide };

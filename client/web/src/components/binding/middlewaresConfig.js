@@ -1,4 +1,13 @@
 class MiddlewaresConfig {
+  hasData() {
+    return (
+      (this._logging.Model.logLevel !== "No Logging" &&
+        this._logging.Model.logLevel !== undefined) ||
+      this._retries.Model.mode === "enabled" ||
+      this._rate.Model.mode === "enabled"
+    );
+  }
+
   get Logging() {
     return this._logging;
   }

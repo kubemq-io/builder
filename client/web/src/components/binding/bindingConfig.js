@@ -12,9 +12,6 @@ class BindingConfig {
   get BindingType() {
     return this._bindingType;
   }
-  get Mode() {
-    return this._mode;
-  }
   get Type() {
     return this._type;
   }
@@ -29,6 +26,10 @@ class BindingConfig {
     }
   }
   get Name() {
+    if (this._name !== "") {
+      return this._name;
+    }
+    this._name = `${this.SourceSide.Name}-${this.TargetSide.Name}`.toLowerCase();
     return this._name;
   }
   set Name(value) {
@@ -41,12 +42,11 @@ class BindingConfig {
     return this._targetSide;
   }
   constructor() {
-    this._mode = "add";
     this._type = "";
     this._bindingType = "";
     this._name = "";
-    this._sourceSide = BindingSide;
-    this._targetSide = BindingSide;
+    this._sourceSide = new BindingSide("Source", "Default", {});
+    this._targetSide = new BindingSide("Target", "Default", {});
     this._middlewares = new MiddlewaresConfig();
   }
 
@@ -55,10 +55,6 @@ class BindingConfig {
     return this;
   }
 
-  SetMode(value) {
-    this._mode = value;
-    return this;
-  }
   SetBindingType(value) {
     this._bindingType = value;
     return this;
@@ -97,7 +93,6 @@ class BindingSide {
   get Name() {
     return this._name;
   }
-
   set Name(value) {
     this._name = value;
   }
@@ -140,7 +135,6 @@ class BindingSide {
       };
     }
   }
-
   constructor(side, name, schema) {
     this._name = name;
     this._title = `${name} ${side}`;
