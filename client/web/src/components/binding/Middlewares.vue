@@ -3,14 +3,14 @@
     <v-row class="d-flex" dense>
       <v-col cols="4">
         <v-card>
-          <v-card-title>
+          <v-list-item class="pa-0">
             <v-list-item-avatar color="primary" size="30">
               <span class="white--text headline">L</span></v-list-item-avatar
             >
-            <h5>
+            <h3 class="secondary--text">
               Logging
-            </h5>
-          </v-card-title>
+            </h3>
+          </v-list-item>
           <v-card-text>
             <v-form
               v-if="toShow"
@@ -24,14 +24,14 @@
       </v-col>
       <v-col cols="4">
         <v-card>
-          <v-card-title>
+          <v-list-item class="pa-0">
             <v-list-item-avatar color="primary" size="30">
               <span class="white--text headline">R</span></v-list-item-avatar
             >
-            <h5>
+            <h3 class="secondary--text">
               Retries
-            </h5>
-          </v-card-title>
+            </h3>
+          </v-list-item>
           <v-card-text>
             <v-form
               v-if="toShow"
@@ -45,14 +45,14 @@
       </v-col>
       <v-col cols="4">
         <v-card>
-          <v-card-title>
+          <v-list-item class="pa-0">
             <v-list-item-avatar color="primary" size="30">
               <span class="white--text headline">R</span></v-list-item-avatar
             >
-            <h5>
+            <h3 class="secondary--text">
               Rate Limiter
-            </h5>
-          </v-card-title>
+            </h3>
+          </v-list-item>
           <v-card-text>
             <v-form
               v-if="toShow"

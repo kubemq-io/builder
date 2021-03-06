@@ -1,31 +1,32 @@
 <template>
-  <v-card flat tile class="min-w-0">
-    <div v-if="currentBindingList.length === 0">
-      <div class="px-1 py-6 text-center">No Integrations</div>
-    </div>
-    <!--    <v-slide-y-transition v-else group tag="div">-->
-    <v-card v-for="(item, index) in currentBindingList" :key="item.Name">
-      <div class="item d-flex justify-center align-center align-content-center">
-        <div id="index" class="pl-3">
-          <v-avatar color="primary" size="35">
-            <span class="white--text headline">{{ index + 1 }}</span>
-          </v-avatar>
-        </div>
-        <div id="content" class="flex-grow-1">
-          <v-card-title class="pa-0 pl-3 pb-2 pt-2">
-            <h4 class="secondary--text font-weight-bold">{{ item.Name }}</h4>
-          </v-card-title>
-          <v-card-subtitle class="pa-0 pl-3">
-            <div
-              class="d-flex justify-center align-center align-content-center"
-            >
+  <div class="pt-0">
+    <v-list two-line>
+      <v-subheader> <h3>Targets</h3> </v-subheader>
+      <v-divider inset></v-divider>
+      <v-card-text v-if="targets.length === 0" class="text-center">
+        <h5 class="secondary--text body-2">No Integrations</h5>
+      </v-card-text>
+      <template v-for="(target, i) in targets">
+        <v-list-item :key="'a' + i">
+          <v-list-item-avatar>
+            <v-avatar color="primary" size="35">
+              <span class="white--text headline">{{ i + 1 }}</span>
+            </v-avatar>
+          </v-list-item-avatar>
+          <v-list-item-content class="pb-0">
+            <v-list-item-title>
+              <h3 class="secondary--text font-weight-bold">
+                {{ target.Name }}
+              </h3>
+            </v-list-item-title>
+            <v-list-item-subtitle>
               <div
-                class="d-flex justify-center align-center align-content-center"
+                class="d-flex justify-start align-center align-content-center"
               >
                 <div class="d-flex">
-                  <h3 class="secondary--text">
-                    {{ item.SourceSide.Name }}
-                  </h3>
+                  <h4 class="secondary--text">
+                    {{ target.SourceSide.Name }}
+                  </h4>
                   <div class="pl-3">
                     <v-chip x-small color="primary font-weight-bold" outlined>
                       text 1asdassdasd asdasd
@@ -38,16 +39,16 @@
                   </div>
                 </div>
                 <div class="pl-3">
-                  <v-list-item-avatar color="primary" size="25">
-                    <v-icon size="15" color="white">
+                  <v-list-item-avatar color="primary" size="15">
+                    <v-icon size="5" color="white">
                       fa-arrow-right
                     </v-icon>
                   </v-list-item-avatar>
                 </div>
                 <div class="d-flex">
-                  <h3 class="secondary--text">
-                    {{ item.TargetSide.Name }}
-                  </h3>
+                  <h4 class="secondary--text">
+                    {{ target.TargetSide.Name }}
+                  </h4>
                   <div class="pl-3">
                     <v-chip x-small color="primary font-weight-bold" outlined>
                       Queue
@@ -60,41 +61,144 @@
                   </div>
                 </div>
               </div>
-
-              <div class="flex-grow-1">
-                <v-col class="d-flex justify-end">
-                  <v-icon
-                    size="20"
-                    class="pr-2"
-                    @click.stop="cloneIntegration(item)"
-                  >
-                    fa-clone
-                  </v-icon>
-                  <v-icon
-                    size="20"
-                    class="pr-2 pl-2"
-                    @click.stop="editIntegration(item)"
-                  >
-                    fa-edit
-                  </v-icon>
-                  <v-icon
-                    size="20"
-                    class="pl-2"
-                    @click.stop="delIntegration(item)"
-                  >
-                    fa-trash-alt
-                  </v-icon>
-                </v-col>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action class="ma-0">
+            <div class="d-flex justify-start align-center align-content-center">
+              <div>
+                <v-icon
+                  size="15"
+                  class="pr-2"
+                  @click.stop="cloneIntegration(target)"
+                >
+                  fa-clone
+                </v-icon>
+              </div>
+              <div>
+                <v-icon
+                  size="15"
+                  class="pr-2 pl-2"
+                  @click.stop="editIntegration(target)"
+                >
+                  fa-edit
+                </v-icon>
+              </div>
+              <div>
+                <v-icon
+                  size="15"
+                  class="pl-2"
+                  @click.stop="delIntegration(target)"
+                >
+                  fa-trash-alt
+                </v-icon>
               </div>
             </div>
-          </v-card-subtitle>
-        </div>
-      </div>
-    </v-card>
-    <!--    </v-slide-y-transition>-->
+          </v-list-item-action>
+        </v-list-item>
+        <v-divider :key="'b' + i" inset></v-divider>
+      </template>
+    </v-list>
+    <v-list two-line>
+      <v-subheader> <h3>Sources</h3> </v-subheader>
+      <v-divider inset></v-divider>
+      <v-card-text v-if="sources.length === 0" class="text-center">
+        <h5 class="secondary--text body-2">No Integrations</h5>
+      </v-card-text>
+      <template v-for="(source, index) in sources">
+        <v-list-item :key="'c' + index">
+          <v-list-item-avatar>
+            <v-avatar color="primary" size="35">
+              <span class="white--text headline">{{ index + 1 }}</span>
+            </v-avatar>
+          </v-list-item-avatar>
+          <v-list-item-content class="pb-0">
+            <v-list-item-title>
+              <h3 class="secondary--text font-weight-bold">
+                {{ source.Name }}
+              </h3>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              <div
+                class="d-flex justify-start align-center align-content-center"
+              >
+                <div class="d-flex">
+                  <h4 class="secondary--text">
+                    {{ source.SourceSide.Name }}
+                  </h4>
+                  <div class="pl-3">
+                    <v-chip x-small color="primary font-weight-bold" outlined>
+                      text 1asdassdasd asdasd
+                    </v-chip>
+                  </div>
+                  <div class="pl-2">
+                    <v-chip x-small color="accent font-weight-bold" outlined>
+                      text 2
+                    </v-chip>
+                  </div>
+                </div>
+                <div class="pl-4">
+                  <v-list-item-avatar color="primary" size="15">
+                    <v-icon size="10" color="white">
+                      fa-arrow-right
+                    </v-icon>
+                  </v-list-item-avatar>
+                </div>
+                <div class="d-flex">
+                  <h4 class="secondary--text">
+                    {{ source.TargetSide.Name }}
+                  </h4>
+                  <div class="pl-2">
+                    <v-chip x-small color="primary font-weight-bold" outlined>
+                      Queue
+                    </v-chip>
+                  </div>
+                  <div class="pl-2">
+                    <v-chip x-small color="accent font-weight-bold" outlined>
+                      queue.q1.qw2.as
+                    </v-chip>
+                  </div>
+                </div>
+              </div>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action class="ma-0">
+            <div class="d-flex justify-start align-center align-content-center">
+              <div>
+                <v-icon
+                  size="15"
+                  class="pr-2"
+                  @click.stop="cloneIntegration(source)"
+                >
+                  fa-clone
+                </v-icon>
+              </div>
+              <div>
+                <v-icon
+                  size="15"
+                  class="pr-2 pl-2"
+                  @click.stop="editIntegration(source)"
+                >
+                  fa-edit
+                </v-icon>
+              </div>
+              <div>
+                <v-icon
+                  size="15"
+                  class="pl-2"
+                  @click.stop="delIntegration(source)"
+                >
+                  fa-trash-alt
+                </v-icon>
+              </div>
+            </div>
+          </v-list-item-action>
+        </v-list-item>
+        <v-divider :key="'d' + index" inset></v-divider>
+      </template>
+    </v-list>
     <BindingDlg ref="bindingDlg"></BindingDlg>
     <ConfirmDlg ref="confirm"></ConfirmDlg>
-  </v-card>
+  </div>
 </template>
 <script>
 import BindingDlg from "@/components/binding/BindingDlg";
@@ -106,40 +210,14 @@ export default {
   name: "IntegrationList",
   components: { BindingDlg, ConfirmDlg },
   data() {
-    return {
-      headers: [
-        {
-          text: "Name",
-          align: "start",
-          value: "Name",
-          width: "10%"
-        },
-        {
-          text: "Source",
-          align: "Start",
-          value: "SourceSide",
-          width: "35%"
-        },
-        {
-          text: "Target",
-          align: "Start",
-          value: "TargetSide",
-          width: "35%"
-        },
-        {
-          text: "Middlewares",
-          align: "Start",
-          value: "Middlewares",
-          sortable: false,
-          width: "10%"
-        },
-        { text: "", value: "actions", sortable: false, width: "10%" }
-      ]
-    };
+    return {};
   },
   computed: {
-    currentBindingList: function() {
-      return this.$store.state.integrations.currentBindingList;
+    sources: function() {
+      return this.$store.state.integrations.sources;
+    },
+    targets: function() {
+      return this.$store.state.integrations.targets;
     }
   },
   methods: {
@@ -191,7 +269,7 @@ const makeid = function(length) {
 //}
 
 .item {
-  border-bottom: 1px solid #595a5c;
+  //border-bottom: 1px solid #595a5c;
 
   &:hover {
     background-color: rgba(100, 100, 100, 0.1);

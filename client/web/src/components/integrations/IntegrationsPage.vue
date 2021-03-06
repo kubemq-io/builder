@@ -1,37 +1,37 @@
 <template>
-  <div class="container ma-10">
-    <v-card class="d-flex flex-column">
-      <v-card flat>
-        <div class="">
-          <v-toolbar-title class="secondary--text">
-            Title
-          </v-toolbar-title>
-        </div>
+  <v-card class="ma-10">
+    <v-toolbar flat color="primary" extended extension-height="10px">
+      <v-toolbar-title class="white--text text-h4">
+        Build KubeMQ Integrations
+      </v-toolbar-title>
+    </v-toolbar>
+    <v-card flat style="margin-top: -0px;">
+      <div class="d-flex flex-column">
         <div class="d-flex flex-column">
-          <IntegrationSearch />
-          <IntegrationList></IntegrationList>
+          <div class="">
+            <IntegrationSearch />
+          </div>
+          <div>
+            <IntegrationList></IntegrationList>
+          </div>
         </div>
-      </v-card>
-      <v-card flat tile class="d-flex justify-end ma-3">
-        <v-btn
-          :disabled="currentBindingList.length === 0"
-          rounded
-          text
-          color="primary"
-          @click.stop="clearAll()"
-          >Clear All</v-btn
-        >
-        <v-btn
-          :disabled="currentBindingList.length === 0"
-          rounded
-          outlined
-          color="primary"
-          >Deploy</v-btn
-        >
-      </v-card>
-      <ConfirmDlg ref="confirm"></ConfirmDlg>
+        <div class="d-flex justify-end ma-3">
+          <v-btn
+            :disabled="!hasIntegration"
+            rounded
+            text
+            color="primary"
+            @click.stop="clearAll()"
+            >Clear All</v-btn
+          >
+          <v-btn :disabled="!hasIntegration" rounded outlined color="primary"
+            >Deploy</v-btn
+          >
+          <ConfirmDlg ref="confirm"></ConfirmDlg>
+        </div>
+      </div>
     </v-card>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -50,8 +50,15 @@ export default {
     this.loadIntegrations();
   },
   computed: {
-    currentBindingList: function() {
-      return this.$store.state.integrations.currentBindingList;
+    sources: function() {
+      return this.$store.state.integrations.sources;
+    },
+    targets: function() {
+      return this.$store.state.integrations.targets;
+    },
+    hasIntegration: function() {
+      console.log(this.sources.length);
+      return this.sources.length > 0 || this.targets.length > 0;
     }
   },
   methods: {
@@ -72,9 +79,9 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  border: 1px solid green;
-}
+/*.container {*/
+/*  border: 1px solid green;*/
+/*}*/
 .row {
   border: 1px solid red;
 }

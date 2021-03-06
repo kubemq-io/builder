@@ -1,17 +1,15 @@
 <template>
-  <div class="d-flex wrap">
-    <div class="side pl-0 pr-2 pt-0 pb-2 col-6">
-      <v-card elevation="1" min-height="210px">
-        <v-list-item class="pa-0">
-          <v-list-item-avatar color="primary" size="30">
-            <span class="white--text headline">{{
-              source.Initial
-            }}</span></v-list-item-avatar
-          >
-          <h3 class="secondary--text">
+  <div class="d-flex justify-center align-content-center align-center">
+    <div class="side pl-0 pr-2 pt-0 pb-2">
+      <v-card elevation="1" class="pa-0 ">
+        <v-card-title class="pa-0 pb-2">
+          <v-list-item-avatar color="primary" size="25">
+            <span class="white--text">{{ source.Initial }}</span>
+          </v-list-item-avatar>
+          <h5 class="secondary--text">
             {{ source.Title }}
-          </h3>
-        </v-list-item>
+          </h5>
+        </v-card-title>
         <v-card-text>
           <v-form v-if="toShow" ref="formSource" v-model="source.IsModelValid">
             <v-jsf
@@ -23,18 +21,23 @@
         </v-card-text>
       </v-card>
     </div>
-    <div class="side pl-2 pr-0 pt-0 pb-2 col-6">
-      <v-card elevation="1" min-height="210px">
-        <v-list-item class="pa-0">
-          <v-list-item-avatar color="primary" size="30">
-            <span class="white--text headline">{{
-              target.Initial
-            }}</span></v-list-item-avatar
-          >
-          <h3 class="secondary--text">
+    <div class="pl-3 flex-grow-1">
+      <v-list-item-avatar color="primary" size="25">
+        <v-icon size="15" color="white">
+          fa-arrow-right
+        </v-icon>
+      </v-list-item-avatar>
+    </div>
+    <div class="side pl-2 pr-0 pt-0 pb-2">
+      <v-card elevation="1" class="pa-0">
+        <v-card-title class="pa-0 pb-2">
+          <v-list-item-avatar color="primary" size="25">
+            <span class="white--text">{{ target.Initial }}</span>
+          </v-list-item-avatar>
+          <h5 class="secondary--text">
             {{ target.Title }}
-          </h3>
-        </v-list-item>
+          </h5>
+        </v-card-title>
         <v-card-text>
           <v-form v-if="toShow" ref="formTarget" v-model="target.IsModelValid">
             <v-jsf
@@ -61,7 +64,10 @@ export default {
   data: function() {
     return {
       options: {
-        initialValidation: "all"
+        initialValidation: "all",
+        checkboxProps: {
+          dense: true
+        }
       }
     };
   },
@@ -78,7 +84,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 /*.container {*/
 /*  border: 1px solid green;*/
 /*}*/
@@ -88,7 +94,24 @@ export default {
 /*.col {*/
 /*  border: 1px solid blue;*/
 /*}*/
-/*.side {*/
-/*  flex-basis: 100%;*/
-/*}*/
+.side {
+  flex-basis: 95%;
+}
+
+.vjsf .v-text-field {
+  padding-top: 0;
+}
+.vjsf .v-text-field input {
+  font-size: 0.8em;
+}
+
+.vjsf .v-label {
+  font-size: 0.8em;
+}
+.vjsf .v-select {
+  font-size: 1em;
+}
+.vjsf .v-select label {
+  font-size: 1em;
+}
 </style>

@@ -5169,6 +5169,7 @@ export default {
   kubemq_sources: {
     title: "Select",
     type: "object",
+    "x-class": "vjsf",
     oneOf: [
       {
         type: "object",
@@ -5664,6 +5665,7 @@ export default {
   kubemq_targets: {
     title: "Select",
     type: "object",
+    "x-class": "vjsf",
     oneOf: [
       {
         type: "object",

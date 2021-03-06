@@ -73,6 +73,7 @@ class MiddlewaresConfig {
 }
 let loggingModel = {
   Schema: {
+    "x-class": "vjsf",
     properties: {
       required: ["logLevel"],
       logLevel: {
@@ -90,6 +91,7 @@ let retriesModel = {
   Schema: {
     type: "object",
     title: "Select Retries Mode",
+    "x-class": "vjsf",
     oneOf: [
       {
         title: "Disabled",
@@ -152,6 +154,7 @@ let rateLimiterModel = {
   Schema: {
     type: "object",
     title: "Select Rate Limiter Mode",
+    "x-class": "vjsf",
     oneOf: [
       {
         title: "Disabled",

@@ -3,12 +3,16 @@ import integrationList from "@/store/modules/integrationList";
 import lodashArray from "lodash/array";
 const state = {
   integrationsMetadata: {},
-  currentBindingList: []
+  targets: [],
+  sources: []
 };
 const getters = {
   getCurrentBindingNames: function() {
     let list = [];
-    state.currentBindingList.forEach(value => {
+    state.targets.forEach(value => {
+      list.push({ name: value.Name });
+    });
+    state.sources.forEach(value => {
       list.push({
         name: value.Name
       });
@@ -23,21 +27,50 @@ const actions = {
 };
 const mutations = {
   clearIntegrationList(state) {
-    state.currentBindingList = [];
+    state.sources = [];
+    state.targets = [];
   },
   addBinding(state, val) {
     if (val) {
-      state.currentBindingList.push(val.binding);
+      switch (val.binding.Type) {
+        case "sources":
+          state.sources.push(val.binding);
+          break;
+        case "targets":
+          state.targets.push(val.binding);
+          break;
+      }
     }
   },
   replaceBinding(state, val) {
-    state.currentBindingList.splice(val.index, 1, val.binding);
+    switch (val.binding.Type) {
+      case "sources":
+        state.sources.splice(val.index, 1, val.binding);
+
+        break;
+      case "targets":
+        state.targets.splice(val.index, 1, val.binding);
+        break;
+    }
   },
   deleteBinding(state, val) {
-    const index = lodashArray.findIndex(state.currentBindingList, function(b) {
-      return b.Name === val.Name;
-    });
-    state.currentBindingList.splice(index, 1);
+    switch (val.Type) {
+      case "sources": {
+        const indexSource = lodashArray.findIndex(state.sources, function(b) {
+          return b.Name === val.Name;
+        });
+        state.sources.splice(indexSource, 1);
+
+        break;
+      }
+      case "targets": {
+        const indexTarget = lodashArray.findIndex(state.targets, function(b) {
+          return b.Name === val.Name;
+        });
+        state.targets.splice(indexTarget, 1);
+        break;
+      }
+    }
   }
 };
 

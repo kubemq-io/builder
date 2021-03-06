@@ -5,10 +5,10 @@
       <v-card-text>
         <v-card flat tile>
           <v-card-title class="pa-0">
-            <v-icon color="secondary">fa-link</v-icon>
-            <h4 class="pa-2 secondary--text">
+            <v-icon size="15" color="secondary">fa-link</v-icon>
+            <h5 class="pa-2 secondary--text">
               Name
-            </h4>
+            </h5>
           </v-card-title>
           <v-card-text class="pa-0">
             <v-col cols="6" class="pt-0 pb-0">
@@ -25,10 +25,10 @@
         </v-card>
         <v-card flat tile>
           <v-card-title class="pa-0">
-            <v-icon color="secondary">fa-sliders-h</v-icon>
-            <h4 class="pa-2 secondary--text">
+            <v-icon size="15" color="secondary">fa-sliders-h</v-icon>
+            <h5 class="pa-2 secondary--text">
               Properties
-            </h4>
+            </h5>
           </v-card-title>
           <v-card-text class="pa-0">
             <Properties
@@ -48,9 +48,9 @@
               color="primary"
             ></v-switch>
             <v-card-title class="pa-0">
-              <h4 class="pa-2 secondary--text">
+              <h5 class="pa-2 secondary--text">
                 Middlewares
-              </h4>
+              </h5>
             </v-card-title>
             <v-card-text v-if="setMiddleware" class="pa-0">
               <Middlewares
@@ -222,28 +222,17 @@ export default {
 </script>
 
 <style scoped>
-/*.container {*/
-/*  border: 1px solid green;*/
-/*}*/
-/*.row {*/
-/*  border: 1px solid red;*/
-/*}*/
-/*.col {*/
-/*  border: 1px solid blue;*/
-/*}*/
-.side {
-  flex-basis: 100%;
+.v-text-field >>> input {
+  font-size: 0.9em;
 }
-/*.icon {*/
-/*  flex-basis: 10%;*/
-/*  margin: 10px;*/
-/*}*/
-/*.center {*/
-/*  display: block;*/
-/*  margin-left: auto;*/
-/*  margin-right: auto;*/
-
-/*  width: 50px;*/
-/*  height: 50px;*/
-/*}*/
+.v-text-field >>> label {
+  font-size: 0.9em;
+}
+.v-text-field >>> button {
+  font-size: 0.9em;
+}
+.v-dialog__content {
+  align-items: flex-start;
+  justify-content: center;
+}
 </style>

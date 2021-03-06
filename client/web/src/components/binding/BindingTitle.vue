@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="primary" flat>
+  <v-toolbar color="primary" flat dense>
     <v-toolbar-title class="text-body-3 font-weight-bold white--text pl-2">
       {{ modeTitle }} {{ binding.Title }}
     </v-toolbar-title>
