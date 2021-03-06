@@ -1,7 +1,15 @@
 //import lodashCollections from "lodash/collection";
 class IntegrationsConfig {
   get connectors() {
-    return this._connectors;
+    let data = [];
+    this._connectors.forEach(value => {
+      data.push(value);
+      // data.push({
+      //   divider: true,
+      //   inset: true
+      // });
+    });
+    return data;
   }
 
   getKubeMQSide(type) {
@@ -29,15 +37,17 @@ class IntegrationsConfig {
     }
     this._connectors = [];
     this._integrations.forEach(value => {
-      this._connectors.push(
-        new Connector()
-          .SetKind(value.kind)
-          .SetType(value.type)
-          .SetName(value.name)
-          .SetCategory(value.category)
-          .SetProvider(value.provider)
-          .SetSchema(value.schema)
-      );
+      let con = new Connector()
+        .SetKind(value.kind)
+        .SetType(value.type)
+        .SetName(value.name)
+        .SetCategory(value.category)
+        .SetProvider(value.provider)
+        .SetSchema(value.schema);
+
+      con.AddTag(value.category);
+      con.AddTag(...(Array.isArray(value.tags) ? value.tags : [value.tags]));
+      this._connectors.push(con);
     });
   }
 }
@@ -46,12 +56,10 @@ class Connector {
   get category() {
     return this._category;
   }
-
   SetCategory(value) {
     this._category = value;
     return this;
   }
-
   get provider() {
     return this._provider;
   }
@@ -79,6 +87,20 @@ class Connector {
     this._type = value;
     return this;
   }
+
+  AddTag(...values) {
+    values.forEach(value => {
+      if (value) {
+        this._tags.push(value.toLowerCase());
+      }
+    });
+    return this;
+  }
+
+  get tags() {
+    return this._tags;
+  }
+
   get kind() {
     return this._kind;
   }
@@ -94,7 +116,17 @@ class Connector {
   get type() {
     return this._type;
   }
-
+  get title() {
+    switch (this._provider.toLowerCase()) {
+      case "gcp":
+        return `${this._name} (GCP)`;
+      case "aws":
+        return `${this._name} (AWS)`;
+      case "azure":
+        return `${this._name} (Azure)`;
+    }
+    return this._name;
+  }
   constructor() {
     this._category = "";
     this._provider = "";
@@ -102,6 +134,7 @@ class Connector {
     this._name = "";
     this._schema = {};
     this._type = "";
+    this._tags = [];
   }
   getInitial() {
     return this._name.charAt(0).toUpperCase();

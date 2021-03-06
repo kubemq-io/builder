@@ -57,7 +57,6 @@ export default {
       return this.$store.state.integrations.targets;
     },
     hasIntegration: function() {
-      console.log(this.sources.length);
       return this.sources.length > 0 || this.targets.length > 0;
     }
   },

@@ -7,6 +7,7 @@ export default {
       category: "General",
       provider: "",
       schema: {
+        "x-class": "vjsf",
         required: ["methods", "path", "dynamic_mapping"],
         properties: {
           kind: {
@@ -562,7 +563,8 @@ export default {
       type: "sources",
       name: "Sqs",
       category: "Aws",
-      provider: "",
+      provider: "aws",
+      tags: ["queue", "messaging", "lior"],
       schema: {
         required: ["aws_key", "aws_secret_key", "region", "queue"],
         properties: {

@@ -1,7 +1,7 @@
 <template>
   <div class="pt-0">
     <v-list two-line>
-      <v-subheader> <h3>Targets</h3> </v-subheader>
+      <v-subheader> <h4>Targets</h4> </v-subheader>
       <v-divider inset></v-divider>
       <v-card-text v-if="targets.length === 0" class="text-center">
         <h5 class="secondary--text body-2">No Integrations</h5>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="pl-3">
                   <v-list-item-avatar color="primary" size="15">
-                    <v-icon size="5" color="white">
+                    <v-icon size="10" color="white">
                       fa-arrow-right
                     </v-icon>
                   </v-list-item-avatar>
@@ -99,7 +99,7 @@
       </template>
     </v-list>
     <v-list two-line>
-      <v-subheader> <h3>Sources</h3> </v-subheader>
+      <v-subheader> <h4>Sources</h4> </v-subheader>
       <v-divider inset></v-divider>
       <v-card-text v-if="sources.length === 0" class="text-center">
         <h5 class="secondary--text body-2">No Integrations</h5>

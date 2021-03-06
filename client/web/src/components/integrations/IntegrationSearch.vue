@@ -6,68 +6,69 @@
         v-model="selectedItem"
         :items="connectors"
         :filter="customFilter"
-        label="Add an integration"
-        clearable
+        label="Add an integration..."
         solo
         @change="add"
         flat
-        filled
+        rounded
         cache-items
-        hide-no-data
         hide-details
+        color="primary"
         prepend-inner-icon="fa-search-plus"
       >
         <template v-slot:selection="data">
-          <div class="d-flex justify-center align-center align-content-center">
+          <v-list-item dense class="pa-0">
             <v-list-item-avatar color="primary" size="25">
               <span class="white--text">{{ data.item.getInitial() }}</span>
             </v-list-item-avatar>
-            <h3 class="secondary--text font-weight-bold pr-2">
-              {{ data.item.name }}
-            </h3>
-
-            <div class="pl-1">
-              <v-chip
-                v-if="data.item.provider"
-                x-small
-                color="primary font-weight-bold"
-                outlined
-              >
-                {{ data.item.provider }}
-              </v-chip>
-            </div>
-            <div class="pl-1">
-              <v-chip x-small color="accent font-weight-bold" outlined>
-                {{ data.item.category }}
-              </v-chip>
-            </div>
-          </div>
+            <v-list-item-content class="pa-0">
+              <v-list-item-title>
+                <h4 class="secondary--text font-weight-bold pr-2">
+                  {{ data.item.name }}
+                </h4>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </template>
         <template v-slot:item="data">
-          <div class="d-flex justify-center align-center align-content-center">
-            <v-list-item-avatar color="primary" size="25">
-              <span class="white--text">{{ data.item.getInitial() }}</span>
-            </v-list-item-avatar>
-            <h3 class="secondary--text font-weight-bold pr-2">
-              {{ data.item.name }}
-            </h3>
+          <v-list>
+            <v-list-item dense class="pa-0">
+              <v-list-item-avatar>
+                <v-avatar :color="getColor(data.item.type)" size="35">
+                  <span class="white--text text-h6">{{
+                    data.item.getInitial()
+                  }}</span>
+                </v-avatar>
+              </v-list-item-avatar>
 
-            <div class="pl-1">
-              <v-chip
-                v-if="data.item.provider"
-                x-small
-                color="primary font-weight-bold"
-                outlined
-              >
-                {{ data.item.provider }}
-              </v-chip>
-            </div>
-            <div class="pl-1">
-              <v-chip x-small color="accent font-weight-bold" outlined>
-                {{ data.item.category }}
-              </v-chip>
-            </div>
-          </div>
+              <v-list-item-content class="pa-0">
+                <v-list-item-title>
+                  <h3 :class="getColorText(data.item.type, '')">
+                    {{ data.item.title }}
+                  </h3>
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  <span
+                    :class="getColorText(data.item.type, ' text-capitalize')"
+                    >{{ data.item.type }}</span
+                  >
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  <v-chip-group>
+                    <v-chip
+                      v-for="(tag, index) in data.item.tags"
+                      :key="'b' + tag + index"
+                      x-small
+                      :color="getColor(data.item.type)"
+                      outlined
+                    >
+                      {{ tag }}
+                    </v-chip>
+                  </v-chip-group>
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </template>
       </v-autocomplete>
     </v-toolbar>
@@ -100,14 +101,29 @@ export default {
     ...mapGetters(["getCurrentBindingNames"]),
     ...mapMutations(["addBinding"]),
     customFilter(item, queryText) {
+      if (item.divider) {
+        return false;
+      }
+      let foundInTags = false;
+      item.tags.forEach(value => {
+        const param = value.toLowerCase();
+        if (param.indexOf(queryText) > -1) {
+          foundInTags = true;
+        }
+      });
+      if (foundInTags) {
+        return true;
+      }
       const param1 = item.name.toLowerCase();
       const param2 = item.category.toLowerCase();
       const param3 = item.type.toLowerCase();
+      const param4 = item.provider.toLowerCase();
       const searchText = queryText.toLowerCase();
       return (
         param1.indexOf(searchText) > -1 ||
         param2.indexOf(searchText) > -1 ||
-        param3.indexOf(searchText) > -1
+        param3.indexOf(searchText) > -1 ||
+        param4.indexOf(searchText) > -1
       );
     },
     async add() {
@@ -118,6 +134,14 @@ export default {
           .then(result => this.addBinding(result));
         this.$nextTick(() => (this.selectedItem = null));
       }
+    },
+    getColor(type) {
+      return type === "targets" ? "primary" : "secondary";
+    },
+    getColorText(type, more) {
+      return type === "targets"
+        ? "primary--text" + more
+        : "secondary--text" + more;
     },
     getNewBinding: function() {
       let newBinding = new BindingConfig()
