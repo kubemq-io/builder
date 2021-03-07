@@ -1,7 +1,13 @@
 <template>
   <v-card class="ma-10">
-    <v-toolbar flat color="primary" extended extension-height="10px">
-      <v-toolbar-title class="white--text text-h4">
+    <v-toolbar
+      flat
+      color="primary"
+      extended
+      extension-height="15px"
+      elevation-1
+    >
+      <v-toolbar-title class="white--text text-h4 pa-2 ">
         Build KubeMQ Integrations
       </v-toolbar-title>
     </v-toolbar>
@@ -20,11 +26,16 @@
             :disabled="!hasIntegration"
             rounded
             text
-            color="primary"
+            color="secondary"
             @click.stop="clearAll()"
             >Clear All</v-btn
           >
-          <v-btn :disabled="!hasIntegration" rounded outlined color="primary"
+          <v-btn
+            :disabled="!hasIntegration"
+            rounded
+            outlined
+            color="primary"
+            @click="deploy"
             >Deploy</v-btn
           >
           <ConfirmDlg ref="confirm"></ConfirmDlg>
@@ -72,6 +83,10 @@ export default {
       ) {
         this.clearIntegrationList();
       }
+    },
+    deploy: function() {
+      this.sources.forEach(value => console.log(value.GetConfiguration()));
+      this.targets.forEach(value => console.log(value.GetConfiguration()));
     }
   }
 };

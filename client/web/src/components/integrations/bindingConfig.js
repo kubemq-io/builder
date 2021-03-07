@@ -1,5 +1,5 @@
 import lodashString from "lodash/string";
-import { MiddlewaresConfig } from "@/components/binding/middlewaresConfig";
+import { MiddlewaresConfig } from "@/components/integrations/middlewaresConfig";
 import lodashObject from "lodash/object";
 class BindingConfig {
   get Middlewares() {
@@ -29,7 +29,9 @@ class BindingConfig {
     if (this._name !== "") {
       return this._name;
     }
-    this._name = `${this.SourceSide.Name}-${this.TargetSide.Name}`.toLowerCase();
+    const sourceName = lodashString.upperFirst(this.SourceSide.Name);
+    const targetName = lodashString.upperFirst(this.TargetSide.Name);
+    this._name = `${sourceName}-${targetName}`;
     return this._name;
   }
   set Name(value) {
@@ -60,13 +62,13 @@ class BindingConfig {
     return this;
   }
 
-  SetSourceSide(name, schema) {
-    this._sourceSide = new BindingSide("Source", name, schema);
+  SetSourceSide(name, category, schema) {
+    this._sourceSide = new BindingSide("Source", name, category, schema);
     return this;
   }
 
-  SetTargetSide(name, schema) {
-    this._targetSide = new BindingSide("Target", name, schema);
+  SetTargetSide(name, category, schema) {
+    this._targetSide = new BindingSide("Target", name, category, schema);
     return this;
   }
   GetConfiguration() {
@@ -90,6 +92,29 @@ class BindingConfig {
 }
 
 class BindingSide {
+  get Category() {
+    if (this._model.kind) {
+      switch (this._model.kind) {
+        case "kubemq.command":
+          return "Command";
+        case "kubemq.query":
+          return "Query";
+        case "kubemq.events":
+          return "Events";
+        case "kubemq.events-store":
+          return "Events Store";
+        case "kubemq.queue":
+          return "Queue";
+        case "kubemq.queue-stream":
+          return "Queue Stream";
+      }
+    }
+    return this._category;
+  }
+
+  set Category(value) {
+    this._category = value;
+  }
   get Name() {
     return this._name;
   }
@@ -135,13 +160,15 @@ class BindingSide {
       };
     }
   }
-  constructor(side, name, schema) {
+  constructor(side, name, category, schema) {
     this._name = name;
     this._title = `${name} ${side}`;
     this._initial = name.charAt(0).toUpperCase();
     this._schema = schema;
     this._model = {};
     this._isModelValid = false;
+    this._category = category;
   }
 }
+
 export { BindingConfig, BindingSide };

@@ -77,8 +77,8 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { BindingConfig } from "@/components/binding/bindingConfig";
-import BindingDlg from "@/components/binding/BindingDlg";
+import { BindingConfig } from "@/components/integrations/bindingConfig";
+import BindingDlg from "@/components/integrations/BindingDlg";
 
 export default {
   name: "IntegrationSearch",
@@ -149,16 +149,26 @@ export default {
         .SetBindingType("integrations");
       if (this.selectedItem.type === "sources") {
         newBinding = newBinding
-          .SetSourceSide(this.selectedItem.name, this.selectedItem.schema)
+          .SetSourceSide(
+            this.selectedItem.name,
+            this.selectedItem.category,
+            this.selectedItem.schema
+          )
           .SetTargetSide(
             "KubeMQ",
+            "something",
             this.$store.state.integrationsMetadata.getKubeMQSide("sources")
           );
       } else {
         newBinding = newBinding
-          .SetTargetSide(this.selectedItem.name, this.selectedItem.schema)
+          .SetTargetSide(
+            this.selectedItem.name,
+            this.selectedItem.category,
+            this.selectedItem.schema
+          )
           .SetSourceSide(
             "KubeMQ",
+            "something",
             this.$store.state.integrationsMetadata.getKubeMQSide("targets")
           );
       }

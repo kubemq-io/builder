@@ -95,11 +95,11 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import Middlewares from "@/components/binding/Middlewares";
-import Properties from "@/components/binding/Properties";
-import BindingTitle from "@/components/binding/BindingTitle";
+import Middlewares from "@/components/integrations/Middlewares";
+import Properties from "@/components/integrations/Properties";
+import BindingTitle from "@/components/integrations/BindingTitle";
 import { mapMutations, mapGetters } from "vuex";
-import { BindingConfig } from "@/components/binding/bindingConfig";
+import { BindingConfig } from "@/components/integrations/bindingConfig";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 

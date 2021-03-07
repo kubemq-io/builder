@@ -15,7 +15,7 @@
         <v-spacer></v-spacer>
         <v-btn
           v-if="!options.noconfirm"
-          color="primary"
+          color="secondary"
           text
           rounded
           @click.native="cancel"
