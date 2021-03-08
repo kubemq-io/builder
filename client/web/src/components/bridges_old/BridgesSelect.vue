@@ -9,7 +9,7 @@
         <v-list one-line subheader>
           <v-list-item @click="selectSubComponent('bridge')">
             <v-list-item-avatar>
-              <img src="@/assets/bridge.svg" alt="bridges" />
+              <img src="@/assets/bridge.svg" alt="BridgesModule" />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>Bridge</v-list-item-title>

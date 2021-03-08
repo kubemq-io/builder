@@ -1,5 +1,24 @@
 $body-font-family: 'Poppins', sans-serif;
 $font-size-root: 16px;
+
+ .v-text-field {
+  padding-top: 0;
+}
+.v-text-field input {
+  font-size: 0.8em;
+}
+
+ .v-label {
+  font-size: 0.8em;
+}
+ .v-select {
+  font-size: 1em;
+}
+.v-select label {
+  font-size: 1em;
+}
+
+
 //$line-height-root: 1.5;
 //
 //$font-weights: (

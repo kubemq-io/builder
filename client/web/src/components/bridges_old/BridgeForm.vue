@@ -65,7 +65,7 @@ import {
   BridgesBindingsConfig,
   BridgesBinding,
   BridgesBindingData
-} from "@/components/bridges/bridges";
+} from "@/components/bridges_old/bridges";
 
 export default {
   name: "BridgeForm",

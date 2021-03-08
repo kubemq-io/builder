@@ -84,7 +84,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /*.container {*/
 /*  border: 1px solid green;*/
 /*}*/
@@ -96,22 +96,5 @@ export default {
 /*}*/
 .side {
   flex-basis: 95%;
-}
-
-.vjsf .v-text-field {
-  padding-top: 0;
-}
-.vjsf .v-text-field input {
-  font-size: 0.8em;
-}
-
-.vjsf .v-label {
-  font-size: 0.8em;
-}
-.vjsf .v-select {
-  font-size: 1em;
-}
-.vjsf .v-select label {
-  font-size: 1em;
 }
 </style>

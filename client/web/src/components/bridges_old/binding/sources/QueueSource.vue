@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form-bridges-sources-queue" v-model="valid">
+  <v-form ref="form-BridgesModule-sources-queue" v-model="valid">
     <v-jsf :value="model" :schema="schema" :options="options" />
   </v-form>
 </template>

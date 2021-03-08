@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { BridgesBinding } from "@/components/bridges/bridges";
+import { BridgesBinding } from "@/components/bridges_old/bridges";
 
 export default {
   name: "BindingCard",

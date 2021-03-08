@@ -72,17 +72,17 @@
         </template>
       </v-autocomplete>
     </v-toolbar>
-    <BindingDlg ref="bindingDlg"></BindingDlg>
+    <IntegrationsBindingDlg ref="bindingDlg"></IntegrationsBindingDlg>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { BindingConfig } from "@/components/integrations/bindingConfig";
-import BindingDlg from "@/components/integrations/BindingDlg";
+import IntegrationsBindingDlg from "@/components/integrations/IntegrationBindingDlg";
+import { IntegrationsBinding } from "@/components/integrations/Integrations";
 
 export default {
   name: "IntegrationSearch",
-  components: { BindingDlg },
+  components: { IntegrationsBindingDlg },
   data: function() {
     return {
       selectedItem: null
@@ -99,7 +99,7 @@ export default {
   methods: {
     ...mapActions(["loadIntegrations"]),
     ...mapGetters(["getCurrentBindingNames"]),
-    ...mapMutations(["addBinding"]),
+    ...mapMutations(["addIntegrationsBinding"]),
     customFilter(item, queryText) {
       if (item.divider) {
         return false;
@@ -131,7 +131,7 @@ export default {
         let newBinding = this.getNewBinding();
         await this.$refs.bindingDlg
           .open(newBinding, this.getCurrentBindingNames(), "add")
-          .then(result => this.addBinding(result));
+          .then(result => this.addIntegrationsBinding(result));
         this.$nextTick(() => (this.selectedItem = null));
       }
     },
@@ -144,7 +144,7 @@ export default {
         : "secondary--text" + more;
     },
     getNewBinding: function() {
-      let newBinding = new BindingConfig()
+      let newBinding = new IntegrationsBinding()
         .SetType(this.selectedItem.type)
         .SetBindingType("integrations");
       if (this.selectedItem.type === "sources") {

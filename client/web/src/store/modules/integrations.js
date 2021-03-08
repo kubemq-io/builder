@@ -1,4 +1,4 @@
-import { IntegrationsConfig } from "@/components/integrations/integrationsConfig";
+import { Integrations } from "@/components/integrations/Integrations";
 import integrationList from "@/store/modules/integrationList";
 import lodashArray from "lodash/array";
 const state = {
@@ -22,15 +22,15 @@ const getters = {
 };
 const actions = {
   loadIntegrations: function() {
-    this.state.integrationsMetadata = new IntegrationsConfig(integrationList);
+    this.state.integrationsMetadata = new Integrations(integrationList);
   }
 };
 const mutations = {
-  clearIntegrationList(state) {
+  clearIntegrationsList(state) {
     state.sources = [];
     state.targets = [];
   },
-  addBinding(state, val) {
+  addIntegrationsBinding(state, val) {
     if (val) {
       switch (val.binding.Type) {
         case "sources":
@@ -42,7 +42,7 @@ const mutations = {
       }
     }
   },
-  replaceBinding(state, val) {
+  replaceIntegrationsBinding(state, val) {
     switch (val.binding.Type) {
       case "sources":
         state.sources.splice(val.index, 1, val.binding);
@@ -53,7 +53,7 @@ const mutations = {
         break;
     }
   },
-  deleteBinding(state, val) {
+  deleteIntegrationsBinding(state, val) {
     switch (val.Type) {
       case "sources": {
         const indexSource = lodashArray.findIndex(state.sources, function(b) {

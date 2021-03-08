@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable persistent width="960px">
     <v-card rounded>
-      <BindingTitle :binding="bindingModel" :mode="mode" />
+      <IntegrationsBindingTitle :binding="bindingModel" :mode="mode" />
       <v-card-text>
         <v-card flat tile>
           <v-card-title class="pa-0">
@@ -31,7 +31,7 @@
             </h5>
           </v-card-title>
           <v-card-text class="pa-0">
-            <Properties
+            <IntegrationsBindingProperties
               ref="properties"
               :binding="bindingModel"
               :options="options"
@@ -53,10 +53,10 @@
               </h5>
             </v-card-title>
             <v-card-text v-if="setMiddleware" class="pa-0">
-              <Middlewares
+              <IntegrationsBindingMiddlewares
                 :config="bindingModel.Middlewares"
                 :show="show"
-              ></Middlewares>
+              ></IntegrationsBindingMiddlewares>
             </v-card-text>
           </v-card-title>
         </v-card>
@@ -95,20 +95,24 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import Middlewares from "@/components/integrations/Middlewares";
-import Properties from "@/components/integrations/Properties";
-import BindingTitle from "@/components/integrations/BindingTitle";
+import IntegrationsBindingMiddlewares from "@/components/integrations/IntegrationsBindingMiddlewares";
+import IntegrationsBindingProperties from "@/components/integrations/IntegrationsBindingsProperties";
+import IntegrationsBindingTitle from "@/components/integrations/IntegrationsBindingTitle";
 import { mapMutations, mapGetters } from "vuex";
-import { BindingConfig } from "@/components/integrations/bindingConfig";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
+import { IntegrationsBinding } from "@/components/integrations/Integrations";
 
 export default {
-  name: "BindingDlg",
-  components: { BindingTitle, Properties, Middlewares },
+  name: "IntegrationsBindingDlg",
+  components: {
+    IntegrationsBindingTitle,
+    IntegrationsBindingProperties,
+    IntegrationsBindingMiddlewares
+  },
   data: function() {
     return {
-      bindingModel: new BindingConfig(),
+      bindingModel: new IntegrationsBinding(),
       show: false,
       forbiddenNames: [],
       panel: [0, 1],
@@ -132,7 +136,7 @@ export default {
   },
   watch: {},
   methods: {
-    ...mapMutations(["addBinding", "replaceBinding"]),
+    ...mapMutations(["addIntegrationsBinding", "replaceIntegrationsBinding"]),
     ...mapGetters(["getCurrentBindingNames"]),
     open(item, forbiddenNames, mode) {
       this.show = true;

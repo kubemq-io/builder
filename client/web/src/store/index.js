@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import cluster from "@/store/modules/cluster";
-import bridges from "@/store/modules/bridges";
-import integrations from "@/store/modules/integrations";
+import BridgesModule from "@/store/modules/bridges";
+import IntegrationsModule from "@/store/modules/integrations";
 // import Go from "@/wasm_exec";
 // /* eslint no-undef: "off"*/
 // const go = new Go();
@@ -22,7 +22,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     cluster,
-    integrations,
-    bridges
+    integrations: IntegrationsModule,
+    bridges: BridgesModule
   }
 });

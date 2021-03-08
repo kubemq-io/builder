@@ -8,22 +8,34 @@
       elevation-1
     >
       <v-toolbar-title class="white--text text-h4 pa-2 ">
-        Build KubeMQ Integrations
+        Build KubeMQ Bridges
       </v-toolbar-title>
     </v-toolbar>
     <v-card flat style="margin-top: -0px;">
       <div class="d-flex flex-column">
         <div class="d-flex flex-column">
           <div class="">
-            <IntegrationSearch />
+            <v-toolbar flat color="primary" dense>
+              <v-btn
+                rounded
+                class="secondary--text"
+                color="white"
+                @click="deploy"
+              >
+                <v-icon left small>
+                  fa-plus
+                </v-icon>
+                Add Bridge</v-btn
+              >
+            </v-toolbar>
           </div>
           <div>
-            <IntegrationsList></IntegrationsList>
+            Binding List
           </div>
         </div>
         <div class="d-flex justify-end ma-3">
           <v-btn
-            :disabled="!hasIntegration"
+            :disabled="!hasBridges"
             rounded
             text
             color="secondary"
@@ -35,7 +47,7 @@
             Clear All</v-btn
           >
           <v-btn
-            :disabled="!hasIntegration"
+            :disabled="!hasBridges"
             rounded
             outlined
             color="primary"
@@ -54,48 +66,37 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
-import IntegrationSearch from "@/components/integrations/IntegrationSearch";
-import IntegrationsList from "@/components/integrations/IntgerationsList";
 
 export default {
-  name: "IntegrationsPage",
-  components: { ConfirmDlg, IntegrationsList, IntegrationSearch },
+  name: "BridgesPage",
+  components: { ConfirmDlg },
   data() {
     return {};
   },
-  created() {
-    this.loadIntegrations();
-  },
   computed: {
-    sources: function() {
-      return this.$store.state.integrations.sources;
+    bindings: function() {
+      return this.$store.state.bridges.bindings;
     },
-    targets: function() {
-      return this.$store.state.integrations.targets;
-    },
-    hasIntegration: function() {
-      return this.sources.length > 0 || this.targets.length > 0;
+
+    hasBridges: function() {
+      return this.bindings.length > 0;
     }
   },
   methods: {
-    ...mapActions(["loadIntegrations"]),
-    ...mapMutations(["clearIntegrationsList"]),
+    ...mapMutations(["clearBridgesBindingsList"]),
     async clearAll() {
       if (
         await this.$refs.confirm.open(
           "Confirm",
-          "Are you sure you want to delete all integration?"
+          "Are you sure you want to delete all bridges connections?"
         )
       ) {
-        this.clearIntegrationsList();
+        this.clearBridgesBindingsList();
       }
     },
-    deploy: function() {
-      this.sources.forEach(value => console.log(value.GetConfiguration()));
-      this.targets.forEach(value => console.log(value.GetConfiguration()));
-    }
+    deploy: function() {}
   }
 };
 </script>

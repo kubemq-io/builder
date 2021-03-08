@@ -72,12 +72,12 @@
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 import VJsf from "@koumoul/vjsf/lib/VJsf";
-import { MiddlewaresConfig } from "@/components/integrations/middlewaresConfig";
+import { IntegrationsBindingMiddlewares } from "@/components/integrations/Integrations";
 export default {
   name: "Middlewares",
   components: { VJsf },
   props: {
-    config: MiddlewaresConfig,
+    config: IntegrationsBindingMiddlewares,
     show: Boolean
   },
   data: function() {

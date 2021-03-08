@@ -1,20 +1,16 @@
-const bridgesState = {
-  bridgesConfig: {
-    name: "kubemq-bridges",
-    namespace: "kubemq",
-    bindings: []
-  }
+const state = {
+  bindings: []
 };
-const getters = {
-  configToShowBridges: state => {
-    return JSON.stringify(state.bridgesConfig, null, "\t");
-  }
-};
+const getters = {};
 const actions = {};
-const mutations = {};
+const mutations = {
+  clearBridgesBindingsList(state) {
+    state.bindings = [];
+  }
+};
 
 export default {
-  state: bridgesState,
+  state,
   getters,
   mutations,
   actions

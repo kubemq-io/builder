@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import BridgeForm from "@/components/bridges/BridgeForm";
-import ReplicateForm from "@/components/bridges/ReplicateForm";
-import AggregateForm from "@/components/bridges/AggregateForm";
-import TransformForm from "@/components/bridges/TransformForm";
+import BridgeForm from "@/components/bridges_old/BridgeForm";
+import ReplicateForm from "@/components/bridges_old/ReplicateForm";
+import AggregateForm from "@/components/bridges_old/AggregateForm";
+import TransformForm from "@/components/bridges_old/TransformForm";
 
 export default {
   name: "BridgeConfig",

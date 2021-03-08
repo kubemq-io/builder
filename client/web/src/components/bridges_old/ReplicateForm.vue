@@ -9,7 +9,7 @@
             <v-list-item-avatar color="secondary" size="36">
               <span class="white--text headline">S</span></v-list-item-avatar
             >
-            <v-list-item-title class="title">KubeMQ Sources</v-list-item-title>
+            <v-list-item-title class="title">KubeMQ Source</v-list-item-title>
           </v-list-item>
           <v-card-text>
             <v-form ref="formBridgeSource" v-model="sourceValid">
@@ -22,11 +22,11 @@
           </v-card-text>
         </v-card>
       </div>
-      <div id="icon" class="icon">
-        <img src="@/assets/transform.svg" alt="transform" />
+      <div class="icon">
+        <img src="@/assets/replicate.svg" alt="replicate" />
       </div>
       <div class="card">
-        <v-card>
+        <v-card elevation="1">
           <v-list-item>
             <v-list-item-avatar color="accent" size="36">
               <span class="white--text headline">T</span></v-list-item-avatar
@@ -65,10 +65,10 @@ import {
   BridgesBindingsConfig,
   BridgesBinding,
   BridgesBindingData
-} from "@/components/bridges/bridges";
+} from "@/components/bridges_old/bridges";
 
 export default {
-  name: "TransformForm",
+  name: "ReplicateForm",
   components: { VJsf },
   data: function() {
     return {
@@ -99,6 +99,7 @@ export default {
       }
     };
   },
+
   computed: {
     selectedConfig: function() {
       return this.$store.state.stages.selectedConfig;
@@ -112,11 +113,11 @@ export default {
         this.$refs.formBridgeSource.validate() &&
         this.$refs.formBridgeTarget.validate()
       ) {
-        let binding = new BridgesBinding("transform-1");
+        let binding = new BridgesBinding("replicate-1");
         binding.Sources = new BridgesBindingData(
           this.sourceModel.properties.kind
         );
-        binding.Sources.addConnections(this.sourceModel.properties.connections);
+        binding.Sources.addConnection(this.sourceModel.properties);
         binding.Targets = new BridgesBindingData(
           this.targetModel.properties.kind
         );
@@ -136,96 +137,84 @@ export default {
 const sourceSchema = {
   title: "Source Type",
   type: "object",
+
   oneOf: [
     {
       title: "Queue",
       required: ["address", "channel"],
       properties: {
+        address: {
+          type: "string",
+          title: "Source Address",
+          default: "kubemq-cluster-grpc:50000"
+        },
         kind: {
           type: "string",
           const: "source.queue"
         },
-        connections: {
-          type: "array",
-          title: "Add Queue Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Queue Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
-              },
+        channel: {
+          type: "string",
+          title: "Source Channel",
+          default: "queues"
+        },
+        setDefaults: {
+          type: "boolean",
+          "x-display": "checkbox",
+          title: "Set Default Properties",
+          default: true
+        }
+      },
 
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                default: "queues"
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                max_requeue: {
-                  type: "integer",
-                  title: "Max ReQueues",
-                  default: 0,
-                  description:
-                    "How many times to re-queue a message on target error",
-                  minimum: 0
-                },
-                batch_size: {
-                  type: "integer",
-                  title: "Pull Messages Batch Size",
-                  default: 1,
-                  description: "How many messages to pull in one request",
-                  minimum: 1
-                },
-                wait_timeout: {
-                  type: "integer",
-                  title: "Pull Messages Timeout",
-                  default: 60,
-                  description:
-                    "How long to wait for messages batch size on each request",
-                  minimum: 1
-                }
-              }
-            }
+      if: {
+        required: ["setDefaults"],
+        properties: {
+          setDefaults: {
+            const: false
+          }
+        }
+      },
+      then: {
+        properties: {
+          client_id: {
+            type: "string",
+            title: "Client ID",
+            default: "",
+            description: "Connection Client ID"
+          },
+          auth_token: {
+            type: "string",
+            title: "Client Authentication Token",
+            default: "",
+            description: "Connection Authentication Token"
+          },
+          sources: {
+            type: "integer",
+            title: "Concurrent Connections",
+            default: 1,
+            description: "How many concurrent channel connections",
+            minimum: 1
+          },
+          max_requeue: {
+            type: "integer",
+            title: "Max ReQueues",
+            default: 0,
+            description: "How many times to re-queue a message on target error",
+            minimum: 0
+          },
+          batch_size: {
+            type: "integer",
+            title: "Pull Messages Batch Size",
+            default: 1,
+            description: "How many messages to pull in one request",
+            minimum: 1
+          },
+          wait_timeout: {
+            type: "integer",
+            title: "Pull Messages Timeout",
+            default: 60,
+            description:
+              "How long to wait for messages batch size on each request",
+            minimum: 1
           }
         }
       }
@@ -238,80 +227,68 @@ const sourceSchema = {
           type: "string",
           const: "source.queue-stream"
         },
-        connections: {
-          type: "array",
-          title: "Add Queue Stream Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Queue Stream Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
-              },
+        address: {
+          type: "string",
+          title: "Source Address",
+          default: "kubemq-cluster-grpc:50000"
+        },
 
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                default: "queues"
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
+        channel: {
+          type: "string",
+          title: "Source Channel",
+          default: "queues"
+        },
+        setDefaults: {
+          type: "boolean",
+          "x-display": "checkbox",
+          title: "Set Default Properties",
+          default: true
+        }
+      },
 
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                visibilityTimeoutSeconds: {
-                  type: "integer",
-                  title: "Message Visibility Timeout (Seconds)",
-                  default: 3600,
-                  description:
-                    "How low to hold processing message before sending back to queue",
-                  minimum: 1
-                },
-                wait_timeout: {
-                  type: "integer",
-                  title: "Push Messages Timeout",
-                  default: 60,
-                  description: "How long to wait for a message",
-                  minimum: 1
-                }
-              }
-            }
+      if: {
+        required: ["setDefaults"],
+        properties: {
+          setDefaults: {
+            const: false
+          }
+        }
+      },
+      then: {
+        properties: {
+          client_id: {
+            type: "string",
+            title: "Client ID",
+            default: "",
+            description: "Connection Client ID"
+          },
+          auth_token: {
+            type: "string",
+            title: "Client Authentication Token",
+            default: "",
+            description: "Connection Authentication Token"
+          },
+          sources: {
+            type: "integer",
+            title: "Concurrent Connections",
+            default: 1,
+            description: "How many concurrent channel connections",
+            minimum: 1
+          },
+          visibilityTimeoutSeconds: {
+            type: "integer",
+            title: "Message Visibility Timeout (Seconds)",
+            default: 3600,
+            description:
+              "How low to hold processing message before sending back to queue",
+            minimum: 1
+          },
+          wait_timeout: {
+            type: "integer",
+            title: "Push Messages Timeout",
+            default: 60,
+            description: "How long to wait for a message",
+            minimum: 1
           }
         }
       }
@@ -324,70 +301,59 @@ const sourceSchema = {
           type: "string",
           const: "source.query"
         },
-        connections: {
-          type: "array",
-          title: "Add Query Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Query Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
-              },
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                default: "queries"
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
+        address: {
+          type: "string",
+          title: "Source Address",
+          default: "kubemq-cluster-grpc:50000"
+        },
 
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                group: {
-                  type: "string",
-                  title: "Channel Group",
-                  default: "",
-                  description: "Subscribers Group"
-                }
-              }
-            }
+        channel: {
+          type: "string",
+          title: "Source Channel",
+          default: "queries"
+        },
+        setDefaults: {
+          type: "boolean",
+          "x-display": "checkbox",
+          title: "Set Default Properties",
+          default: true
+        }
+      },
+
+      if: {
+        required: ["setDefaults"],
+        properties: {
+          setDefaults: {
+            const: false
+          }
+        }
+      },
+      then: {
+        properties: {
+          client_id: {
+            type: "string",
+            title: "Client ID",
+            default: "",
+            description: "Connection Client ID"
+          },
+          auth_token: {
+            type: "string",
+            title: "Client Authentication Token",
+            default: "",
+            description: "Connection Authentication Token"
+          },
+          sources: {
+            type: "integer",
+            title: "Concurrent Connections",
+            default: 1,
+            description: "How many concurrent channel connections",
+            minimum: 1
+          },
+          group: {
+            type: "string",
+            title: "Channel Group",
+            default: "",
+            description: "Subscribers Group"
           }
         }
       }
@@ -400,71 +366,59 @@ const sourceSchema = {
           type: "string",
           const: "source.command"
         },
-        connections: {
-          type: "array",
-          title: "Add Command Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Command Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
-              },
+        address: {
+          type: "string",
+          title: "Source Address",
+          default: "kubemq-cluster-grpc:50000"
+        },
 
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                default: "commands"
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
+        channel: {
+          type: "string",
+          title: "Source Channel",
+          default: "commands"
+        },
+        setDefaults: {
+          type: "boolean",
+          "x-display": "checkbox",
+          title: "Set Default Properties",
+          default: true
+        }
+      },
 
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                group: {
-                  type: "string",
-                  title: "Channel Group",
-                  default: "",
-                  description: "Subscribers Group"
-                }
-              }
-            }
+      if: {
+        required: ["setDefaults"],
+        properties: {
+          setDefaults: {
+            const: false
+          }
+        }
+      },
+      then: {
+        properties: {
+          client_id: {
+            type: "string",
+            title: "Client ID",
+            default: "",
+            description: "Connection Client ID"
+          },
+          auth_token: {
+            type: "string",
+            title: "Client Authentication Token",
+            default: "",
+            description: "Connection Authentication Token"
+          },
+          sources: {
+            type: "integer",
+            title: "Concurrent Connections",
+            default: 1,
+            description: "How many concurrent channel connections",
+            minimum: 1
+          },
+          group: {
+            type: "string",
+            title: "Channel Group",
+            default: "",
+            description: "Subscribers Group"
           }
         }
       }
@@ -477,71 +431,59 @@ const sourceSchema = {
           type: "string",
           const: "source.events"
         },
-        connections: {
-          type: "array",
-          title: "Add Events Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Events Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
-              },
+        address: {
+          type: "string",
+          title: "Source Address",
+          default: "kubemq-cluster-grpc:50000"
+        },
 
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                default: "events"
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
+        channel: {
+          type: "string",
+          title: "Source Channel",
+          default: "events"
+        },
+        setDefaults: {
+          type: "boolean",
+          "x-display": "checkbox",
+          title: "Set Default Properties",
+          default: true
+        }
+      },
 
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                group: {
-                  type: "string",
-                  title: "Channel Group",
-                  default: "",
-                  description: "Subscribers Group"
-                }
-              }
-            }
+      if: {
+        required: ["setDefaults"],
+        properties: {
+          setDefaults: {
+            const: false
+          }
+        }
+      },
+      then: {
+        properties: {
+          client_id: {
+            type: "string",
+            title: "Client ID",
+            default: "",
+            description: "Connection Client ID"
+          },
+          auth_token: {
+            type: "string",
+            title: "Client Authentication Token",
+            default: "",
+            description: "Connection Authentication Token"
+          },
+          sources: {
+            type: "integer",
+            title: "Concurrent Connections",
+            default: 1,
+            description: "How many concurrent channel connections",
+            minimum: 1
+          },
+          group: {
+            type: "string",
+            title: "Channel Group",
+            default: "",
+            description: "Subscribers Group"
           }
         }
       }
@@ -553,70 +495,59 @@ const sourceSchema = {
           type: "string",
           const: "source.events-store"
         },
-        connections: {
-          type: "array",
-          title: "Add Events Store Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Events Store Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
-              },
+        address: {
+          type: "string",
+          title: "Source Address",
+          default: "kubemq-cluster-grpc:50000"
+        },
 
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                default: "events-store"
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                group: {
-                  type: "string",
-                  title: "Channel Group",
-                  default: "",
-                  description: "Subscribers Group"
-                }
-              }
-            }
+        channel: {
+          type: "string",
+          title: "Source Channel",
+          default: "events-store"
+        },
+        setDefaults: {
+          type: "boolean",
+          "x-display": "checkbox",
+          title: "Set Default Properties",
+          default: true
+        }
+      },
+
+      if: {
+        required: ["setDefaults"],
+        properties: {
+          setDefaults: {
+            const: false
+          }
+        }
+      },
+      then: {
+        properties: {
+          client_id: {
+            type: "string",
+            title: "Client ID",
+            default: "",
+            description: "Connection Client ID"
+          },
+          auth_token: {
+            type: "string",
+            title: "Client Authentication Token",
+            default: "",
+            description: "Connection Authentication Token"
+          },
+          sources: {
+            type: "integer",
+            title: "Concurrent Connections",
+            default: 1,
+            description: "How many concurrent channel connections",
+            minimum: 1
+          },
+          group: {
+            type: "string",
+            title: "Channel Group",
+            default: "",
+            description: "Subscribers Group"
           }
         }
       }
