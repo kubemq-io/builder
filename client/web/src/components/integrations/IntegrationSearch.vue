@@ -93,12 +93,12 @@ export default {
       return this.$store.state.integrationsMetadata.connectors;
     },
     forbiddenNames: function() {
-      return this.getCurrentBindingNames();
+      return this.getIntegrationsBindingNames();
     }
   },
   methods: {
     ...mapActions(["loadIntegrations"]),
-    ...mapGetters(["getCurrentBindingNames"]),
+    ...mapGetters(["getIntegrationsBindingNames"]),
     ...mapMutations(["addIntegrationsBinding"]),
     customFilter(item, queryText) {
       if (item.divider) {
@@ -130,7 +130,7 @@ export default {
       if (this.selectedItem !== null) {
         let newBinding = this.getNewBinding();
         await this.$refs.bindingDlg
-          .open(newBinding, this.getCurrentBindingNames(), "add")
+          .open(newBinding, this.getIntegrationsBindingNames(), "add")
           .then(result => this.addIntegrationsBinding(result));
         this.$nextTick(() => (this.selectedItem = null));
       }

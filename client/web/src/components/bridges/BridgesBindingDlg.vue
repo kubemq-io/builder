@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable persistent width="960px">
     <v-card rounded>
-      <IntegrationsBindingTitle :binding="bindingModel" :mode="mode" />
+      <BridgesBindingTitle :binding="bindingModel" :mode="mode" />
       <v-card-text>
         <v-card flat tile>
           <v-card-title class="pa-0">
@@ -15,7 +15,7 @@
               <v-text-field
                 v-model="bindingModel.Name"
                 clearable
-                label="Integration Name"
+                label="Bridge Name"
                 :rules="[this.validateBindingName]"
                 ref="inputName"
                 :error="errorState"
@@ -31,7 +31,7 @@
             </h5>
           </v-card-title>
           <v-card-text class="pa-0">
-            <IntegrationsBindingProperties
+            <BridgesBindingProperties
               ref="properties"
               :binding="bindingModel"
               :options="options"
@@ -53,10 +53,10 @@
               </h5>
             </v-card-title>
             <v-card-text v-if="setMiddleware" class="pa-0">
-              <IntegrationsBindingMiddlewares
+              <BridgesBindingMiddlewares
                 :config="bindingModel.Middlewares"
                 :show="show"
-              ></IntegrationsBindingMiddlewares>
+              ></BridgesBindingMiddlewares>
             </v-card-text>
           </v-card-title>
         </v-card>
@@ -95,24 +95,25 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import IntegrationsBindingMiddlewares from "@/components/integrations/IntegrationsBindingMiddlewares";
-import IntegrationsBindingProperties from "@/components/integrations/IntegrationsBindingsProperties";
-import IntegrationsBindingTitle from "@/components/integrations/IntegrationsBindingTitle";
+
+import BridgesBindingTitle from "@/components/bridges/BridgesBindingTitle";
 import { mapMutations, mapGetters } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
-import { IntegrationsBinding } from "@/components/integrations/Integrations";
+import { BridgesBinding } from "@/components/bridges/bridges";
+import BridgesBindingProperties from "@/components/bridges/BridgesBindingsProperties";
+import BridgesBindingMiddlewares from "@/components/bridges/BridgesBindingMiddlewares";
 
 export default {
-  name: "IntegrationsBindingDlg",
+  name: "BridgesBindingDlg",
   components: {
-    IntegrationsBindingTitle,
-    IntegrationsBindingProperties,
-    IntegrationsBindingMiddlewares
+    BridgesBindingMiddlewares,
+    BridgesBindingProperties,
+    BridgesBindingTitle
   },
   data: function() {
     return {
-      bindingModel: new IntegrationsBinding(),
+      bindingModel: new BridgesBinding(),
       show: false,
       forbiddenNames: [],
       panel: [0, 1],
@@ -136,8 +137,8 @@ export default {
   },
   watch: {},
   methods: {
-    ...mapMutations(["addIntegrationsBinding", "replaceIntegrationsBinding"]),
-    ...mapGetters(["getIntegrationsBindingNames"]),
+    ...mapMutations(["addBridgesBinding", "replaceBridgesBinding"]),
+    ...mapGetters(["getBridgesBindingNames"]),
     open(item, forbiddenNames, mode) {
       this.show = true;
       this.bindingModel = lodashLang.cloneDeep(item);
@@ -163,7 +164,7 @@ export default {
     },
     validateBindingName: function() {
       if (this.bindingModel.Name === "" || this.bindingModel.Name === null) {
-        return "Set integration name";
+        return "Set bridge name";
       }
       const checkName = this.bindingModel.Name;
       const found = lodashArray.findIndex(this.forbiddenNames, function(b) {
@@ -171,7 +172,7 @@ export default {
       });
       if (this.mode === "add") {
         if (found >= 0) {
-          return "Integration name must be unique";
+          return "Bridge name must be unique";
         } else {
           this.isValidName = true;
           return true;
@@ -182,7 +183,7 @@ export default {
         found >= 0 &&
         checkName !== this.editedItem.originateName
       ) {
-        return "Integration name must be unique";
+        return "Bridge name must be unique";
       } else {
         this.isValidName = true;
         return true;

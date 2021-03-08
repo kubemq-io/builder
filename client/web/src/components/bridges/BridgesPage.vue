@@ -11,26 +11,21 @@
         Build KubeMQ Bridges
       </v-toolbar-title>
     </v-toolbar>
-    <v-card flat style="margin-top: -0px;">
+    <v-card flat style="margin-top: -20px;">
       <div class="d-flex flex-column">
         <div class="d-flex flex-column">
           <div class="">
             <v-toolbar flat color="primary" dense>
-              <v-btn
-                rounded
-                class="secondary--text"
-                color="white"
-                @click="deploy"
-              >
+              <v-btn rounded class="secondary--text" color="white" @click="add">
                 <v-icon left small>
                   fa-plus
                 </v-icon>
-                Add Bridge</v-btn
+                Add a Bridge</v-btn
               >
             </v-toolbar>
           </div>
           <div>
-            Binding List
+            <BridgesList />
           </div>
         </div>
         <div class="d-flex justify-end ma-3">
@@ -58,6 +53,7 @@
             </v-icon>
             Deploy</v-btn
           >
+          <BridgesBindingDlg ref="bindingDlg"></BridgesBindingDlg>
           <ConfirmDlg ref="confirm"></ConfirmDlg>
         </div>
       </div>
@@ -66,12 +62,15 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
+import BridgesList from "@/components/bridges/BridgesList";
+import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
+import { BridgesBinding } from "@/components/bridges/bridges";
 
 export default {
   name: "BridgesPage",
-  components: { ConfirmDlg },
+  components: { BridgesBindingDlg, BridgesList, ConfirmDlg },
   data() {
     return {};
   },
@@ -85,7 +84,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["clearBridgesBindingsList"]),
+    ...mapGetters(["getBridgesBindingNames"]),
+    ...mapMutations(["clearBridgesBindingsList", "addBridgesBinding"]),
     async clearAll() {
       if (
         await this.$refs.confirm.open(
@@ -96,7 +96,16 @@ export default {
         this.clearBridgesBindingsList();
       }
     },
-    deploy: function() {}
+    async add() {
+      let newBinding = new BridgesBinding();
+      await this.$refs.bindingDlg
+        .open(newBinding, this.getBridgesBindingNames(), "add")
+        .then(result => this.addBridgesBinding(result));
+    },
+
+    deploy: function() {
+      this.bindings.forEach(value => console.log(value.GetConfiguration()));
+    }
   }
 };
 </script>

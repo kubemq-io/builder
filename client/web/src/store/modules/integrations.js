@@ -7,7 +7,7 @@ const state = {
   sources: []
 };
 const getters = {
-  getCurrentBindingNames: function() {
+  getIntegrationsBindingNames: function() {
     let list = [];
     state.targets.forEach(value => {
       list.push({ name: value.Name });

@@ -234,7 +234,7 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getCurrentBindingNames"]),
+    ...mapGetters(["getIntegrationsBindingNames"]),
     ...mapMutations([
       "deleteIntegrationsBinding",
       "replaceIntegrationsBinding",

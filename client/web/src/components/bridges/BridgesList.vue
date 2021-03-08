@@ -2,66 +2,82 @@
   <div class="pt-0">
     <v-list two-line>
       <v-subheader>
-        <h3 :class="getColorText('sources', '')">Sources</h3>
+        <h3 class="primary--text">Bridges</h3>
       </v-subheader>
-      <v-card-text v-if="sources.length === 0" class="text-center">
-        <h5 :class="getColorText('sources', ' body-2')">No Integrations</h5>
+      <v-card-text v-if="bindings.length === 0" class="text-center">
+        <h5 class="primary--text body-2">No Bridges</h5>
       </v-card-text>
-      <template v-for="(source, index) in sources">
+      <template v-for="(binding, index) in bindings">
         <v-list-item :key="'c' + index">
           <v-list-item-avatar>
-            <v-avatar :color="getColor('sources', '')" size="35">
+            <v-avatar class="primary" size="35">
               <span class="white--text headline">{{ index + 1 }}</span>
             </v-avatar>
           </v-list-item-avatar>
           <v-list-item-content class="pb-0">
             <v-list-item-title>
-              <h3 :class="getColorText('sources', '')">
-                {{ source.Name }}
+              <h3 class="primary--text">
+                {{ binding.Name }}
               </h3>
             </v-list-item-title>
             <v-list-item-subtitle>
               <div
-                class="d-flex justify-start align-center align-content-center"
+                class="d-flex justify-start align-stretch align-content-center pa-0"
               >
-                <div class="d-flex">
-                  <h3 :class="getColorText('sources', '')">
-                    {{ source.SourceSide.Name }}
-                  </h3>
-                  <div class="pl-3">
-                    <v-chip
-                      x-small
-                      :color="getColorText('sources', '')"
-                      outlined
-                    >
-                      {{ source.SourceSide.Category }}
-                    </v-chip>
+                <v-col class="side pa-0 " cols="5">
+                  <div>
+                    <h3 class="secondary--text">
+                      {{ binding.SourceSide.Type }}
+                    </h3>
                   </div>
-                </div>
-                <div class="pl-4">
-                  <v-list-item-avatar
-                    :color="getColor('sources', '')"
-                    size="15"
-                  >
-                    <v-icon size="10" color="white">
-                      fa-arrow-right
-                    </v-icon>
-                  </v-list-item-avatar>
-                </div>
-                <div class="d-flex">
-                  <h3 class="getColorText('sources', '')">
-                    {{ source.TargetSide.Name }}
-                  </h3>
-                  <div class="pl-2">
-                    <v-chip
-                      x-small
-                      :color="getColorText('sources', '')"
-                      outlined
+                  <div>
+                    <v-chip-group
+                      v-for="(connection,
+                      index) in binding.SourceSide.getConnections()"
+                      :key="'s' + connection + index"
+                      color="secondary"
                     >
-                      {{ source.TargetSide.Category }}
-                    </v-chip>
+                      <v-chip x-small outlined class="ma-1 pa-1">
+                        {{ connection.address }}
+                      </v-chip>
+                      <v-chip x-small outlined class="ma-1 pa-1">
+                        {{ connection.channel }}
+                      </v-chip>
+                    </v-chip-group>
                   </div>
-                </div>
+                </v-col>
+                <v-col
+                  class="d-flex   flex-column justify-center align-center align-content-center pl-0 pr-0"
+                  cols="1"
+                >
+                  <div class="pa-0">
+                    <v-list-item-avatar color="primary" size="20">
+                      <v-icon size="15" color="white">
+                        fa-arrow-right
+                      </v-icon>
+                    </v-list-item-avatar>
+                  </div>
+                </v-col>
+                <v-col class="side pa-0" cols="5">
+                  <h3 class="secondary--text">
+                    {{ binding.TargetSide.Type }}
+                  </h3>
+                  <div>
+                    <v-chip-group
+                      v-for="(connection,
+                      index) in binding.TargetSide.getConnections()"
+                      :key="'t' + connection + index"
+                      color="secondary"
+                    >
+                      <v-chip x-small outlined class="ma-1 pa-1">
+                        {{ connection.address }}
+                      </v-chip>
+                      <v-chip x-small outlined class="ma-1 pa-1">
+                        {{ connection.channel }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
+                </v-col>
               </div>
             </v-list-item-subtitle>
           </v-list-item-content>
@@ -71,8 +87,8 @@
                 <v-icon
                   size="15"
                   class="pr-2"
-                  :color="getColor('source', '')"
-                  @click.stop="cloneIntegration(source)"
+                  color="secondary"
+                  @click.stop="cloneBridge(binding)"
                 >
                   fa-clone
                 </v-icon>
@@ -81,8 +97,8 @@
                 <v-icon
                   size="15"
                   class="pr-2 pl-2"
-                  :color="getColor('source', '')"
-                  @click.stop="editIntegration(source)"
+                  color="secondary"
+                  @click.stop="editIntegration(binding)"
                 >
                   fa-edit
                 </v-icon>
@@ -91,8 +107,8 @@
                 <v-icon
                   size="15"
                   class="pl-2"
-                  :color="getColor('source', '')"
-                  @click.stop="delIntegration(source)"
+                  color="secondary"
+                  @click.stop="delIntegration(binding)"
                 >
                   fa-trash-alt
                 </v-icon>
@@ -103,19 +119,21 @@
         <v-divider :key="'d' + index" inset></v-divider>
       </template>
     </v-list>
-    <v-divider v-if="sources.length === 0" inset></v-divider>
-
+    <v-divider v-if="bindings.length === 0" inset></v-divider>
+    <BridgesBindingDlg ref="bindingDlg"></BridgesBindingDlg>
     <ConfirmDlg ref="confirm"></ConfirmDlg>
   </div>
 </template>
 <script>
 import ConfirmDlg from "@/components/common/ConfirmDlg";
+
 import { mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
+import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
 
 export default {
   name: "BridgesList",
-  components: { ConfirmDlg },
+  components: { BridgesBindingDlg, ConfirmDlg },
   data() {
     return {};
   },
@@ -125,39 +143,37 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getCurrentBindingNames"]),
+    ...mapGetters(["getBridgesBindingNames"]),
     ...mapMutations([
-      "deleteIntegrationsBinding",
-      "replaceIntegrationsBinding",
-      "addIntegrationsBinding"
+      "deleteBridgesBinding",
+      "replaceBridgesBinding",
+      "addBridgesBinding"
     ]),
     async delIntegration(item) {
       if (
         await this.$refs.confirm.open(
           "Confirm",
-          "Are you sure you want to delete this integration?"
+          "Are you sure you want to delete this bridge?"
         )
       ) {
-        this.deleteIntegrationsBinding(item);
+        this.deleteBridgesBinding(item);
       }
     },
     async editIntegration(item) {
       await this.$refs.bindingDlg
-        .open(item, this.getCurrentBindingNames(), "edit")
-        .then(result => this.replaceIntegrationsBinding(result));
+        .open(item, this.getBridgesBindingNames(), "edit")
+        .then(result => this.replaceBridgesBinding(result));
     },
-    cloneIntegration(item) {
+    cloneBridge(item) {
       let clonedItem = lodashLang.cloneDeep(item);
       clonedItem.Name = `${clonedItem.Name}-${makeid(5)}`;
-      this.addIntegrationsBinding({ binding: clonedItem });
+      this.addBridgesBinding({ binding: clonedItem });
     },
     getColor(type, more) {
-      return type === "targets" ? "primary" + more : "secondary" + more;
+      return "primary" + more;
     },
     getColorText(type, more) {
-      return type === "targets"
-        ? "primary--text" + more
-        : "secondary--text" + more;
+      return "primary--text" + more;
     }
   }
 };
@@ -173,28 +189,10 @@ const makeid = function(length) {
 };
 </script>
 
-<style lang="scss" scoped>
-//.container {
-//  border: 1px solid green;
-//}
-//.row {
-//  border: 1px solid red;
-//}
-//.col {
-//  border: 1px solid blue;
-//}
-
-.item {
-  //border-bottom: 1px solid #595a5c;
-
-  &:hover {
-    background-color: rgba(100, 100, 100, 0.1);
-  }
-
-  .item-content {
-    &.complete {
-      text-decoration: line-through;
-    }
-  }
+<style scoped>
+.side {
+  display: flex;
+  flex-direction: column;
+  width: auto;
 }
 </style>

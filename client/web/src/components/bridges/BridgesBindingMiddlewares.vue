@@ -72,12 +72,13 @@
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 import VJsf from "@koumoul/vjsf/lib/VJsf";
-import { IntegrationsBindingMiddlewares } from "@/components/integrations/Integrations";
+import { BridgesBindingMiddlewares } from "@/components/bridges/bridges";
+
 export default {
-  name: "Middlewares",
+  name: "BridgesBindingMiddlewares",
   components: { VJsf },
   props: {
-    config: IntegrationsBindingMiddlewares,
+    config: BridgesBindingMiddlewares,
     show: Boolean
   },
   data: function() {

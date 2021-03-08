@@ -7,14 +7,9 @@ class Integrations {
     let data = [];
     this._connectors.forEach(value => {
       data.push(value);
-      // data.push({
-      //   divider: true,
-      //   inset: true
-      // });
     });
     return data;
   }
-
   getKubeMQSide(type) {
     if (type === "sources") {
       return this._kubemqTargets;
@@ -146,7 +141,6 @@ class IntegrationsBinding {
   get Middlewares() {
     return this._middlewares;
   }
-
   set Middlewares(value) {
     this._middlewares = value;
   }
@@ -160,14 +154,7 @@ class IntegrationsBinding {
   }
 
   get Title() {
-    switch (this.BindingType) {
-      case "integrations":
-        return `${lodashString.upperFirst(this.Mode)} ${
-          this.SourceSide.Name
-        } - ${this.TargetSide.Name} Integration`;
-      default:
-        return `${lodashString.upperFirst(this.Mode)} KubeMQ Bridging`;
-    }
+    return `${this.SourceSide.Name} - ${this.TargetSide.Name} Integration`;
   }
 
   get Name() {
@@ -232,22 +219,12 @@ class IntegrationsBinding {
   }
 
   GetConfiguration() {
-    switch (this.BindingType) {
-      case "integrations":
-        return {
-          name: this._name,
-          properties: this._middlewares.GetConfiguration(),
-          source: this.SourceSide.GetSideConfiguration(false),
-          target: this.TargetSide.GetSideConfiguration(false)
-        };
-      default:
-        return {
-          name: this._name,
-          properties: this._middlewares.GetConfiguration(),
-          sources: this.SourceSide.GetSideConfiguration(true),
-          targets: this.TargetSide.GetSideConfiguration(true)
-        };
-    }
+    return {
+      name: this._name,
+      properties: this._middlewares.getConfiguration(),
+      source: this.SourceSide.GetSideConfiguration(),
+      target: this.TargetSide.GetSideConfiguration()
+    };
   }
 }
 class IntegrationsBindingSide {
@@ -311,23 +288,16 @@ class IntegrationsBindingSide {
     return this._schema;
   }
 
-  GetSideConfiguration(isBridges) {
+  GetSideConfiguration() {
     const sideKind = this._model.kind;
     const sideProperties = lodashObject.omit(this._model, [
       "kind",
       "setDefaults"
     ]);
-    if (isBridges) {
-      return {
-        kind: sideKind,
-        connections: sideProperties
-      };
-    } else {
-      return {
-        kind: sideKind,
-        properties: sideProperties
-      };
-    }
+    return {
+      kind: sideKind,
+      properties: sideProperties
+    };
   }
 
   constructor(side, name, category, schema) {
@@ -374,7 +344,7 @@ class IntegrationsBindingMiddlewares {
     this._rate = value;
   }
 
-  GetConfiguration() {
+  getConfiguration() {
     let config = {
       log_level: undefined,
       retry_attempts: undefined,
@@ -410,13 +380,13 @@ class IntegrationsBindingMiddlewares {
   }
 
   constructor() {
-    this._logging = loggingModel;
-    this._retries = retriesModel;
-    this._rate = rateLimiterModel;
+    this._logging = integrationsLoggingModel;
+    this._retries = integrationsRetriesModel;
+    this._rate = integrationsRateLimiterModel;
   }
 }
 
-let loggingModel = {
+let integrationsLoggingModel = {
   Schema: {
     "x-class": "vjsf",
     properties: {
@@ -432,7 +402,7 @@ let loggingModel = {
   Model: {},
   IsValid: false
 };
-let retriesModel = {
+let integrationsRetriesModel = {
   Schema: {
     type: "object",
     title: "Select Retries Mode",
@@ -495,7 +465,7 @@ let retriesModel = {
   },
   IsValid: false
 };
-let rateLimiterModel = {
+let integrationsRateLimiterModel = {
   Schema: {
     type: "object",
     title: "Select Rate Limiter Mode",
