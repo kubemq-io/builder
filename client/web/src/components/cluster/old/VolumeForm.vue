@@ -1,7 +1,14 @@
 <template>
-  <v-form ref="form-cluster-volume" v-model="valid">
-    <v-jsf v-model="model" :schema="schema" :options="options" />
-  </v-form>
+  <v-card>
+    <v-toolbar-title dense class="secondary white--text body-2 pa-2">
+      External Persistent Volume
+    </v-toolbar-title>
+    <v-card-text>
+      <v-form ref="form-cluster-volume" v-model="valid">
+        <v-jsf v-model="model" :schema="schema" :options="options" />
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -31,7 +38,6 @@ const defaultSchema = {
   oneOf: [
     {
       title: "No Persistent Volume",
-      "x-cols": 6,
       properties: {
         volumeSchemaKey: {
           type: "string",
@@ -43,7 +49,6 @@ const defaultSchema = {
       title: "Set Persistent Volume Claims",
       required: ["size", "storageClass"],
       properties: {
-        "x-cols": 6,
         volumeSchemaKey: {
           type: "string",
           const: "withVolume"
@@ -53,17 +58,13 @@ const defaultSchema = {
           title: "Volume Size (Gi)",
           description: "volume size in Gi units",
           default: 1,
-          minimum: 1,
-          "x-cols": 6,
-          "x-class": "pr-2"
+          minimum: 1
         },
         storageClass: {
           type: "string",
           title: "Storage Class",
           description: "Set storage class type",
-          default: "default",
-          "x-cols": 6,
-          "x-class": "pl-2"
+          default: "default"
         }
       }
     }

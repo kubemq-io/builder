@@ -8,7 +8,7 @@
       elevation-1
     >
       <v-toolbar-title class="white--text text-h4 pa-2 ">
-        Build KubeMQ Bridges
+        Build KubeMQ Clusters
       </v-toolbar-title>
     </v-toolbar>
     <v-card flat style="margin-top: -20px;">
@@ -20,17 +20,17 @@
                 <v-icon left small>
                   fa-plus
                 </v-icon>
-                Bridge</v-btn
+                Cluster</v-btn
               >
             </v-toolbar>
           </div>
           <div>
-            <BridgesList />
+            <ClustersList />
           </div>
         </div>
         <div class="d-flex justify-end ma-3">
           <v-btn
-            :disabled="!hasBridges"
+            :disabled="!hasClusters"
             rounded
             text
             color="secondary"
@@ -42,7 +42,7 @@
             Clear All</v-btn
           >
           <v-btn
-            :disabled="!hasBridges"
+            :disabled="!hasClusters"
             rounded
             outlined
             color="primary"
@@ -53,7 +53,7 @@
             </v-icon>
             Deploy</v-btn
           >
-          <BridgesBindingDlg ref="bindingDlg"></BridgesBindingDlg>
+          <ClusterConfigDlg ref="clusterDlg"></ClusterConfigDlg>
           <ConfirmDlg ref="confirm"></ConfirmDlg>
         </div>
       </div>
@@ -64,47 +64,47 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
-import BridgesList from "@/components/bridges/BridgesList";
-import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
-import { BridgesBinding } from "@/components/bridges/bridges";
+import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
+import ClusterConfigDlg from "@/components/cluster/ClusterConfigDlg";
+import ClustersList from "@/components/cluster/ClustersList";
 
 export default {
-  name: "BridgesPage",
-  components: { BridgesBindingDlg, BridgesList, ConfirmDlg },
+  name: "ClustersPage",
+  components: { ClustersList, ClusterConfigDlg, ConfirmDlg },
   data() {
     return {};
   },
   computed: {
-    bindings: function() {
-      return this.$store.state.bridges.bindings;
+    clusters: function() {
+      return this.$store.state.clusters.clusters;
     },
 
-    hasBridges: function() {
-      return this.bindings.length > 0;
+    hasClusters: function() {
+      return this.clusters.length > 0;
     }
   },
   methods: {
-    ...mapGetters(["getBridgesBindingNames"]),
-    ...mapMutations(["clearBridgesBindingsList", "addBridgesBinding"]),
+    ...mapGetters(["getClustersNames"]),
+    ...mapMutations(["clearClustersList", "addCluster"]),
     async clearAll() {
       if (
         await this.$refs.confirm.open(
           "Confirm",
-          "Are you sure you want to delete all bridges connections?"
+          "Are you sure you want to delete all clusters?"
         )
       ) {
-        this.clearBridgesBindingsList();
+        this.clearClustersList();
       }
     },
     async add() {
-      let newBinding = new BridgesBinding();
-      await this.$refs.bindingDlg
-        .open(newBinding, this.getBridgesBindingNames(), "add")
-        .then(result => this.addBridgesBinding(result));
+      let newCluster = new ClusterConfig();
+      await this.$refs.clusterDlg
+        .open(newCluster, this.getClustersNames(), "add")
+        .then(result => this.addCluster(result));
     },
 
     deploy: function() {
-      this.bindings.forEach(value => console.log(value.GetConfiguration()));
+      this.clusters.forEach(value => console.log(value));
     }
   }
 };

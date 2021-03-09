@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import cluster from "@/store/modules/cluster";
+import ClustersModule from "@/store/modules/clusters";
 import BridgesModule from "@/store/modules/bridges";
 import IntegrationsModule from "@/store/modules/integrations";
 // import Go from "@/wasm_exec";
@@ -21,7 +21,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    cluster,
+    clusters: ClustersModule,
     integrations: IntegrationsModule,
     bridges: BridgesModule
   }

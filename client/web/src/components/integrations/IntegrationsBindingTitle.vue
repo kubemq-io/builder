@@ -1,7 +1,7 @@
 <template>
   <v-toolbar color="primary" flat dense>
     <v-toolbar-title class="text-body-3 font-weight-bold white--text pl-2">
-      {{ modeTitle }} {{ binding.Title }}
+      {{ modeTitle }} {{ cluster.Title }}
     </v-toolbar-title>
   </v-toolbar>
 </template>

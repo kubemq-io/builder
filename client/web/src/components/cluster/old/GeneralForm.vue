@@ -1,7 +1,14 @@
 <template>
-  <v-form ref="form-cluster-general" v-model="valid">
-    <v-jsf v-model="model" :schema="schema" :options="options" />
-  </v-form>
+  <v-card flat>
+    <v-toolbar-title dense class="secondary white--text body-2 pa-2">
+      General
+    </v-toolbar-title>
+    <v-card-text>
+      <v-form ref="form-cluster-general" v-model="valid">
+        <v-jsf v-model="model" :schema="schema" :options="options" />
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -29,48 +36,30 @@ const defaultOptions = {};
 const defaultSchema = {
   title: "General",
   type: "object",
-  required: [
-    "clusterName",
-    "clusterNamespace",
-    "clusterReplicas",
-    "clusterMode",
-    "licenseKey"
-  ],
+  required: ["clusterReplicas", "clusterMode", "licenseKey"],
   properties: {
-    clusterName: {
+    licenseKey: {
       type: "string",
-      title: "Cluster Name",
-      default: "kubemq-cluster",
-      "x-cols": 6,
-      "x-class": "pr-2"
-    },
-    clusterNamespace: {
-      type: "string",
-      title: "Cluster Namespace",
-      default: "kubemq",
-      "x-cols": 6,
+      title: "Key",
+      default: "",
+      "x-cols": 8,
       "x-class": "pl-2"
     },
     clusterReplicas: {
       type: "integer",
-      title: "Cluster Replicas",
+      title: "Replicas",
       default: 3,
       minimum: 1,
-      "x-cols": 6,
-      "x-class": "pr-2"
+      "x-cols": 2,
+      "x-class": "pl-2 pr-2"
     },
     clusterMode: {
       type: "string",
-      title: "Cluster Mode",
+      title: "Mode",
       default: "Grouped",
       enum: ["Grouped", "Standalone"],
-      "x-cols": 6,
+      "x-cols": 2,
       "x-class": "pl-2"
-    },
-    licenseKey: {
-      type: "string",
-      title: "License Key",
-      default: "key"
     }
   }
 };

@@ -1,9 +1,5 @@
 <template>
   <v-card class="my-auto">
-    <v-toolbar color="light-green mb-2" dark>
-      <v-toolbar-title>Configure KubeMQ Server</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
     <v-row justify="center">
       <ClusterGeneralSection />
     </v-row>
@@ -35,8 +31,8 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import ClusterGeneralSection from "@/components/cluster/GeneralSection";
-import ClusterAdvancedSection from "@/components/cluster/AdvancedSection";
+import ClusterGeneralSection from "@/components/cluster/old/GeneralSection";
+import ClusterAdvancedSection from "@/components/cluster/old/AdvancedSection";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "ClusterConfig",

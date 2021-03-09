@@ -1,13 +1,13 @@
 <template>
-  <v-container>
+  <v-card class="container">
     <ClusterGeneral />
-  </v-container>
+  </v-card>
 </template>
 
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import ClusterGeneral from "@/components/cluster/GeneralForm";
+import ClusterGeneral from "@/components/cluster/old/GeneralForm";
 
 export default {
   name: "ClusterGeneralSection",

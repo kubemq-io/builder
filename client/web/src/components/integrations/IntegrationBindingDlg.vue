@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable persistent width="960px">
     <v-card rounded>
-      <IntegrationsBindingTitle :binding="bindingModel" :mode="mode" />
+      <DialogTitle :title="bindingModel.Title" :mode="mode" />
       <v-card-text>
         <v-card flat tile>
           <v-card-title class="pa-0">
@@ -97,16 +97,16 @@ import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 import IntegrationsBindingMiddlewares from "@/components/integrations/IntegrationsBindingMiddlewares";
 import IntegrationsBindingProperties from "@/components/integrations/IntegrationsBindingsProperties";
-import IntegrationsBindingTitle from "@/components/integrations/IntegrationsBindingTitle";
 import { mapMutations, mapGetters } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 import { IntegrationsBinding } from "@/components/integrations/Integrations";
+import DialogTitle from "@/components/common/DialogTitle";
 
 export default {
   name: "IntegrationsBindingDlg",
   components: {
-    IntegrationsBindingTitle,
+    DialogTitle,
     IntegrationsBindingProperties,
     IntegrationsBindingMiddlewares
   },

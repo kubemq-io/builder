@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable persistent width="960px">
     <v-card rounded>
-      <BridgesBindingTitle :binding="bindingModel" :mode="mode" />
+      <DialogTitle title="KubeMQ Bridge" :mode="mode" />
       <v-card-text>
         <v-card flat tile>
           <v-card-title class="pa-0">
@@ -74,7 +74,8 @@
               outlined
               rounded
               @click="submit"
-              >Add</v-btn
+            >
+              Add</v-btn
             >
             <v-btn
               color="primary"
@@ -96,20 +97,20 @@
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 
-import BridgesBindingTitle from "@/components/bridges/BridgesBindingTitle";
 import { mapMutations, mapGetters } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 import { BridgesBinding } from "@/components/bridges/bridges";
 import BridgesBindingProperties from "@/components/bridges/BridgesBindingsProperties";
 import BridgesBindingMiddlewares from "@/components/bridges/BridgesBindingMiddlewares";
+import DialogTitle from "@/components/common/DialogTitle";
 
 export default {
   name: "BridgesBindingDlg",
   components: {
+    DialogTitle,
     BridgesBindingMiddlewares,
-    BridgesBindingProperties,
-    BridgesBindingTitle
+    BridgesBindingProperties
   },
   data: function() {
     return {

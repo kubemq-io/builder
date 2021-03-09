@@ -2,7 +2,7 @@
   <div class="pt-0">
     <v-list two-line>
       <v-subheader>
-        <h3 class="primary--text">Bridges</h3>
+        <h3 class="primary--text">BRIDGES</h3>
       </v-subheader>
       <v-card-text v-if="bindings.length === 0" class="text-center">
         <h5 class="primary--text body-2">No Bridges</h5>

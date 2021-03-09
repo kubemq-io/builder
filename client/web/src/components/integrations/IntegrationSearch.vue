@@ -6,7 +6,7 @@
         v-model="selectedItem"
         :items="connectors"
         :filter="customFilter"
-        label="Add an integration..."
+        label="INTEGRATION"
         solo
         @change="add"
         flat
@@ -14,7 +14,7 @@
         cache-items
         hide-details
         color="primary"
-        prepend-inner-icon="fa-search-plus"
+        prepend-inner-icon="fa-plus"
       >
         <template v-slot:selection="data">
           <v-list-item dense class="pa-0">

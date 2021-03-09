@@ -1,15 +1,15 @@
 <template>
   <v-toolbar color="primary" flat dense>
     <v-toolbar-title class="text-body-3 font-weight-bold white--text pl-2">
-      {{ modeTitle }} KubeMQ Bridge
+      {{ modeTitle }} {{ title }}
     </v-toolbar-title>
   </v-toolbar>
 </template>
 <script>
 export default {
-  name: "BridgesBindingTitle",
+  name: "DialogTitle",
   props: {
-    binding: {},
+    title: String,
     mode: String
   },
   computed: {

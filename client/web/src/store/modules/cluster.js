@@ -117,8 +117,8 @@ const clusterState = {
   }
 };
 const getters = {
-  // getGeneralModel: state => state.clusterConfig.generalModel,
-  // getAuthenticationModel: state => state.clusterConfig.authenticationModel,
+  // getGeneralModel: state => state.clusterModel.generalModel,
+  // getAuthenticationModel: state => state.clusterModel.authenticationModel,
   configToShowCluster: state => {
     return JSON.stringify(state.clusterConfig, null, "\t");
   }
@@ -126,7 +126,7 @@ const getters = {
 const actions = {};
 const mutations = {
   // setAuthenticationModel: (state, authenticationModel) => {
-  //   //   state.clusterConfig.authenticationModel = authenticationModel;
+  //   //   state.clusterModel.authenticationModel = authenticationModel;
   //   // }
 };
 

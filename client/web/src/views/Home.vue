@@ -1,5 +1,6 @@
 <template>
   <v-main app>
+    <ClusterPage />
     <BridgesPage />
     <IntegrationsPage />
   </v-main>
@@ -7,10 +8,11 @@
 
 <script>
 import BridgesPage from "@/components/bridges/BridgesPage";
+import ClusterPage from "@/components/cluster/ClusterPage";
 import IntegrationsPage from "@/components/integrations/IntegrationsPage";
 export default {
   name: "Home",
-  components: { IntegrationsPage, BridgesPage },
+  components: { IntegrationsPage, ClusterPage, BridgesPage },
   data: function() {
     return {
       valid: false
