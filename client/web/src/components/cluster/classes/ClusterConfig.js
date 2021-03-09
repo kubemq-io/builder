@@ -1,26 +1,26 @@
-import { ClusterBaseConfig } from "@/components/cluster/classes/ClusterBaseConfig";
+import { ClusterBasicConfig } from "@/components/cluster/classes/ClusterBasicConfig";
 
 class ClusterConfig {
   get name() {
-    return `${this.base.clusterName}/${this.base.clusterNamespace}`;
+    return `${this.basic.clusterName}/${this.basic.clusterNamespace}`;
   }
   get clusterName() {
-    return this.base.clusterName;
+    return this.basic.clusterName;
   }
 
   set clusterName(value) {
-    this.base.clusterName = value;
+    this.basic.clusterName = value;
   }
 
-  get base() {
-    return this._base;
+  get basic() {
+    return this._basic;
   }
 
-  set base(value) {
-    this._base = value;
+  set basic(value) {
+    this._basic = value;
   }
   constructor() {
-    this._base = new ClusterBaseConfig();
+    this._basic = new ClusterBasicConfig();
   }
 }
 

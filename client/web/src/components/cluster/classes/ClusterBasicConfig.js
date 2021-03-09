@@ -1,6 +1,6 @@
 import { ClusterConfigItem } from "@/components/cluster/classes/ClusterConfigItem";
 
-class ClusterBaseConfig extends ClusterConfigItem {
+class ClusterBasicConfig extends ClusterConfigItem {
   get clusterName() {
     return this.model.clusterName;
   }
@@ -43,7 +43,7 @@ class ClusterBaseConfig extends ClusterConfigItem {
 
   constructor() {
     super()
-      .setName("Base")
+      .setName("Basic")
       .setSchema(clusterBaseSchema)
       .setModel(clusterBaseModel);
   }
@@ -100,4 +100,4 @@ const clusterBaseSchema = {
     }
   }
 };
-export { ClusterBaseConfig };
+export { ClusterBasicConfig };
