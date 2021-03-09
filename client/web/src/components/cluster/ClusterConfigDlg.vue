@@ -6,7 +6,12 @@
         <ClusterConfigItemCard
           :config="cluster.basic"
           title="Basic"
+          :show="show"
         ></ClusterConfigItemCard>
+        <v-expansion-panels>
+          <ClusterInterfacesPanel :cluster="cluster" :show="show" />
+          <ClusterAccessControlPanel :cluster="cluster" :show="show" />
+        </v-expansion-panels>
         <v-row justify="end" align-content="center" align="center" class="pa-2">
           <div class="pa-2">
             <v-btn color="primary" text rounded @click.native="cancel"
@@ -43,16 +48,23 @@
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 
-import { mapMutations, mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 import DialogTitle from "@/components/common/DialogTitle";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
+import ClusterInterfacesPanel from "@/components/cluster/ClusterInterfacesPanel";
 import ClusterConfigItemCard from "@/components/cluster/ClusterConfigItemCard";
+import ClusterAccessControlPanel from "@/components/cluster/ClusterAccessControlPanel";
 
 export default {
   name: "ClusterConfigDlg",
-  components: { ClusterConfigItemCard, DialogTitle },
+  components: {
+    ClusterAccessControlPanel,
+    ClusterConfigItemCard,
+    ClusterInterfacesPanel,
+    DialogTitle
+  },
   data: function() {
     return {
       cluster: new ClusterConfig(),

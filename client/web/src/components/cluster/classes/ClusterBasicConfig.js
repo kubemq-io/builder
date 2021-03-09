@@ -22,6 +22,7 @@ class ClusterBasicConfig extends ClusterConfigItem {
   }
 
   set licenseKey(value) {
+    console.log("asd");
     this.model.licenseKey = value;
   }
 

@@ -66,7 +66,7 @@ class ClusterConfigItem {
     this._model = {};
     this._schema = {};
     this._options = {};
-    this._isValid = false;
+    this._isValid = true;
   }
 }
 

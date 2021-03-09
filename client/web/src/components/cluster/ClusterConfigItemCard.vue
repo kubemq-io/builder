@@ -1,16 +1,17 @@
 <template>
   <v-card elevation="1" class="pa-0 ">
     <v-card-title class="pa-0 pb-2">
-      <v-list-item-avatar color="primary" size="25">
-        <span class="white--text">{{ initial }}</span>
+      <v-list-item-avatar color="primary" size="20">
+        <span class="white--text body-2">{{ initial }}</span>
       </v-list-item-avatar>
-      <h5 class="secondary--text">
+      <h6 class="secondary--text">
         {{ title }}
-      </h5>
+      </h6>
     </v-card-title>
     <v-card-text>
-      <v-form :ref="getRef" v-model="config.isValid">
+      <v-form v-if="toShow" ref="form" v-model="config.isValid">
         <v-jsf
+          @change="validateForm"
           v-model="config.model"
           :schema="config.schema"
           :options="config.options"
@@ -30,20 +31,39 @@ export default {
   components: { VJsf },
   props: {
     title: String,
-    config: ClusterConfigItem
+    config: ClusterConfigItem,
+    show: Boolean
   },
   data: function() {
     return {};
   },
+
   computed: {
-    getRef: function() {
-      return `cluster-${this.title}-card`;
-    },
     initial: function() {
       return this.title.charAt(0).toUpperCase();
+    },
+    toShow: function() {
+      return this.show;
+    }
+  },
+  methods: {
+    validateForm() {
+      this.$nextTick(() => {
+        this.$refs.form.validate();
+      });
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/*.container {*/
+/*  border: 1px solid green;*/
+/*}*/
+/*.row {*/
+/*  border: 1px solid red;*/
+/*}*/
+/*.col {*/
+/*  border: 1px solid blue;*/
+/*}*/
+</style>
