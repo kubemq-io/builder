@@ -1,19 +1,47 @@
 <template>
   <v-card flat>
-    <v-toolbar color="primary" extended plat>
+    <v-toolbar color="primary" extended flat extension-height="0px">
       <v-toolbar-title class="white--text text-capitalize">
         Configure KubeMQ {{ type }}
       </v-toolbar-title>
     </v-toolbar>
-
-    <v-card flat style="margin-top: -64px;">
+    <v-card flat>
       <div class="d-flex flex-column ">
-        <div>
-          <IntegrationSearch :type="type" />
+        <div class="col-12 pb-0">
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="deploymentName"
+                label="Deployment Name"
+                :rules="rules"
+                hide-details="auto"
+                color="secondary"
+                ref="deploymentName"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                label="Deployment Namespace"
+                v-model="deploymentNamespace"
+                :rules="rules"
+                hide-details="auto"
+                color="secondary"
+                ref="deploymentNamespace"
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </div>
-        <div class="flex-grow-1 ">
-          <IntegrationList :type="type"></IntegrationList>
+        <div class="pa-1">
+          <v-subheader>
+            <h3 class="secondary--text font-weight-bold text-capitalize">
+              {{ type }}
+            </h3>
+            <IntegrationSearch :type="type" />
+          </v-subheader>
         </div>
+
+        <IntegrationList :type="type"></IntegrationList>
+
         <div class="d-flex justify-end ma-3">
           <v-btn
             :disabled="!hasIntegration"
@@ -59,7 +87,11 @@ export default {
     type: String
   },
   data() {
-    return {};
+    return {
+      deploymentName: `kubemq-${this.type}`,
+      deploymentNamespace: "kubemq",
+      rules: [value => !!value || "Required"]
+    };
   },
   created() {
     this.loadIntegrations();

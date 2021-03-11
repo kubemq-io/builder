@@ -1,29 +1,48 @@
 <template>
   <v-card flat>
-    <v-toolbar flat color="primary" extended>
+    <v-toolbar flat color="primary" extended extension-height="0px">
       <v-toolbar-title class="white--text ">
         Configure KubeMQ Bridges
       </v-toolbar-title>
     </v-toolbar>
-    <v-card flat style="margin-top: -20px;">
+    <v-card flat style="margin-top: -00px;">
       <div class="d-flex flex-column">
         <div class="d-flex flex-column">
-          <div class="">
-            <v-fab-transition>
-              <v-btn
-                color="secondary"
-                fab
-                x-small
-                absolute
-                top
-                left
-                @click="add"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </v-fab-transition>
+          <div class="col-12 pb-0">
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="deploymentName"
+                  label="Deployment Name"
+                  :rules="rules"
+                  hide-details="auto"
+                  color="secondary"
+                  ref="deploymentName"
+                ></v-text-field>
+              </v-col>
+              <v-col>
+                <v-text-field
+                  label="Deployment Namespace"
+                  v-model="deploymentNamespace"
+                  :rules="rules"
+                  hide-details="auto"
+                  color="secondary"
+                  ref="deploymentNamespace"
+                ></v-text-field>
+              </v-col>
+            </v-row>
           </div>
-          <div>
+          <div class="pa-1">
+            <v-subheader>
+              <h3 class="secondary--text font-weight-bold pr-1">Bridges</h3>
+              <v-fab-transition>
+                <v-btn color="secondary" fab x-small @click="add">
+                  <v-icon>fa-plus</v-icon>
+                </v-btn>
+              </v-fab-transition>
+            </v-subheader>
+            <v-divider inset></v-divider>
+
             <BridgesList />
           </div>
         </div>
@@ -71,7 +90,11 @@ export default {
   name: "BridgesPage",
   components: { BridgesBindingDlg, BridgesList, ConfirmDlg },
   data() {
-    return {};
+    return {
+      deploymentName: "kubemq-bridges",
+      deploymentNamespace: "kubemq",
+      rules: [value => !!value || "Required"]
+    };
   },
   computed: {
     bindings: function() {
@@ -113,10 +136,10 @@ export default {
 /*.container {*/
 /*  border: 1px solid green;*/
 /*}*/
-.row {
-  border: 1px solid red;
-}
-.col {
-  border: 1px solid blue;
-}
+/*.row {*/
+/*  border: 1px solid red;*/
+/*}*/
+/*.col {*/
+/*  border: 1px solid blue;*/
+/*}*/
 </style>

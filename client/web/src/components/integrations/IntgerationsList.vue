@@ -1,28 +1,26 @@
 <template>
   <div class="pt-0">
     <v-list two-line>
-      <v-subheader>
-        <h3 class="primary--text text-capitalize ">{{ type }}</h3>
-      </v-subheader>
-      <v-divider inset></v-divider>
-      <v-card min-height="50vh" flat v-if="integrations.length === 0">
+      <v-card min-height="45vh" flat v-if="integrations.length === 0">
         <v-card-text class="pa-15">
           <v-container class="text-center">
-            <span class="primary--text subtitle-1">No Integration</span>
+            <span class="secondary--text subtitle-1 font-weight-medium"
+              >No Integration</span
+            >
           </v-container>
         </v-card-text>
       </v-card>
-      <v-card min-height="50vh" v-if="integrations.length !== 0" flat tile>
+      <v-card min-height="45vh" v-if="integrations.length !== 0" flat tile>
         <template v-for="(integration, index) in integrations">
           <v-list-item :key="'c' + index">
             <v-list-item-avatar>
-              <v-avatar color="primary" size="35">
+              <v-avatar color="secondary" size="35">
                 <span class="white--text headline">{{ index + 1 }}</span>
               </v-avatar>
             </v-list-item-avatar>
             <v-list-item-content class="pb-0">
               <v-list-item-title>
-                <h3 class="primary--text">
+                <h3 class="secondary--text">
                   {{ integration.Name }}
                 </h3>
               </v-list-item-title>
@@ -35,13 +33,13 @@
                       {{ integration.SourceSide.Name }}
                     </h3>
                     <div>
-                      <v-chip x-small color="secondary" outlined>
+                      <v-chip x-small color="primary" outlined>
                         {{ integration.SourceSide.Category }}
                       </v-chip>
                     </div>
                   </div>
                   <div class="col-1 pa-0">
-                    <v-list-item-avatar color="primary" size="20">
+                    <v-list-item-avatar color="secondary" size="20">
                       <v-icon size="15" color="white">
                         fa-arrow-right
                       </v-icon>
@@ -52,7 +50,7 @@
                       {{ integration.TargetSide.Name }}
                     </h3>
                     <div>
-                      <v-chip x-small color="secondary" outlined>
+                      <v-chip x-small color="primary" outlined>
                         {{ integration.TargetSide.Category }}
                       </v-chip>
                     </div>
@@ -61,9 +59,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action class="ma-0">
-              <div
-                class="d-flex justify-start align-center align-content-center"
-              >
+              <div class="d-flex justify-end align-end align-content-end pt-5">
                 <div>
                   <v-btn icon>
                     <v-icon

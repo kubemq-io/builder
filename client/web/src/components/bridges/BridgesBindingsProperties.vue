@@ -35,7 +35,7 @@
         <v-card-title class="pa-0 pb-2">
           <v-list-item-avatar>
             <v-avatar color="primary" size="25">
-              <span class="white--text">T</span>
+              <span class="white--text headline">T</span>
             </v-avatar>
           </v-list-item-avatar>
           <h5 class="secondary--text">

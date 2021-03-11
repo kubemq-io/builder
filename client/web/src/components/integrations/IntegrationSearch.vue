@@ -1,87 +1,74 @@
 <template>
-  <div class="d-flex">
-    <v-toolbar color="primary" dense flat tile>
-      <v-toolbar-title>
-        <v-autocomplete
-          dense
-          ref="autocomplete"
-          v-model="selectedItem"
-          :items="connectors"
-          :filter="customFilter"
-          solo
-          @change="add"
-          flat
-          rounded
-          cache-items
-          no-data-text="No integrations were found for this query"
-          hide-details
-          append-icon=""
-          color="primary"
-        >
-          <template v-slot:prepend-inner>
-            <v-fab-transition>
-              <v-btn color="secondary" fab small @click="onFocus">
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </v-fab-transition>
-          </template>
-          <template v-slot:selection="data">
-            <v-list-item dense class="pa-0">
-              <v-list-item-avatar color="primary" size="25">
-                <span class="white--text">{{ data.item.getInitial() }}</span>
-              </v-list-item-avatar>
-              <v-list-item-content class="pa-0">
-                <v-list-item-title>
-                  <h4 class="secondary--text font-weight-bold pr-2">
-                    {{ data.item.name }}
-                  </h4>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-          <template v-slot:item="data">
-            <v-list>
-              <v-list-item dense class="pa-0">
-                <v-list-item-avatar>
-                  <v-avatar :color="getColor()" size="35">
-                    <span class="white--text text-h6">{{
-                      data.item.getInitial()
-                    }}</span>
-                  </v-avatar>
-                </v-list-item-avatar>
+  <div class="d-flex col-10">
+    <v-autocomplete
+      dense
+      ref="autocomplete"
+      v-model="selectedItem"
+      :items="connectors"
+      :filter="customFilter"
+      @change="add"
+      flat
+      rounded
+      cache-items
+      no-data-text="No integrations were found for this query"
+      hide-details
+      append-icon=""
+      placeholder="Add integration"
+      prepend-inner-icon="fa-plus"
+      filled
+    >
+      <template v-slot:selection="data">
+        <v-list-item dense class="pa-0">
+          <v-list-item-avatar color="primary" size="25">
+            <span class="white--text">{{ data.item.getInitial() }}</span>
+          </v-list-item-avatar>
+          <v-list-item-content class="pa-0">
+            <v-list-item-title>
+              <h4 class="secondary--text font-weight-bold pr-2">
+                {{ data.item.name }}
+              </h4>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+      <template v-slot:item="data">
+        <v-list>
+          <v-list-item dense class="pa-0">
+            <v-list-item-avatar>
+              <v-avatar color="secondary" size="35">
+                <span class="white--text headline">{{
+                  data.item.getInitial()
+                }}</span>
+              </v-avatar>
+            </v-list-item-avatar>
 
-                <v-list-item-content class="pa-0">
-                  <v-list-item-title>
-                    <h3 :class="getColorText('')">
-                      {{ data.item.title }}
-                    </h3>
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    <span :class="getColorText(' text-capitalize')">{{
-                      data.item.type
-                    }}</span>
-                  </v-list-item-subtitle>
-                  <v-list-item-subtitle>
-                    <v-chip-group>
-                      <v-chip
-                        v-for="(tag, index) in data.item.tags"
-                        :key="'b' + tag + index"
-                        x-small
-                        :color="getColor()"
-                        outlined
-                      >
-                        {{ tag }}
-                      </v-chip>
-                    </v-chip-group>
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </template>
-        </v-autocomplete>
-      </v-toolbar-title>
-    </v-toolbar>
-
+            <v-list-item-content class="pa-0">
+              <v-list-item-title>
+                <h3 class="secondary--text">
+                  {{ data.item.title }}
+                </h3>
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                <span class="econdary--text">{{ data.item.type }}</span>
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                <v-chip-group>
+                  <v-chip
+                    v-for="(tag, index) in data.item.tags"
+                    :key="'b' + tag + index"
+                    x-small
+                    color="primary"
+                    outlined
+                  >
+                    {{ tag }}
+                  </v-chip>
+                </v-chip-group>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
+    </v-autocomplete>
     <IntegrationsBindingDlg ref="bindingDlg"></IntegrationsBindingDlg>
   </div>
 </template>

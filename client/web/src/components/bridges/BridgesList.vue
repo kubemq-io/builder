@@ -1,28 +1,26 @@
 <template>
   <div class="pt-0">
     <v-list two-line>
-      <v-subheader>
-        <h3 class="primary--text">Bridges</h3>
-      </v-subheader>
-      <v-divider inset></v-divider>
-      <v-card min-height="50vh" v-if="bindings.length === 0" flat>
+      <v-card min-height="45vh" v-if="bindings.length === 0" flat>
         <v-card-text class="pa-15">
           <v-container class="text-center">
-            <span class="primary--text subtitle-1">No Bridges</span>
+            <span class="secondary--text subtitle-1 font-weight-medium"
+              >No Bridges</span
+            >
           </v-container>
         </v-card-text>
       </v-card>
-      <v-card min-height="50vh" v-if="bindings.length !== 0" flat tile>
+      <v-card min-height="45vh" v-if="bindings.length !== 0" flat tile>
         <template v-for="(binding, index) in bindings">
           <v-list-item :key="'c' + index">
             <v-list-item-avatar>
-              <v-avatar class="primary" size="35">
+              <v-avatar class="secondary" size="35">
                 <span class="white--text headline">{{ index + 1 }}</span>
               </v-avatar>
             </v-list-item-avatar>
             <v-list-item-content class="pb-0">
               <v-list-item-title>
-                <h3 class="primary--text">
+                <h3 class="secondary--text">
                   {{ binding.Name }}
                 </h3>
               </v-list-item-title>
@@ -32,7 +30,7 @@
                 >
                   <v-col class="side pa-0 " cols="5">
                     <div>
-                      <h3 class="secondary--text">
+                      <h3 class="secondary-text">
                         {{ binding.SourceSide.Type }}
                       </h3>
                     </div>
@@ -41,12 +39,11 @@
                         v-for="(connection,
                         index) in binding.SourceSide.getConnections()"
                         :key="'s' + connection + index"
-                        color="secondary"
                       >
-                        <v-chip x-small outlined class="my-0">
+                        <v-chip color="primary" x-small outlined class="my-0">
                           {{ connection.address }}
                         </v-chip>
-                        <v-chip x-small outlined class="my-0">
+                        <v-chip color="primary" x-small outlined class="my-0">
                           {{ connection.channel }}
                         </v-chip>
                       </v-chip-group>
@@ -57,7 +54,7 @@
                     class="d-flex   flex-column justify-center align-center align-content-center pa-0"
                     cols="1"
                   >
-                    <v-list-item-avatar color="primary" size="20">
+                    <v-list-item-avatar color="secondary" size="20">
                       <v-icon size="15" color="white">
                         fa-arrow-right
                       </v-icon>
@@ -72,12 +69,12 @@
                         v-for="(connection,
                         index) in binding.TargetSide.getConnections()"
                         :key="'t' + connection + index"
-                        color="secondary"
+                        color="primary"
                       >
-                        <v-chip x-small outlined class="my-0">
+                        <v-chip color="primary" x-small outlined class="my-0">
                           {{ connection.address }}
                         </v-chip>
-                        <v-chip x-small outlined class="my-0">
+                        <v-chip color="primary" x-small outlined class="my-0">
                           {{ connection.channel }}
                         </v-chip>
                       </v-chip-group>
@@ -87,9 +84,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action class="ma-0">
-              <div
-                class="d-flex justify-start align-center align-content-center"
-              >
+              <div class="d-flex justify-end align-end align-content-end pt-5">
                 <v-btn icon>
                   <v-icon
                     size="15"
