@@ -37,7 +37,9 @@ class ClusterBasicConfig extends ClusterConfigItem {
   get mode() {
     return this.model.mode;
   }
-
+  getHasConfigured() {
+    return false;
+  }
   set mode(value) {
     this.model.mode = value;
   }

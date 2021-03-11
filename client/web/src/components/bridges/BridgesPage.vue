@@ -1,28 +1,27 @@
 <template>
-  <v-card class="ma-10">
-    <v-toolbar
-      flat
-      color="primary"
-      extended
-      extension-height="15px"
-      elevation-1
-    >
-      <v-toolbar-title class="white--text text-h4 pa-2 ">
-        Build KubeMQ Bridges
+  <v-card flat>
+    <v-toolbar flat color="primary" extended>
+      <v-toolbar-title class="white--text ">
+        Configure KubeMQ Bridges
       </v-toolbar-title>
     </v-toolbar>
     <v-card flat style="margin-top: -20px;">
       <div class="d-flex flex-column">
         <div class="d-flex flex-column">
           <div class="">
-            <v-toolbar flat color="primary" dense>
-              <v-btn rounded class="secondary--text" color="white" @click="add">
-                <v-icon left small>
-                  fa-plus
-                </v-icon>
-                Bridge</v-btn
+            <v-fab-transition>
+              <v-btn
+                color="secondary"
+                fab
+                x-small
+                absolute
+                top
+                left
+                @click="add"
               >
-            </v-toolbar>
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </v-fab-transition>
           </div>
           <div>
             <BridgesList />

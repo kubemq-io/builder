@@ -8,7 +8,7 @@
       </v-toolbar>
       <v-card-text
         v-show="!!message"
-        class="pa-4 black--text"
+        class="pa-2 black--text"
         v-html="message"
       ></v-card-text>
       <v-card-actions class="pt-3">
@@ -19,7 +19,7 @@
           text
           rounded
           @click.native="cancel"
-          >Cancel</v-btn
+          >CANCEL</v-btn
         >
         <v-btn color="primary" outlined rounded @click.native="agree">OK</v-btn>
       </v-card-actions>

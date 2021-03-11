@@ -1,25 +1,18 @@
 <template>
-  <v-card class="ma-10">
-    <v-toolbar
-      flat
-      color="primary"
-      extended
-      extension-height="15px"
-      elevation-1
-    >
-      <v-toolbar-title class="white--text text-h4 pa-2 ">
-        Build KubeMQ Integrations
+  <v-card flat>
+    <v-toolbar color="primary" extended plat>
+      <v-toolbar-title class="white--text text-capitalize">
+        Configure KubeMQ {{ type }}
       </v-toolbar-title>
     </v-toolbar>
-    <v-card flat style="margin-top: -20px;">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-column">
-          <div class="">
-            <IntegrationSearch />
-          </div>
-          <div>
-            <IntegrationsList></IntegrationsList>
-          </div>
+
+    <v-card flat style="margin-top: -64px;">
+      <div class="d-flex flex-column ">
+        <div>
+          <IntegrationSearch :type="type" />
+        </div>
+        <div class="flex-grow-1 ">
+          <IntegrationList :type="type"></IntegrationList>
         </div>
         <div class="d-flex justify-end ma-3">
           <v-btn
@@ -57,11 +50,14 @@
 import { mapActions, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 import IntegrationSearch from "@/components/integrations/IntegrationSearch";
-import IntegrationsList from "@/components/integrations/IntgerationsList";
+import IntegrationList from "@/components/integrations/IntgerationsList";
 
 export default {
   name: "IntegrationsPage",
-  components: { ConfirmDlg, IntegrationsList, IntegrationSearch },
+  components: { IntegrationList, IntegrationSearch, ConfirmDlg },
+  props: {
+    type: String
+  },
   data() {
     return {};
   },
@@ -104,10 +100,10 @@ export default {
 /*.container {*/
 /*  border: 1px solid green;*/
 /*}*/
-.row {
-  border: 1px solid red;
-}
-.col {
-  border: 1px solid blue;
-}
+/*.row {*/
+/*  border: 1px solid red;*/
+/*}*/
+/*.col {*/
+/*  border: 1px solid blue;*/
+/*}*/
 </style>

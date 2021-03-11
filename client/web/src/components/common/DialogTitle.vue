@@ -1,6 +1,6 @@
 <template>
   <v-toolbar color="primary" flat dense>
-    <v-toolbar-title class="text-body-3 font-weight-bold white--text pl-2">
+    <v-toolbar-title class="text-body-3 white--text pa-0">
       {{ modeTitle }} {{ title }}
     </v-toolbar-title>
   </v-toolbar>
@@ -10,7 +10,8 @@ export default {
   name: "DialogTitle",
   props: {
     title: String,
-    mode: String
+    mode: String,
+    enable: Boolean
   },
   computed: {
     modeTitle: function() {
@@ -20,6 +21,12 @@ export default {
         return "Edit";
       }
     }
+  },
+  methods: {
+    setAction(action) {
+      this.$emit("action", action);
+    }
   }
 };
 </script>
+<style scoped></style>

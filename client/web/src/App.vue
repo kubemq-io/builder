@@ -1,54 +1,73 @@
 <template>
-  <v-app>
-    <!--    <v-app-bar app color="primary" dark>-->
-    <!--      <div class="d-flex align-center">-->
-    <!--        <v-img-->
-    <!--          alt="Vuetify Logo"-->
-    <!--          class="shrink mr-2"-->
-    <!--          contain-->
-    <!--          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"-->
-    <!--          transition="scale-transition"-->
-    <!--          width="40"-->
-    <!--        />-->
-    <!--        <v-img-->
-    <!--          alt="Vuetify Name"-->
-    <!--          class="shrink mt-1 hidden-sm-and-down"-->
-    <!--          contain-->
-    <!--          min-width="100"-->
-    <!--          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"-->
-    <!--          width="100"-->
-    <!--        />-->
-    <!--      </div>-->
-    <!--      <v-spacer></v-spacer>-->
-    <!--      <v-btn-->
-    <!--        href="https://github.com/vuetifyjs/vuetify/releases/latest"-->
-    <!--        target="_blank"-->
-    <!--        text-->
-    <!--      >-->
-    <!--        <span class="mr-2">Latest Release</span>-->
-    <!--        <v-icon>mdi-open-in-new</v-icon>-->
-    <!--      </v-btn>-->
-    <!--    </v-app-bar>-->
-    <!--    <v-main>-->
-    <!--      <Home />-->
-    <!--    </v-main>-->
+  <v-app id="inspire">
+    <v-app-bar app color="white" flat>
+      <v-container class="px-0 py-0 fill-height">
+        <v-avatar class="pl-0" color="secondary" size="32"></v-avatar>
+        <v-spacer></v-spacer>
+      </v-container>
+    </v-app-bar>
 
-    <Home></Home>
+    <v-main class="secondary lighten-5">
+      <v-container class="px-0 pt-2">
+        <v-row>
+          <v-col cols="2" class="pl-0 pr-0">
+            <v-card>
+              <v-list color="transparent">
+                <v-list-item
+                  v-for="item in menu"
+                  :key="item.label"
+                  link
+                  :to="item.link"
+                >
+                  <v-list-item-avatar color="secondary" size="32">
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title class="secondary--text">
+                      {{ item.label }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-col>
+
+          <v-col>
+            <v-sheet min-height="80vh" rounded>
+              <router-view :key="$route.path"></router-view>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
 <script>
-import Home from "@/views/Home";
-
 export default {
-  name: "App",
-
-  components: {
-    Home
-  },
-
+  components: {},
   data: () => ({
-    //
+    menu: [
+      {
+        label: "Clusters",
+        icon: "bx bxs-inbox",
+        link: "/clusters"
+      },
+      {
+        label: "Bridges",
+        icon: "bx-send",
+        link: "/bridges"
+      },
+      {
+        label: "Targets",
+        icon: "mdi-pencil-outline",
+        link: "/targets"
+      },
+      {
+        label: "Sources",
+        icon: "mdi-star-outline",
+        link: "/sources"
+      }
+    ]
   })
 };
 </script>

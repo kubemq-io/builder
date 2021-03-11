@@ -1,16 +1,18 @@
 <template>
   <div class="d-flex justify-center align-content-center align-center">
-    <div class="side pl-0 pr-2 pt-0 pb-2">
-      <v-card elevation="1" class="pa-0 ">
-        <v-card-title class="pa-0 pb-2">
-          <v-list-item-avatar color="primary" size="25">
-            <span class="white--text">S</span>
+    <div class="side">
+      <v-card class="pa-0 ">
+        <v-card-title class="pa-0">
+          <v-list-item-avatar>
+            <v-avatar color="primary" size="25">
+              <span class="white--text headline">S</span>
+            </v-avatar>
           </v-list-item-avatar>
           <h5 class="secondary--text">
             Bridge Sources
           </h5>
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="pb-1">
           <v-form v-if="toShow" ref="formSource" v-model="source.IsModelValid">
             <v-jsf
               v-model="source.Model"
@@ -29,10 +31,12 @@
       </v-list-item-avatar>
     </div>
     <div class="side pl-2 pr-0 pt-0 pb-2">
-      <v-card elevation="1" class="pa-0">
+      <v-card class="pa-0">
         <v-card-title class="pa-0 pb-2">
-          <v-list-item-avatar color="primary" size="25">
-            <span class="white--text">T</span>
+          <v-list-item-avatar>
+            <v-avatar color="primary" size="25">
+              <span class="white--text">T</span>
+            </v-avatar>
           </v-list-item-avatar>
           <h5 class="secondary--text">
             Bridge Targets

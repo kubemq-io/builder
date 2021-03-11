@@ -1,91 +1,73 @@
 <template>
-  <v-dialog v-model="show" scrollable persistent width="960px">
-    <v-card rounded>
-      <DialogTitle :title="bindingModel.Title" :mode="mode" />
+  <v-dialog v-model="show" scrollable persistent>
+    <v-card tile>
+      <v-card-title class="pa-0">
+        <DialogTitle :title="bindingModel.Title" :mode="mode" />
+      </v-card-title>
       <v-card-text>
-        <v-card flat tile>
-          <v-card-title class="pa-0">
-            <v-icon size="15" color="secondary">fa-link</v-icon>
-            <h5 class="pa-2 secondary--text">
-              Name
-            </h5>
-          </v-card-title>
-          <v-card-text class="pa-0">
-            <v-col cols="6" class="pt-0 pb-0">
-              <v-text-field
-                v-model="bindingModel.Name"
-                clearable
-                label="Integration Name"
-                :rules="[this.validateBindingName]"
-                ref="inputName"
-                :error="errorState"
-              ></v-text-field>
-            </v-col>
-          </v-card-text>
-        </v-card>
-        <v-card flat tile>
-          <v-card-title class="pa-0">
-            <v-icon size="15" color="secondary">fa-sliders-h</v-icon>
-            <h5 class="pa-2 secondary--text">
-              Properties
-            </h5>
-          </v-card-title>
-          <v-card-text class="pa-0">
+        <v-row class="flex-column">
+          <v-col cols="6" class="pb-0">
+            <v-text-field
+              v-model="bindingModel.Name"
+              clearable
+              label="Integration Name"
+              :rules="[this.validateBindingName]"
+              ref="inputName"
+              :error="errorState"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" class="py-0">
             <IntegrationsBindingProperties
               ref="properties"
               :binding="bindingModel"
               :options="options"
               :show="show"
             />
-          </v-card-text>
-        </v-card>
-        <v-card flat tile>
-          <v-card-title class="pt-0 pr-0 pl-0">
+          </v-col>
+          <v-col cols="12" class="py-0">
             <v-switch
               v-model="setMiddleware"
+              label="Middlewares"
               flat
               dense
               color="primary"
+              class="mt-1"
             ></v-switch>
-            <v-card-title class="pa-0">
-              <h5 class="pa-2 secondary--text">
-                Middlewares
-              </h5>
-            </v-card-title>
-            <v-card-text v-if="setMiddleware" class="pa-0">
+            <v-card-text v-if="setMiddleware" class="pa-0 pb-2">
               <IntegrationsBindingMiddlewares
                 :config="bindingModel.Middlewares"
                 :show="show"
               ></IntegrationsBindingMiddlewares>
             </v-card-text>
-          </v-card-title>
-        </v-card>
-        <v-card flat tile> </v-card>
-        <v-row justify="end" align-content="center" align="center" class="pa-2">
-          <div class="pa-2">
-            <v-btn color="primary" text rounded @click.native="cancel"
-              >cancel</v-btn
-            >
-          </div>
-          <div class="pa-2">
-            <v-btn
-              color="primary"
-              v-if="mode === 'add'"
-              outlined
-              rounded
-              @click="submit"
-              >Add</v-btn
-            >
-            <v-btn
-              color="primary"
-              class=""
-              v-if="mode === 'edit'"
-              outlined
-              rounded
-              @click="submit"
-              >Edit</v-btn
-            >
-          </div>
+          </v-col>
+          <v-col cols="12">
+            <v-row justify="end" align-content="center" align="center">
+              <div class="pr-1">
+                <v-btn color="secondary" text rounded @click.native="cancel"
+                  >CANCEL</v-btn
+                >
+              </div>
+              <div class="pr-2">
+                <v-btn
+                  color="primary"
+                  v-if="mode === 'add'"
+                  outlined
+                  rounded
+                  @click="submit"
+                  >ADD</v-btn
+                >
+                <v-btn
+                  color="primary"
+                  class="pr-2"
+                  v-if="mode === 'edit'"
+                  outlined
+                  rounded
+                  @click="submit"
+                  >EDIT</v-btn
+                >
+              </div>
+            </v-row>
+          </v-col>
         </v-row>
       </v-card-text>
     </v-card>
@@ -97,7 +79,7 @@ import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 import IntegrationsBindingMiddlewares from "@/components/integrations/IntegrationsBindingMiddlewares";
 import IntegrationsBindingProperties from "@/components/integrations/IntegrationsBindingsProperties";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 import { IntegrationsBinding } from "@/components/integrations/Integrations";
@@ -132,12 +114,19 @@ export default {
   computed: {
     errorState: function() {
       return !this.isValidName;
+    },
+    isValidForm: function() {
+      return (
+        this.$refs.inputName.validate() &&
+        this.$refs.properties.$refs.formSource.validate() &&
+        this.$refs.properties.$refs.formTarget.validate()
+      );
     }
   },
   watch: {},
   methods: {
     ...mapMutations(["addIntegrationsBinding", "replaceIntegrationsBinding"]),
-    ...mapGetters(["getIntegrationsBindingNames"]),
+
     open(item, forbiddenNames, mode) {
       this.show = true;
       this.bindingModel = lodashLang.cloneDeep(item);
@@ -146,7 +135,6 @@ export default {
       this.setMiddleware = this.bindingModel.Middlewares.hasData();
       if (this.mode === "edit") {
         this.editedItem.binding = lodashLang.cloneDeep(item);
-
         const currentName = this.editedItem.binding.Name;
         this.editedItem.originateName = currentName;
         this.editedItem.index = lodashArray.findIndex(
@@ -188,18 +176,10 @@ export default {
         return true;
       }
     },
-    isValidBindingName: function() {},
-    submit: function() {
-      this.panel = [0, 1];
-      this.isValidName = this.$refs.inputName.validate();
 
-      this.$refs.properties.$refs.formSource.validate();
-      this.$refs.properties.$refs.formTarget.validate();
-      if (
-        this.bindingModel.SourceSide.IsModelValid &&
-        this.bindingModel.TargetSide.IsModelValid &&
-        this.isValidName
-      ) {
+    submit: function() {
+      this.isValidName = this.$refs.inputName.validate();
+      if (this.isValidForm) {
         if (this.mode === "add") {
           this.resolve({
             binding: this.bindingModel
@@ -226,15 +206,15 @@ export default {
 </script>
 
 <style scoped>
-.v-text-field >>> input {
-  font-size: 0.9em;
-}
-.v-text-field >>> label {
-  font-size: 0.9em;
-}
-.v-text-field >>> button {
-  font-size: 0.9em;
-}
+/*.v-text-field >>> input {*/
+/*  font-size: 0.9em;*/
+/*}*/
+/*.v-text-field >>> label {*/
+/*  font-size: 0.9em;*/
+/*}*/
+/*.v-text-field >>> button {*/
+/*  font-size: 0.9em;*/
+/*}*/
 .v-dialog__content {
   align-items: flex-start;
   justify-content: center;

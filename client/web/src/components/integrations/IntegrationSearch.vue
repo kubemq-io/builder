@@ -1,104 +1,121 @@
 <template>
-  <div class="pb-0">
-    <v-toolbar flat color="primary" dense>
-      <v-autocomplete
-        dense
-        v-model="selectedItem"
-        :items="connectors"
-        :filter="customFilter"
-        label="INTEGRATION"
-        solo
-        @change="add"
-        flat
-        rounded
-        cache-items
-        hide-details
-        color="primary"
-        prepend-inner-icon="fa-plus"
-      >
-        <template v-slot:selection="data">
-          <v-list-item dense class="pa-0">
-            <v-list-item-avatar color="primary" size="25">
-              <span class="white--text">{{ data.item.getInitial() }}</span>
-            </v-list-item-avatar>
-            <v-list-item-content class="pa-0">
-              <v-list-item-title>
-                <h4 class="secondary--text font-weight-bold pr-2">
-                  {{ data.item.name }}
-                </h4>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-        <template v-slot:item="data">
-          <v-list>
+  <div class="d-flex">
+    <v-toolbar color="primary" dense flat tile>
+      <v-toolbar-title>
+        <v-autocomplete
+          dense
+          ref="autocomplete"
+          v-model="selectedItem"
+          :items="connectors"
+          :filter="customFilter"
+          solo
+          @change="add"
+          flat
+          rounded
+          cache-items
+          no-data-text="No integrations were found for this query"
+          hide-details
+          append-icon=""
+          color="primary"
+        >
+          <template v-slot:prepend-inner>
+            <v-fab-transition>
+              <v-btn color="secondary" fab small @click="onFocus">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </v-fab-transition>
+          </template>
+          <template v-slot:selection="data">
             <v-list-item dense class="pa-0">
-              <v-list-item-avatar>
-                <v-avatar :color="getColor(data.item.type)" size="35">
-                  <span class="white--text text-h6">{{
-                    data.item.getInitial()
-                  }}</span>
-                </v-avatar>
+              <v-list-item-avatar color="primary" size="25">
+                <span class="white--text">{{ data.item.getInitial() }}</span>
               </v-list-item-avatar>
-
               <v-list-item-content class="pa-0">
                 <v-list-item-title>
-                  <h3 :class="getColorText(data.item.type, '')">
-                    {{ data.item.title }}
-                  </h3>
+                  <h4 class="secondary--text font-weight-bold pr-2">
+                    {{ data.item.name }}
+                  </h4>
                 </v-list-item-title>
-                <v-list-item-subtitle>
-                  <span
-                    :class="getColorText(data.item.type, ' text-capitalize')"
-                    >{{ data.item.type }}</span
-                  >
-                </v-list-item-subtitle>
-                <v-list-item-subtitle>
-                  <v-chip-group>
-                    <v-chip
-                      v-for="(tag, index) in data.item.tags"
-                      :key="'b' + tag + index"
-                      x-small
-                      :color="getColor(data.item.type)"
-                      outlined
-                    >
-                      {{ tag }}
-                    </v-chip>
-                  </v-chip-group>
-                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-          </v-list>
-        </template>
-      </v-autocomplete>
+          </template>
+          <template v-slot:item="data">
+            <v-list>
+              <v-list-item dense class="pa-0">
+                <v-list-item-avatar>
+                  <v-avatar :color="getColor()" size="35">
+                    <span class="white--text text-h6">{{
+                      data.item.getInitial()
+                    }}</span>
+                  </v-avatar>
+                </v-list-item-avatar>
+
+                <v-list-item-content class="pa-0">
+                  <v-list-item-title>
+                    <h3 :class="getColorText('')">
+                      {{ data.item.title }}
+                    </h3>
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    <span :class="getColorText(' text-capitalize')">{{
+                      data.item.type
+                    }}</span>
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle>
+                    <v-chip-group>
+                      <v-chip
+                        v-for="(tag, index) in data.item.tags"
+                        :key="'b' + tag + index"
+                        x-small
+                        :color="getColor()"
+                        outlined
+                      >
+                        {{ tag }}
+                      </v-chip>
+                    </v-chip-group>
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </template>
+        </v-autocomplete>
+      </v-toolbar-title>
     </v-toolbar>
+
     <IntegrationsBindingDlg ref="bindingDlg"></IntegrationsBindingDlg>
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import IntegrationsBindingDlg from "@/components/integrations/IntegrationBindingDlg";
 import { IntegrationsBinding } from "@/components/integrations/Integrations";
 
 export default {
   name: "IntegrationSearch",
   components: { IntegrationsBindingDlg },
+  props: {
+    type: String
+  },
+
   data: function() {
     return {
-      selectedItem: null
+      selectedItem: null,
+      showAutoComplete: false,
+      currentConnectorList: null
     };
   },
   computed: {
     connectors: function() {
-      return this.$store.state.integrationsMetadata.connectors;
+      return this.$store.state.integrations.integrationsMetadata.connectors.filter(
+        connector => connector.type === this.type
+      );
     },
     forbiddenNames: function() {
-      return this.getIntegrationsBindingNames();
+      return this.$store.getters.getIntegrationsBindingNames(this.type);
     }
   },
   methods: {
     ...mapActions(["loadIntegrations"]),
-    ...mapGetters(["getIntegrationsBindingNames"]),
     ...mapMutations(["addIntegrationsBinding"]),
     customFilter(item, queryText) {
       if (item.divider) {
@@ -130,18 +147,22 @@ export default {
       if (this.selectedItem !== null) {
         let newBinding = this.getNewBinding();
         await this.$refs.bindingDlg
-          .open(newBinding, this.getIntegrationsBindingNames(), "add")
+          .open(
+            newBinding,
+            this.$store.getters.getIntegrationsBindingNames(this.type),
+            "add"
+          )
           .then(result => this.addIntegrationsBinding(result));
-        this.$nextTick(() => (this.selectedItem = null));
+        this.$nextTick(() => {
+          this.selectedItem = null;
+        });
       }
     },
-    getColor(type) {
-      return type === "targets" ? "primary" : "secondary";
+    getColor() {
+      return "secondary";
     },
-    getColorText(type, more) {
-      return type === "targets"
-        ? "primary--text" + more
-        : "secondary--text" + more;
+    getColorText(more) {
+      return "secondary--text" + more;
     },
     getNewBinding: function() {
       let newBinding = new IntegrationsBinding()
@@ -157,7 +178,9 @@ export default {
           .SetTargetSide(
             "KubeMQ",
             "something",
-            this.$store.state.integrationsMetadata.getKubeMQSide("sources")
+            this.$store.state.integrations.integrationsMetadata.getKubeMQSide(
+              "sources"
+            )
           );
       } else {
         newBinding = newBinding
@@ -169,10 +192,19 @@ export default {
           .SetSourceSide(
             "KubeMQ",
             "something",
-            this.$store.state.integrationsMetadata.getKubeMQSide("targets")
+            this.$store.state.integrations.integrationsMetadata.getKubeMQSide(
+              "targets"
+            )
           );
       }
       return newBinding;
+    },
+    onFocus() {
+      this.showAutoComplete = true;
+      this.$nextTick(() => {
+        this.$refs.autocomplete.focus();
+        this.$refs.autocomplete.isMenuActive = true;
+      });
     }
   }
 };
@@ -186,5 +218,8 @@ export default {
 /*}*/
 /*.col {*/
 /*  border: 1px solid blue;*/
+/*}*/
+/*.v-input__control {*/
+/*  padding: 0 0 0 0;*/
 /*}*/
 </style>

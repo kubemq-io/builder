@@ -45,8 +45,6 @@ const clusterAuthorizationSchema = {
   oneOf: [
     {
       title: "Disabled",
-
-      "x-cols": 6,
       properties: {
         mode: {
           type: "string",
@@ -58,6 +56,7 @@ const clusterAuthorizationSchema = {
     {
       title: "Set Authorization Policy",
       required: ["rules"],
+
       properties: {
         mode: {
           type: "string",
@@ -173,14 +172,12 @@ const clusterAuthorizationSchema = {
         url: {
           type: "string",
           title: "Authorization Policy Server URL",
-          default: "",
-          "x-cols": 10
+          default: ""
         },
         fetchInterval: {
           type: "integer",
           title: "Fetch Interval Seconds",
-          default: 3600,
-          "x-cols": 3
+          default: 3600
         }
       }
     }

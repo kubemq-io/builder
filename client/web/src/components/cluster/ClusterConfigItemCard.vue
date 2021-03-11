@@ -1,14 +1,14 @@
 <template>
   <v-card elevation="1" class="pa-0 ">
-    <v-card-title class="pa-0 pb-2">
+    <v-card-title class="pa-0">
       <v-list-item-avatar color="primary" size="20">
         <span class="white--text body-2">{{ initial }}</span>
       </v-list-item-avatar>
-      <h6 class="secondary--text">
+      <h5 class="primary--text font-weight-regular">
         {{ title }}
-      </h6>
+      </h5>
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="py-1">
       <v-form v-if="toShow" ref="form" v-model="config.isValid">
         <v-jsf
           @change="validateForm"

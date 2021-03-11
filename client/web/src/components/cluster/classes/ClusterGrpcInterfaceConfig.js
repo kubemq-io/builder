@@ -37,7 +37,7 @@ const clusterGrpcInterfaceSchema = {
 
   oneOf: [
     {
-      title: "ClusterIP",
+      title: "Cluster IP",
       properties: {
         mode: {
           type: "string",
@@ -57,7 +57,6 @@ const clusterGrpcInterfaceSchema = {
         nodePort: {
           type: "integer",
           title: "Node Port",
-          "x-cols": 6,
           default: 0,
           minimum: 0,
           maximum: 65355

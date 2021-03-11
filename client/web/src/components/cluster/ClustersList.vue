@@ -17,45 +17,55 @@
           <v-list-item-content class="pb-0">
             <v-list-item-title>
               <h3 class="primary--text">
-                {{ cluster.name }}
+                {{ cluster.clusterName }}
               </h3>
             </v-list-item-title>
-            <v-list-item-subtitle>
-              subtitle
+            <v-list-item-subtitle class="pb-1">
+              <h3>
+                {{ cluster.clusterNamespace }}
+              </h3>
+            </v-list-item-subtitle>
+            <v-list-item-subtitle class="pb-1">
+              <v-chip
+                v-for="(tag, index) in cluster.tags()"
+                :key="'a' + tag + index"
+                x-small
+                outlined
+                class="mr-1"
+              >
+                {{ tag }}
+              </v-chip>
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action class="ma-0">
             <div class="d-flex justify-start align-center align-content-center">
-              <div>
+              <v-btn icon>
                 <v-icon
                   size="15"
-                  class="pr-2"
-                  color="secondary"
-                  @click.stop="cloneCluster(cluster)"
-                >
-                  fa-clone
-                </v-icon>
-              </div>
-              <div>
-                <v-icon
-                  size="15"
-                  class="pr-2 pl-2"
                   color="secondary"
                   @click.stop="editCluster(cluster)"
                 >
                   fa-edit
                 </v-icon>
-              </div>
-              <div>
+              </v-btn>
+              <v-btn icon>
                 <v-icon
                   size="15"
-                  class="pl-2"
+                  color="secondary"
+                  @click.stop="cloneCluster(cluster)"
+                >
+                  fa-clone
+                </v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon
+                  size="15"
                   color="secondary"
                   @click.stop="delCluster(cluster)"
                 >
                   fa-trash-alt
                 </v-icon>
-              </div>
+              </v-btn>
             </div>
           </v-list-item-action>
         </v-list-item>

@@ -2,213 +2,108 @@
   <div class="pt-0">
     <v-list two-line>
       <v-subheader>
-        <h3 :class="getColorText('sources', '')">Sources</h3>
+        <h3 class="primary--text text-capitalize ">{{ type }}</h3>
       </v-subheader>
-      <v-card-text v-if="sources.length === 0" class="text-center">
-        <h5 :class="getColorText('sources', ' body-2')">No Integrations</h5>
-      </v-card-text>
-      <template v-for="(source, index) in sources">
-        <v-list-item :key="'c' + index">
-          <v-list-item-avatar>
-            <v-avatar :color="getColor('sources', '')" size="35">
-              <span class="white--text headline">{{ index + 1 }}</span>
-            </v-avatar>
-          </v-list-item-avatar>
-          <v-list-item-content class="pb-0">
-            <v-list-item-title>
-              <h3 :class="getColorText('sources', '')">
-                {{ source.Name }}
-              </h3>
-            </v-list-item-title>
-            <v-list-item-subtitle>
+      <v-divider inset></v-divider>
+      <v-card min-height="50vh" flat v-if="integrations.length === 0">
+        <v-card-text class="pa-15">
+          <v-container class="text-center">
+            <span class="primary--text subtitle-1">No Integration</span>
+          </v-container>
+        </v-card-text>
+      </v-card>
+      <v-card min-height="50vh" v-if="integrations.length !== 0" flat tile>
+        <template v-for="(integration, index) in integrations">
+          <v-list-item :key="'c' + index">
+            <v-list-item-avatar>
+              <v-avatar color="primary" size="35">
+                <span class="white--text headline">{{ index + 1 }}</span>
+              </v-avatar>
+            </v-list-item-avatar>
+            <v-list-item-content class="pb-0">
+              <v-list-item-title>
+                <h3 class="primary--text">
+                  {{ integration.Name }}
+                </h3>
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                <div
+                  class="d-flex justify-start align-center align-content-center"
+                >
+                  <div class="d-flex flex-column justify-start col-5 pa-0">
+                    <h3 class="secondary--text pb-1">
+                      {{ integration.SourceSide.Name }}
+                    </h3>
+                    <div>
+                      <v-chip x-small color="secondary" outlined>
+                        {{ integration.SourceSide.Category }}
+                      </v-chip>
+                    </div>
+                  </div>
+                  <div class="col-1 pa-0">
+                    <v-list-item-avatar color="primary" size="20">
+                      <v-icon size="15" color="white">
+                        fa-arrow-right
+                      </v-icon>
+                    </v-list-item-avatar>
+                  </div>
+                  <div class="d-flex flex-column justify-start col-5 pa-0">
+                    <h3 class="secondary--text pb-1">
+                      {{ integration.TargetSide.Name }}
+                    </h3>
+                    <div>
+                      <v-chip x-small color="secondary" outlined>
+                        {{ integration.TargetSide.Category }}
+                      </v-chip>
+                    </div>
+                  </div>
+                </div>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action class="ma-0">
               <div
                 class="d-flex justify-start align-center align-content-center"
               >
-                <div class="d-flex">
-                  <h3 :class="getColorText('sources', '')">
-                    {{ source.SourceSide.Name }}
-                  </h3>
-                  <div class="pl-3">
-                    <v-chip
-                      x-small
-                      :color="getColorText('sources', '')"
-                      outlined
+                <div>
+                  <v-btn icon>
+                    <v-icon
+                      size="15"
+                      color="secondary"
+                      @click.stop="cloneIntegration(integration)"
                     >
-                      {{ source.SourceSide.Category }}
-                    </v-chip>
-                  </div>
-                </div>
-                <div class="pl-4">
-                  <v-list-item-avatar
-                    :color="getColor('sources', '')"
-                    size="15"
-                  >
-                    <v-icon size="10" color="white">
-                      fa-arrow-right
+                      fa-clone
                     </v-icon>
-                  </v-list-item-avatar>
+                  </v-btn>
                 </div>
-                <div class="d-flex">
-                  <h3 class="getColorText('sources', '')">
-                    {{ source.TargetSide.Name }}
-                  </h3>
-                  <div class="pl-2">
-                    <v-chip
-                      x-small
-                      :color="getColorText('sources', '')"
-                      outlined
+                <div>
+                  <v-btn icon>
+                    <v-icon
+                      size="15"
+                      color="secondary"
+                      @click.stop="editIntegration(integration)"
                     >
-                      {{ source.TargetSide.Category }}
-                    </v-chip>
-                  </div>
-                </div>
-              </div>
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action class="ma-0">
-            <div class="d-flex justify-start align-center align-content-center">
-              <div>
-                <v-icon
-                  size="15"
-                  class="pr-2"
-                  :color="getColor('source', '')"
-                  @click.stop="cloneIntegration(source)"
-                >
-                  fa-clone
-                </v-icon>
-              </div>
-              <div>
-                <v-icon
-                  size="15"
-                  class="pr-2 pl-2"
-                  :color="getColor('source', '')"
-                  @click.stop="editIntegration(source)"
-                >
-                  fa-edit
-                </v-icon>
-              </div>
-              <div>
-                <v-icon
-                  size="15"
-                  class="pl-2"
-                  :color="getColor('source', '')"
-                  @click.stop="delIntegration(source)"
-                >
-                  fa-trash-alt
-                </v-icon>
-              </div>
-            </div>
-          </v-list-item-action>
-        </v-list-item>
-        <v-divider :key="'d' + index" inset></v-divider>
-      </template>
-    </v-list>
-    <v-divider v-if="sources.length === 0" inset></v-divider>
-    <v-list two-line>
-      <v-subheader>
-        <h3 :class="getColorText('targets', '')">Targets</h3>
-      </v-subheader>
-      <v-card-text v-if="targets.length === 0" class="text-center">
-        <h5 :class="getColorText('targets', ' body-2')">No Integrations</h5>
-      </v-card-text>
-      <template v-for="(target, i) in targets">
-        <v-list-item :key="'a' + i">
-          <v-list-item-avatar>
-            <v-avatar color="primary" size="35">
-              <span class="white--text headline">{{ i + 1 }}</span>
-            </v-avatar>
-          </v-list-item-avatar>
-          <v-list-item-content class="pb-0">
-            <v-list-item-title>
-              <h3 :class="getColorText('targets', '')">
-                {{ target.Name }}
-              </h3>
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              <div
-                class="d-flex justify-start align-center align-content-center"
-              >
-                <div class="d-flex">
-                  <h3 :class="getColorText('targets', '')">
-                    {{ target.SourceSide.Name }}
-                  </h3>
-                  <div class="pl-3">
-                    <v-chip
-                      x-small
-                      :color="getColorText('targets', '')"
-                      outlined
-                    >
-                      {{ target.SourceSide.Category }}
-                    </v-chip>
-                  </div>
-                </div>
-                <div class="pl-3">
-                  <v-list-item-avatar
-                    :color="getColor('targets', '')"
-                    size="15"
-                  >
-                    <v-icon size="10" color="white">
-                      fa-arrow-right
+                      fa-edit
                     </v-icon>
-                  </v-list-item-avatar>
+                  </v-btn>
                 </div>
-                <div class="d-flex">
-                  <h3 :class="getColorText('targets', '')">
-                    {{ target.TargetSide.Name }}
-                  </h3>
-                  <div class="pl-3">
-                    <v-chip
-                      x-small
-                      :color="getColorText('targets', '')"
-                      outlined
-                      pill
+                <div>
+                  <v-btn icon>
+                    <v-icon
+                      size="15"
+                      color="secondary"
+                      @click.stop="delIntegration(integration)"
                     >
-                      {{ target.TargetSide.Category }}
-                    </v-chip>
-                  </div>
+                      fa-trash-alt
+                    </v-icon>
+                  </v-btn>
                 </div>
               </div>
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action class="ma-0">
-            <div class="d-flex justify-start align-center align-content-center">
-              <div>
-                <v-icon
-                  size="15"
-                  class="pr-2"
-                  :color="getColor('targets', '')"
-                  @click.stop="cloneIntegration(target)"
-                >
-                  fa-clone
-                </v-icon>
-              </div>
-              <div>
-                <v-icon
-                  size="15"
-                  class="pr-2 pl-2"
-                  :color="getColor('targets', '')"
-                  @click.stop="editIntegration(target)"
-                >
-                  fa-edit
-                </v-icon>
-              </div>
-              <div>
-                <v-icon
-                  size="15"
-                  class="pl-2"
-                  :color="getColor('targets', '')"
-                  @click.stop="delIntegration(target)"
-                >
-                  fa-trash-alt
-                </v-icon>
-              </div>
-            </div>
-          </v-list-item-action>
-        </v-list-item>
-        <v-divider :key="'b' + i" inset></v-divider>
-      </template>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider :key="'d' + index" inset></v-divider>
+        </template>
+      </v-card>
     </v-list>
-    <v-divider v-if="targets.length === 0" inset></v-divider>
     <IntegrationsBindingDlg ref="bindingDlg"></IntegrationsBindingDlg>
     <ConfirmDlg ref="confirm"></ConfirmDlg>
   </div>
@@ -216,25 +111,28 @@
 <script>
 import IntegrationsBindingDlg from "@/components/integrations/IntegrationBindingDlg";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
 
 export default {
   name: "IntegrationList",
   components: { IntegrationsBindingDlg, ConfirmDlg },
+  props: {
+    type: String
+  },
   data() {
     return {};
   },
   computed: {
-    sources: function() {
-      return this.$store.state.integrations.sources;
-    },
-    targets: function() {
-      return this.$store.state.integrations.targets;
+    integrations: function() {
+      if (this.type === "sources") {
+        return this.$store.state.integrations.sources;
+      } else {
+        return this.$store.state.integrations.targets;
+      }
     }
   },
   methods: {
-    ...mapGetters(["getIntegrationsBindingNames"]),
     ...mapMutations([
       "deleteIntegrationsBinding",
       "replaceIntegrationsBinding",
@@ -252,21 +150,17 @@ export default {
     },
     async editIntegration(item) {
       await this.$refs.bindingDlg
-        .open(item, this.getCurrentBindingNames(), "edit")
+        .open(
+          item,
+          this.$store.getters.getIntegrationsBindingNames(this.type),
+          "edit"
+        )
         .then(result => this.replaceIntegrationsBinding(result));
     },
     cloneIntegration(item) {
       let clonedItem = lodashLang.cloneDeep(item);
       clonedItem.Name = `${clonedItem.Name}-${makeid(5)}`;
       this.addIntegrationsBinding({ binding: clonedItem });
-    },
-    getColor(type, more) {
-      return type === "targets" ? "primary" + more : "secondary" + more;
-    },
-    getColorText(type, more) {
-      return type === "targets"
-        ? "primary--text" + more
-        : "secondary--text" + more;
     }
   }
 };
@@ -292,7 +186,11 @@ const makeid = function(length) {
 //.col {
 //  border: 1px solid blue;
 //}
-
+.side {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
 .item {
   //border-bottom: 1px solid #595a5c;
 

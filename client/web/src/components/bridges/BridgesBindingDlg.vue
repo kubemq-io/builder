@@ -1,93 +1,79 @@
 <template>
-  <v-dialog v-model="show" scrollable persistent width="960px">
-    <v-card rounded>
+  <v-dialog v-model="show" scrollable persistent>
+    <v-card tile class="pa-0">
       <DialogTitle title="KubeMQ Bridge" :mode="mode" />
       <v-card-text>
         <v-card flat tile>
-          <v-card-title class="pa-0">
-            <v-icon size="15" color="secondary">fa-link</v-icon>
-            <h5 class="pa-2 secondary--text">
-              Name
-            </h5>
-          </v-card-title>
-          <v-card-text class="pa-0">
-            <v-col cols="6" class="pt-0 pb-0">
-              <v-text-field
-                v-model="bindingModel.Name"
-                clearable
-                label="Bridge Name"
-                :rules="[this.validateBindingName]"
-                ref="inputName"
-                :error="errorState"
-              ></v-text-field>
-            </v-col>
+          <v-card-text>
+            <v-row class="flex-column">
+              <v-col cols="6" class="pb-0">
+                <v-text-field
+                  v-model="bindingModel.Name"
+                  clearable
+                  label="Bridge Name"
+                  :rules="[this.validateBindingName]"
+                  ref="inputName"
+                  :error="errorState"
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" class="py-0">
+                <BridgesBindingProperties
+                  ref="properties"
+                  :binding="bindingModel"
+                  :options="options"
+                  :show="show"
+                />
+              </v-col>
+              <v-col cols="12" class="py-0">
+                <v-switch
+                  v-model="setMiddleware"
+                  label="Middlewares"
+                  flat
+                  dense
+                  color="primary"
+                  class="mt-1"
+                ></v-switch>
+
+                <v-card-text v-if="setMiddleware" class="pa-0 pb-2">
+                  <BridgesBindingMiddlewares
+                    :config="bindingModel.Middlewares"
+                    :show="show"
+                  ></BridgesBindingMiddlewares>
+                </v-card-text>
+              </v-col>
+
+              <v-col cols="12">
+                <v-row justify="end" align-content="center" align="center">
+                  <div class="pr-1">
+                    <v-btn color="secondary" text rounded @click.native="cancel"
+                      >CANCEL</v-btn
+                    >
+                  </div>
+                  <div class="pr-2">
+                    <v-btn
+                      color="primary"
+                      v-if="mode === 'add'"
+                      outlined
+                      rounded
+                      @click="submit"
+                      >ADD</v-btn
+                    >
+                    <v-btn
+                      color="primary"
+                      class="pr-2"
+                      v-if="mode === 'edit'"
+                      outlined
+                      rounded
+                      @click="submit"
+                      >EDIT</v-btn
+                    >
+                  </div>
+                </v-row>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
-        <v-card flat tile>
-          <v-card-title class="pa-0">
-            <v-icon size="15" color="secondary">fa-sliders-h</v-icon>
-            <h5 class="pa-2 secondary--text">
-              Properties
-            </h5>
-          </v-card-title>
-          <v-card-text class="pa-0">
-            <BridgesBindingProperties
-              ref="properties"
-              :binding="bindingModel"
-              :options="options"
-              :show="show"
-            />
-          </v-card-text>
-        </v-card>
-        <v-card flat tile>
-          <v-card-title class="pt-0 pr-0 pl-0">
-            <v-switch
-              v-model="setMiddleware"
-              flat
-              dense
-              color="primary"
-            ></v-switch>
-            <v-card-title class="pa-0">
-              <h5 class="pa-2 secondary--text">
-                Middlewares
-              </h5>
-            </v-card-title>
-            <v-card-text v-if="setMiddleware" class="pa-0">
-              <BridgesBindingMiddlewares
-                :config="bindingModel.Middlewares"
-                :show="show"
-              ></BridgesBindingMiddlewares>
-            </v-card-text>
-          </v-card-title>
-        </v-card>
-        <v-card flat tile> </v-card>
-        <v-row justify="end" align-content="center" align="center" class="pa-2">
-          <div class="pa-2">
-            <v-btn color="primary" text rounded @click.native="cancel"
-              >cancel</v-btn
-            >
-          </div>
-          <div class="pa-2">
-            <v-btn
-              color="primary"
-              v-if="mode === 'add'"
-              outlined
-              rounded
-              @click="submit"
-            >
-              Add</v-btn
-            >
-            <v-btn
-              color="primary"
-              class=""
-              v-if="mode === 'edit'"
-              outlined
-              rounded
-              @click="submit"
-              >Edit</v-btn
-            >
-          </div>
-        </v-row>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -194,7 +180,6 @@ export default {
     submit: function() {
       this.panel = [0, 1];
       this.isValidName = this.$refs.inputName.validate();
-
       this.$refs.properties.$refs.formSource.validate();
       this.$refs.properties.$refs.formTarget.validate();
       if (
@@ -222,21 +207,28 @@ export default {
         this.resolve(null);
       }
       this.show = false;
+    },
+    actionValue: function(action) {
+      if (action === "cancel") {
+        this.cancel();
+      } else if (action === "submit") {
+        this.submit();
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-.v-text-field >>> input {
-  font-size: 0.9em;
-}
-.v-text-field >>> label {
-  font-size: 0.9em;
-}
-.v-text-field >>> button {
-  font-size: 0.9em;
-}
+/*.v-text-field >>> input {*/
+/*  font-size: 0.9em;*/
+/*}*/
+/*.v-text-field >>> label {*/
+/*  font-size: 0.9em;*/
+/*}*/
+/*.v-text-field >>> button {*/
+/*  font-size: 0.9em;*/
+/*}*/
 .v-dialog__content {
   align-items: flex-start;
   justify-content: center;

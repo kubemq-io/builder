@@ -7,22 +7,26 @@ const state = {
   sources: []
 };
 const getters = {
-  getIntegrationsBindingNames: function() {
+  getIntegrationsBindingNames: state => type => {
     let list = [];
-    state.targets.forEach(value => {
-      list.push({ name: value.Name });
-    });
-    state.sources.forEach(value => {
-      list.push({
-        name: value.Name
+
+    if (type === "sources") {
+      state.sources.forEach(value => {
+        list.push({
+          name: value.Name
+        });
       });
-    });
+    } else {
+      state.targets.forEach(value => {
+        list.push({ name: value.Name });
+      });
+    }
     return list;
   }
 };
 const actions = {
   loadIntegrations: function() {
-    this.state.integrationsMetadata = new Integrations(integrationList);
+    state.integrationsMetadata = new Integrations(integrationList);
   }
 };
 const mutations = {

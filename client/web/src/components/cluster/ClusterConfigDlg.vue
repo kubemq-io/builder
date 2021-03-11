@@ -1,44 +1,60 @@
 <template>
-  <v-dialog v-model="show" scrollable persistent width="960px">
-    <v-card rounded>
-      <DialogTitle title="KubeMQ Cluster" :mode="mode" />
+  <v-dialog v-model="show" scrollable persistent>
+    <v-card tile>
+      <v-card-title class="pa-0">
+        <DialogTitle
+          @action="actionValue"
+          title="KubeMQ Cluster"
+          :enable="cluster.configIsValid()"
+          :mode="mode"
+        />
+      </v-card-title>
       <v-card-text>
-        <ClusterConfigItemCard
-          :config="cluster.basic"
-          title="Basic"
-          :show="show"
-        ></ClusterConfigItemCard>
         <v-expansion-panels>
-          <ClusterInterfacesPanel :cluster="cluster" :show="show" />
-          <ClusterAccessControlPanel :cluster="cluster" :show="show" />
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Item
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <ClusterBasicPanel :cluster="cluster" :show="show" />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Item
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <ClusterConfigAdvancedPanle
+                :cluster="cluster"
+                :items="items"
+                :show="show"
+                :tab="tab"
+              />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
         </v-expansion-panels>
-        <v-row justify="end" align-content="center" align="center" class="pa-2">
-          <div class="pa-2">
-            <v-btn color="primary" text rounded @click.native="cancel"
-              >cancel</v-btn
-            >
-          </div>
-          <div class="pa-2">
-            <v-btn
-              color="primary"
-              v-if="mode === 'add'"
-              outlined
-              rounded
-              @click="submit"
-            >
-              Add</v-btn
-            >
-            <v-btn
-              color="primary"
-              class=""
-              v-if="mode === 'edit'"
-              outlined
-              rounded
-              @click="submit"
-              >Edit</v-btn
-            >
-          </div>
-        </v-row>
+        <div class="d-flex justify-end">
+          <v-btn
+            class="text-body-1  font-weight-bold secondary-text"
+            color="primary"
+            v-if="mode === 'add'"
+            outlined
+            rounded
+            @click="setAction('submit')"
+          >
+            ADD</v-btn
+          >
+          <v-btn
+            c
+            class="text-body-1  font-weight-bold secondary-text"
+            color="white"
+            v-if="mode === 'edit'"
+            rounded
+            small
+            @click="setAction('submit')"
+            >EDIT</v-btn
+          >
+        </div>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -53,20 +69,33 @@ import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 import DialogTitle from "@/components/common/DialogTitle";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
-import ClusterInterfacesPanel from "@/components/cluster/ClusterInterfacesPanel";
-import ClusterConfigItemCard from "@/components/cluster/ClusterConfigItemCard";
-import ClusterAccessControlPanel from "@/components/cluster/ClusterAccessControlPanel";
+// import ClusterInterfacesSecurityPanel from "@/components/cluster/ClusterInterfacesSecurityPanel";
+// import ClusterAccessControlRoutingPanel from "@/components/cluster/ClusterAccessControlRoutingPanel";
+// import ClusterImageVolumePanel from "@/components/cluster/ClusterImageVolumePanel";
+// import ClusterHealthResourcesNodesPanel from "@/components/cluster/ClusterHealthResourceNodesPanel";
+// import ClusterStoreQueuesPanel from "@/components/cluster/ClusterStoreQueuesPanel";
+import ClusterBasicPanel from "@/components/cluster/ClusterBasicPanel";
+import ClusterConfigAdvancedPanle from "@/components/cluster/ClusterConfigAdvancedPanle";
+// import ClusterAccessControlRoutingTab from "@/components/cluster/ClusterAccessControlRoutingTab";
 
 export default {
   name: "ClusterConfigDlg",
   components: {
-    ClusterAccessControlPanel,
-    ClusterConfigItemCard,
-    ClusterInterfacesPanel,
+    ClusterConfigAdvancedPanle,
+    // ClusterAccessControlRoutingTab,
+    //ClusterAccessControlRoutingTab,
+    ClusterBasicPanel,
+    // ClusterStoreQueuesPanel,
+    // ClusterHealthResourcesNodesPanel,
+    // ClusterImageVolumePanel,
+    // ClusterAccessControlRoutingPanel,
+    // ClusterInterfacesSecurityPanel,
     DialogTitle
   },
   data: function() {
     return {
+      enableAdvance: false,
+      panel: null,
       cluster: new ClusterConfig(),
       show: false,
       forbiddenNames: [],
@@ -78,12 +107,25 @@ export default {
         cluster: {},
         index: {},
         originateName: ""
-      }
+      },
+      tab: null,
+      items: [
+        "Interfaces & Security",
+        "Access & Routing",
+        "Image & Volumes",
+        "Health & Resources",
+        "Store & Queues"
+      ],
+      text:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
   },
   computed: {
     errorState: function() {
       return !this.isValidName;
+    },
+    showPanels: function() {
+      return this.enableAdvance;
     }
   },
   watch: {},
@@ -91,6 +133,7 @@ export default {
     ...mapMutations(["addCluster", "replaceCluster"]),
     ...mapGetters(["getClustersNames"]),
     open(item, forbiddenNames, mode) {
+      this.panel = null;
       this.show = true;
       this.cluster = lodashLang.cloneDeep(item);
       this.mode = mode;
@@ -150,6 +193,7 @@ export default {
           });
         }
         this.show = false;
+        this.panel = null;
       }
     },
     cancel: function() {
@@ -159,14 +203,25 @@ export default {
         this.resolve(null);
       }
       this.show = false;
+      this.panel = null;
+    },
+    actionValue: function(action) {
+      if (action === "cancel") {
+        this.cancel();
+      } else if (action === "submit") {
+        this.submit();
+      }
+    },
+    showAdvance: function(value) {
+      this.enableAdvance = value;
     }
   }
 };
 </script>
 
 <style scoped>
-.v-dialog__content {
-  align-items: flex-start;
-  justify-content: center;
-}
+/*.v-dialog__content {*/
+/*  align-items: flex-start;*/
+/*  justify-content: center;*/
+/*}*/
 </style>
