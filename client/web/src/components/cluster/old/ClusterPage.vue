@@ -1,40 +1,34 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span class="primary--text text-h5 font-weight-bold">
-        KubeMQ Clusters
-      </span>
-    </v-card-title>
-    <v-divider></v-divider>
-    <v-card-text>
-      <v-row>
-        <v-col class="py-2">
-          <v-card flat tile>
-            <v-card-title class="pa-0">
-              <v-btn text color="secondary" @click="add">
-                <span class="secondary--text text-h6 font-weight-bold">
-                  Clusters
-                </span>
-                <v-icon right big>
+  <v-card class="ma-10">
+    <v-toolbar
+      flat
+      color="primary"
+      extended
+      extension-height="15px"
+      elevation-1
+    >
+      <v-toolbar-title class="white--text text-h4 pa-2 ">
+        Build KubeMQ Clusters
+      </v-toolbar-title>
+    </v-toolbar>
+    <v-card flat style="margin-top: -20px;">
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="">
+            <v-toolbar flat color="primary" dense>
+              <v-btn rounded class="secondary--text" color="white" @click="add">
+                <v-icon left small>
                   fa-plus
                 </v-icon>
-              </v-btn>
-            </v-card-title>
-
-            <v-card-text>
-              <v-divider v-show="hasClusters" inset></v-divider>
-              <ClustersList />
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col v-show="!hasClusters" class="py-1">
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-      <v-row no-gutters justify="end" align-content="center" align="center">
-        <div>
+                Cluster</v-btn
+              >
+            </v-toolbar>
+          </div>
+          <div>
+            <ClustersList />
+          </div>
+        </div>
+        <div class="d-flex justify-end ma-3">
           <v-btn
             :disabled="!hasClusters"
             rounded
@@ -47,8 +41,6 @@
             </v-icon>
             Clear All</v-btn
           >
-        </div>
-        <div>
           <v-btn
             :disabled="!hasClusters"
             rounded
@@ -61,11 +53,11 @@
             </v-icon>
             Deploy</v-btn
           >
+          <ClusterConfigDlg ref="clusterDlg"></ClusterConfigDlg>
+          <ConfirmDlg ref="confirm"></ConfirmDlg>
         </div>
-        <ClusterConfigDlg ref="clusterDlg"></ClusterConfigDlg>
-        <ConfirmDlg ref="confirm"></ConfirmDlg>
-      </v-row>
-    </v-card-text>
+      </div>
+    </v-card>
   </v-card>
 </template>
 
@@ -122,10 +114,10 @@ export default {
 /*.container {*/
 /*  border: 1px solid green;*/
 /*}*/
-/*.row {*/
-/*  border: 1px solid red;*/
-/*}*/
-/*.col {*/
-/*  border: 1px solid blue;*/
-/*}*/
+.row {
+  border: 1px solid red;
+}
+.col {
+  border: 1px solid blue;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex col-10">
+  <div class="d-flex">
     <v-autocomplete
       dense
       ref="autocomplete"
@@ -12,9 +12,7 @@
       cache-items
       no-data-text="No integrations were found for this query"
       hide-details
-      append-icon=""
-      placeholder="Add integration"
-      prepend-inner-icon="fa-plus"
+      placeholder="Search for Integration"
       filled
     >
       <template v-slot:selection="data">
@@ -49,10 +47,12 @@
                 </h3>
               </v-list-item-title>
               <v-list-item-subtitle>
-                <span class="econdary--text">{{ data.item.type }}</span>
+                <span class="secondary--text body-2">{{
+                  data.item.category
+                }}</span>
               </v-list-item-subtitle>
               <v-list-item-subtitle>
-                <v-chip-group>
+                <v-chip-group column>
                   <v-chip
                     v-for="(tag, index) in data.item.tags"
                     :key="'b' + tag + index"

@@ -49,9 +49,9 @@ export default {
         return "error";
       }
       if (this.hasContent) {
-        return "secondary";
+        return "primary";
       }
-      return "primary";
+      return "secondary";
     }
   }
 };

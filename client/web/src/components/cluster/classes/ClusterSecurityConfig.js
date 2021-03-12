@@ -7,9 +7,9 @@ class ClusterSecurityConfig extends ClusterConfigItem {
   get tags() {
     switch (this.model.mode) {
       case "tls":
-        return ["TLS Enabled"];
+        return ["TLS"];
       case "mtls":
-        return ["mTLS Enabled"];
+        return ["mTLS"];
     }
     return [];
   }

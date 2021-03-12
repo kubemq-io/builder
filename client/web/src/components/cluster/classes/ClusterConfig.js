@@ -12,24 +12,17 @@ import { ClusterNodesConfig } from "@/components/cluster/classes/ClusterNodesCon
 import { ClusterRoutingConfig } from "@/components/cluster/classes/ClusterRoutingConfig";
 import { ClusterStoreConfig } from "@/components/cluster/classes/ClusterStoreConfig";
 import { ClusterQueuesConfig } from "@/components/cluster/classes/ClusterQueuesConfig";
-import { ClusterBasicMetadataConfig } from "@/components/cluster/classes/ClusterBasicMetadataConfig";
-import { ClusterBasicSpecConfig } from "@/components/cluster/classes/ClusterBasicSpecConfig";
+import { ClusterDeploymentConfig } from "@/components/cluster/classes/ClusterDeploymentConfig";
 
 class ClusterConfig {
-  get basicSpec() {
-    return this._basicSpec;
+  get deployment() {
+    return this._deployment;
   }
 
-  set basicSpec(value) {
-    this._basicSpec = value;
-  }
-  get basicMetadata() {
-    return this._basicMetadata;
+  set deployment(value) {
+    this._deployment = value;
   }
 
-  set basicMetadata(value) {
-    this._basicMetadata = value;
-  }
   get store() {
     return this._store;
   }
@@ -133,23 +126,21 @@ class ClusterConfig {
     this._authentication = value;
   }
   get name() {
-    return `${this.basicMetadata.clusterName}/${this.basicMetadata.clusterNamespace}`;
+    return `${this.deployment.clusterName}/${this.deployment.clusterNamespace}`;
   }
   get clusterName() {
-    return this.basicMetadata.clusterName;
+    return this.deployment.clusterName;
   }
   set clusterName(value) {
-    this.basicMetadata.clusterName = value;
+    this.deployment.clusterName = value;
   }
   get clusterNamespace() {
-    return this.basicMetadata.clusterNamespace;
+    return this.deployment.clusterNamespace;
   }
   set clusterNamespace(value) {
-    this.basicMetadata.clusterNamespace = value;
+    this.deployment.clusterNamespace = value;
   }
-  get basic() {
-    return this._basic;
-  }
+
   hasEdits() {
     return (
       this._authentication.getHasConfigured() ||
@@ -171,21 +162,29 @@ class ClusterConfig {
   tags() {
     let list = [];
 
+    list.push(...this._deployment.tags);
     list.push(...this._grpcInterface.tags);
     list.push(...this._restInterface.tags);
     list.push(...this._apiInterface.tags);
     list.push(...this._authentication.tags);
     list.push(...this._authorization.tags);
-    list.push(...this._authentication.tags);
-    list.push(...this._volume.tags);
+    list.push(...this._routing.tags);
     list.push(...this._security.tags);
-    list.push(...this._resources.tags);
+    list.push(...this._image.tags);
+    list.push(...this._volume.tags);
     list.push(...this._health.tags);
+    list.push(...this._resources.tags);
+    list.push(...this._nodes.tags);
+    list.push(...this._store.tags);
+    list.push(...this._queues.tags);
+
     return list;
   }
   configIsValid() {
+    return this._deployment.isValid && this.configAdvanceIsValid();
+  }
+  configAdvanceIsValid() {
     return (
-      this._basicMetadata &&
       this._authentication.isValid &&
       this._authorization.isValid &&
       this._routing.isValid &&
@@ -202,12 +201,10 @@ class ClusterConfig {
       this._queues.isValid
     );
   }
-  set basic(value) {
-    this._basic = value;
-  }
+
   constructor() {
-    this._basicMetadata = new ClusterBasicMetadataConfig();
-    this._basicSpec = new ClusterBasicSpecConfig();
+    this._deployment = new ClusterDeploymentConfig();
+
     this._authentication = new ClusterAuthenticationConfig();
     this._authorization = new ClusterAuthorizationConfig();
     this._routing = new ClusterRoutingConfig();

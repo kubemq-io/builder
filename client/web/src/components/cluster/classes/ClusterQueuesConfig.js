@@ -5,9 +5,11 @@ class ClusterQueuesConfig extends ClusterConfigItem {
     return this.model.mode !== "default";
   }
   get tags() {
+    if (this.getHasConfigured()) {
+      return ["Queues"];
+    }
     return [];
   }
-
   constructor() {
     super()
       .setName("Queues")

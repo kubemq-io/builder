@@ -3,10 +3,10 @@
     <v-expansion-panel-header class="pa-0 pr-2">
       <v-card-title class="pa-0">
         <v-list-item-avatar :color="getColor" size="25">
-          <span class="white--text">SQ</span>
+          <span class="white--text body-2">IS</span>
         </v-list-item-avatar>
         <h5 :class="`${getColor}--text`">
-          Store & Queues
+          Interfaces & Security
         </h5>
       </v-card-title>
       <template v-slot:actions>
@@ -31,15 +31,33 @@
       <v-row no-gutters>
         <v-col class="pr-1">
           <ClusterConfigItemCard
-            :config="cluster.store"
-            title="Store"
+            :config="cluster.grpcInterface"
+            title="GRPC"
             :show="show"
           ></ClusterConfigItemCard>
         </v-col>
-        <v-col class="pl-1">
+        <v-col class="pr-1 pl-1">
           <ClusterConfigItemCard
-            :config="cluster.queues"
-            title="Queues"
+            :config="cluster.restInterface"
+            title="REST"
+            :show="show"
+          >
+          </ClusterConfigItemCard>
+        </v-col>
+        <v-col class="pr-1 pl-1">
+          <ClusterConfigItemCard
+            :config="cluster.apiInterface"
+            title="API"
+            :show="show"
+          >
+          </ClusterConfigItemCard>
+        </v-col>
+      </v-row>
+      <v-row no-gutters class="mt-2">
+        <v-col cols="8" class="pr-1">
+          <ClusterConfigItemCard
+            :config="cluster.security"
+            title="Security"
             :show="show"
           >
           </ClusterConfigItemCard>
@@ -52,7 +70,7 @@
 import ClusterConfigItemCard from "@/components/cluster/ClusterConfigItemCard";
 
 export default {
-  name: "ClusterStoreQueuesPanel",
+  name: "ClusterInterfacesSecurityPanel",
   components: { ClusterConfigItemCard },
   props: {
     cluster: {},
@@ -60,12 +78,19 @@ export default {
   },
   computed: {
     isValid: function() {
-      return this.cluster.store.isValid && this.cluster.queues.isValid;
+      return (
+        this.cluster.grpcInterface.isValid &&
+        this.cluster.restInterface.isValid &&
+        this.cluster.apiInterface.isValid &&
+        this.cluster.security.isValid
+      );
     },
     hasContent: function() {
       return (
-        this.cluster.store.getHasConfigured() ||
-        this.cluster.queues.getHasConfigured()
+        this.cluster.grpcInterface.getHasConfigured() ||
+        this.cluster.restInterface.getHasConfigured() ||
+        this.cluster.apiInterface.getHasConfigured() ||
+        this.cluster.security.getHasConfigured()
       );
     },
     getColor: function() {
@@ -73,9 +98,9 @@ export default {
         return "error";
       }
       if (this.hasContent) {
-        return "secondary";
+        return "primary";
       }
-      return "primary";
+      return "secondary";
     }
   }
 };

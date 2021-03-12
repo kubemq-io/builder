@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar color="primary" size="25">
-              <span class="white--text">L</span>
+              <span class="white--text body-2">L</span>
             </v-list-item-avatar>
             <h5 class="secondary--text">
               Logging
@@ -26,7 +26,7 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar color="primary" size="25">
-              <span class="white--text">R</span>
+              <span class="white--text body-2">R</span>
             </v-list-item-avatar>
             <h5 class="secondary--text">
               Retries
@@ -47,7 +47,7 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar color="primary" size="25">
-              <span class="white--text">R</span>
+              <span class="white--text body-2">R</span>
             </v-list-item-avatar>
             <h5 class="secondary--text">
               Rate Limiter

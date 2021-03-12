@@ -5,6 +5,9 @@ class ClusterVolumeConfig extends ClusterConfigItem {
     return this.model.mode !== "disabled";
   }
   get tags() {
+    if (this.getHasConfigured()) {
+      return ["Volume"];
+    }
     return [];
   }
 

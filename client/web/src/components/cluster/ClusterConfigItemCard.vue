@@ -1,10 +1,10 @@
 <template>
   <v-card elevation="1" class="pa-0 ">
     <v-card-title class="pa-0">
-      <v-list-item-avatar color="primary" size="20">
+      <v-list-item-avatar color="secondary" size="20">
         <span class="white--text body-2">{{ initial }}</span>
       </v-list-item-avatar>
-      <h5 class="primary--text font-weight-regular">
+      <h5 class="secondary--text font-weight-regular">
         {{ title }}
       </h5>
     </v-card-title>

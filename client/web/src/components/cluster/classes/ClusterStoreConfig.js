@@ -5,6 +5,9 @@ class ClusterStoreConfig extends ClusterConfigItem {
     return this.model.mode !== "default";
   }
   get tags() {
+    if (this.getHasConfigured()) {
+      return ["Store"];
+    }
     return [];
   }
 

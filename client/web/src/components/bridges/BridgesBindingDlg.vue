@@ -16,7 +16,6 @@
                   :error="errorState"
                 ></v-text-field>
               </v-col>
-
               <v-col cols="12" class="py-0">
                 <BridgesBindingProperties
                   ref="properties"
@@ -42,7 +41,6 @@
                   ></BridgesBindingMiddlewares>
                 </v-card-text>
               </v-col>
-
               <v-col cols="12">
                 <v-row justify="end" align-content="center" align="center">
                   <div class="pr-1">

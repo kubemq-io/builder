@@ -1,124 +1,135 @@
 <template>
   <div class="pt-0">
-    <v-list two-line>
-      <v-card min-height="45vh" v-if="bindings.length === 0" flat>
-        <v-card-text class="pa-15">
-          <v-container class="text-center">
-            <span class="secondary--text subtitle-1 font-weight-medium"
-              >No Bridges</span
-            >
-          </v-container>
-        </v-card-text>
-      </v-card>
-      <v-card min-height="45vh" v-if="bindings.length !== 0" flat tile>
-        <template v-for="(binding, index) in bindings">
-          <v-list-item :key="'c' + index">
-            <v-list-item-avatar>
-              <v-avatar class="secondary" size="35">
-                <span class="white--text headline">{{ index + 1 }}</span>
-              </v-avatar>
-            </v-list-item-avatar>
-            <v-list-item-content class="pb-0">
-              <v-list-item-title>
-                <h3 class="secondary--text">
-                  {{ binding.Name }}
-                </h3>
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                <div
-                  class="d-flex justify-start align-stretch align-content-center pa-0"
-                >
-                  <v-col class="side pa-0 " cols="5">
-                    <div>
-                      <h3 class="secondary-text">
-                        {{ binding.SourceSide.Type }}
-                      </h3>
-                    </div>
-                    <div>
-                      <v-chip-group
-                        v-for="(connection,
-                        index) in binding.SourceSide.getConnections()"
-                        :key="'s' + connection + index"
-                      >
-                        <v-chip color="primary" x-small outlined class="my-0">
-                          {{ connection.address }}
-                        </v-chip>
-                        <v-chip color="primary" x-small outlined class="my-0">
-                          {{ connection.channel }}
-                        </v-chip>
-                      </v-chip-group>
-                    </div>
-                  </v-col>
-
-                  <v-col
-                    class="d-flex   flex-column justify-center align-center align-content-center pa-0"
-                    cols="1"
-                  >
-                    <v-list-item-avatar color="secondary" size="20">
-                      <v-icon size="15" color="white">
-                        fa-arrow-right
-                      </v-icon>
-                    </v-list-item-avatar>
-                  </v-col>
-                  <v-col class="side pa-0" cols="5">
-                    <h3 class="secondary--text">
-                      {{ binding.TargetSide.Type }}
+    <v-card flat tile min-height="45vh">
+      <template v-for="(binding, index) in bindings">
+        <v-list-item :key="'c' + index" class="px-0">
+          <v-list-item-avatar>
+            <v-avatar class="secondary" size="35">
+              <span class="white--text headline">{{ index + 1 }}</span>
+            </v-avatar>
+          </v-list-item-avatar>
+          <v-list-item-content class="pb-1">
+            <v-list-item-title>
+              <h3 class="secondary--text">
+                {{ binding.Name }}
+              </h3>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              <div
+                class="d-flex justify-start align-stretch align-content-center pa-0"
+              >
+                <v-col class="side pa-0 " cols="5">
+                  <div>
+                    <h3 class="secondary-text">
+                      {{ binding.SourceSide.Type }}
                     </h3>
-                    <div>
-                      <v-chip-group
-                        v-for="(connection,
-                        index) in binding.TargetSide.getConnections()"
-                        :key="'t' + connection + index"
+                  </div>
+                  <div>
+                    <v-chip-group
+                      v-for="(connection,
+                      index) in binding.SourceSide.getConnections()"
+                      :key="'s' + connection + index"
+                      column
+                    >
+                      <v-chip
                         color="primary"
+                        x-small
+                        outlined
+                        class="my-0 px-1"
                       >
-                        <v-chip color="primary" x-small outlined class="my-0">
-                          {{ connection.address }}
-                        </v-chip>
-                        <v-chip color="primary" x-small outlined class="my-0">
-                          {{ connection.channel }}
-                        </v-chip>
-                      </v-chip-group>
-                    </div>
-                  </v-col>
-                </div>
-              </v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action class="ma-0">
-              <div class="d-flex justify-end align-end align-content-end pt-5">
-                <v-btn icon>
-                  <v-icon
-                    size="15"
-                    color="secondary"
-                    @click.stop="cloneBridge(binding)"
-                  >
-                    fa-clone
-                  </v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon
-                    size="15"
-                    color="secondary"
-                    @click.stop="editIntegration(binding)"
-                  >
-                    fa-edit
-                  </v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon
-                    size="15"
-                    color="secondary"
-                    @click.stop="delIntegration(binding)"
-                  >
-                    fa-trash-alt
-                  </v-icon>
-                </v-btn>
+                        {{ connection.address }}
+                      </v-chip>
+                      <v-chip
+                        color="primary"
+                        x-small
+                        outlined
+                        class="my-0 px-1"
+                      >
+                        {{ connection.channel }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
+                </v-col>
+                <v-col
+                  class="d-flex   flex-column justify-center align-center align-content-center pa-0"
+                  cols="1"
+                >
+                  <v-list-item-avatar color="secondary" size="20">
+                    <v-icon size="15" color="white">
+                      fa-arrow-right
+                    </v-icon>
+                  </v-list-item-avatar>
+                </v-col>
+                <v-col class="side pa-0" cols="5">
+                  <h3 class="secondary--text">
+                    {{ binding.TargetSide.Type }}
+                  </h3>
+                  <div>
+                    <v-chip-group
+                      v-for="(connection,
+                      index) in binding.TargetSide.getConnections()"
+                      :key="'t' + connection + index"
+                      color="primary"
+                      column
+                    >
+                      <v-chip
+                        color="primary"
+                        x-small
+                        outlined
+                        class="my-0 px-1"
+                      >
+                        {{ connection.address }}
+                      </v-chip>
+                      <v-chip
+                        color="primary"
+                        x-small
+                        outlined
+                        class="my-0 px-1"
+                      >
+                        {{ connection.channel }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
+                </v-col>
               </div>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider :key="'d' + index" inset></v-divider>
-        </template>
-      </v-card>
-    </v-list>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action class="ma-0">
+            <div class="d-flex justify-end align-end align-content-end pt-5">
+              <v-btn icon>
+                <v-icon
+                  size="15"
+                  color="secondary"
+                  @click.stop="cloneBridge(binding)"
+                >
+                  fa-clone
+                </v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon
+                  size="15"
+                  color="secondary"
+                  @click.stop="editIntegration(binding)"
+                >
+                  fa-edit
+                </v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon
+                  size="15"
+                  color="secondary"
+                  @click.stop="delIntegration(binding)"
+                >
+                  fa-trash-alt
+                </v-icon>
+              </v-btn>
+            </div>
+          </v-list-item-action>
+        </v-list-item>
+        <v-divider :key="'d' + index"></v-divider>
+      </template>
+    </v-card>
+
     <BridgesBindingDlg ref="bindingDlg"></BridgesBindingDlg>
     <ConfirmDlg ref="confirm"></ConfirmDlg>
   </div>

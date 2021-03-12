@@ -8,6 +8,9 @@ class ClusterImageConfig extends ClusterConfigItem {
     );
   }
   get tags() {
+    if (this.getHasConfigured()) {
+      return ["Image"];
+    }
     return [];
   }
 

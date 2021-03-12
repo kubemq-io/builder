@@ -1,105 +1,95 @@
 <template>
   <div class="pt-0">
-    <v-list two-line>
-      <v-card min-height="45vh" flat v-if="integrations.length === 0">
-        <v-card-text class="pa-15">
-          <v-container class="text-center">
-            <span class="secondary--text subtitle-1 font-weight-medium"
-              >No Integration</span
-            >
-          </v-container>
-        </v-card-text>
-      </v-card>
-      <v-card min-height="45vh" v-if="integrations.length !== 0" flat tile>
-        <template v-for="(integration, index) in integrations">
-          <v-list-item :key="'c' + index">
-            <v-list-item-avatar>
-              <v-avatar color="secondary" size="35">
-                <span class="white--text headline">{{ index + 1 }}</span>
-              </v-avatar>
-            </v-list-item-avatar>
-            <v-list-item-content class="pb-0">
-              <v-list-item-title>
-                <h3 class="secondary--text">
-                  {{ integration.Name }}
-                </h3>
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                <div
-                  class="d-flex justify-start align-center align-content-center"
-                >
-                  <div class="d-flex flex-column justify-start col-5 pa-0">
-                    <h3 class="secondary--text pb-1">
-                      {{ integration.SourceSide.Name }}
-                    </h3>
-                    <div>
-                      <v-chip x-small color="primary" outlined>
-                        {{ integration.SourceSide.Category }}
-                      </v-chip>
-                    </div>
-                  </div>
-                  <div class="col-1 pa-0">
-                    <v-list-item-avatar color="secondary" size="20">
-                      <v-icon size="15" color="white">
-                        fa-arrow-right
-                      </v-icon>
-                    </v-list-item-avatar>
-                  </div>
-                  <div class="d-flex flex-column justify-start col-5 pa-0">
-                    <h3 class="secondary--text pb-1">
-                      {{ integration.TargetSide.Name }}
-                    </h3>
-                    <div>
-                      <v-chip x-small color="primary" outlined>
-                        {{ integration.TargetSide.Category }}
-                      </v-chip>
-                    </div>
+    <v-card min-height="45vh" flat tile>
+      <template v-for="(integration, index) in integrations">
+        <v-list-item :key="'c' + index" class="px-0">
+          <v-list-item-avatar>
+            <v-avatar color="secondary" size="35">
+              <span class="white--text headline">{{ index + 1 }}</span>
+            </v-avatar>
+          </v-list-item-avatar>
+          <v-list-item-content class="pb-1">
+            <v-list-item-title>
+              <h3 class="secondary--text">
+                {{ integration.Name }}
+              </h3>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              <div
+                class="d-flex justify-start align-center align-content-center"
+              >
+                <div class="d-flex flex-column justify-start col-5 pa-0">
+                  <h3 class="secondary--text pb-1">
+                    {{ integration.SourceSide.Name }}
+                  </h3>
+                  <div>
+                    <v-chip x-small color="primary" outlined class="my-0 px-1">
+                      {{ integration.SourceSide.Category }}
+                    </v-chip>
                   </div>
                 </div>
-              </v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action class="ma-0">
-              <div class="d-flex justify-end align-end align-content-end pt-5">
-                <div>
-                  <v-btn icon>
-                    <v-icon
-                      size="15"
-                      color="secondary"
-                      @click.stop="cloneIntegration(integration)"
-                    >
-                      fa-clone
+                <div class="col-1 pa-0">
+                  <v-list-item-avatar color="secondary" size="20">
+                    <v-icon size="15" color="white">
+                      fa-arrow-right
                     </v-icon>
-                  </v-btn>
+                  </v-list-item-avatar>
                 </div>
-                <div>
-                  <v-btn icon>
-                    <v-icon
-                      size="15"
-                      color="secondary"
-                      @click.stop="editIntegration(integration)"
-                    >
-                      fa-edit
-                    </v-icon>
-                  </v-btn>
-                </div>
-                <div>
-                  <v-btn icon>
-                    <v-icon
-                      size="15"
-                      color="secondary"
-                      @click.stop="delIntegration(integration)"
-                    >
-                      fa-trash-alt
-                    </v-icon>
-                  </v-btn>
+                <div class="d-flex flex-column justify-start col-5 pa-0">
+                  <h3 class="secondary--text pb-1">
+                    {{ integration.TargetSide.Name }}
+                  </h3>
+                  <div>
+                    <v-chip x-small color="primary" outlined class="my-0 px-1">
+                      {{ integration.TargetSide.Category }}
+                    </v-chip>
+                  </div>
                 </div>
               </div>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider :key="'d' + index" inset></v-divider>
-        </template>
-      </v-card>
-    </v-list>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action class="ma-0">
+            <div class="d-flex justify-end align-end align-content-end pt-5">
+              <div>
+                <v-btn icon>
+                  <v-icon
+                    size="15"
+                    color="secondary"
+                    @click.stop="cloneIntegration(integration)"
+                  >
+                    fa-clone
+                  </v-icon>
+                </v-btn>
+              </div>
+              <div>
+                <v-btn icon>
+                  <v-icon
+                    size="15"
+                    color="secondary"
+                    @click.stop="editIntegration(integration)"
+                  >
+                    fa-edit
+                  </v-icon>
+                </v-btn>
+              </div>
+              <div>
+                <v-btn icon>
+                  <v-icon
+                    size="15"
+                    color="secondary"
+                    @click.stop="delIntegration(integration)"
+                  >
+                    fa-trash-alt
+                  </v-icon>
+                </v-btn>
+              </div>
+            </div>
+          </v-list-item-action>
+        </v-list-item>
+        <v-divider :key="'d' + index"></v-divider>
+      </template>
+    </v-card>
+
     <IntegrationsBindingDlg ref="bindingDlg"></IntegrationsBindingDlg>
     <ConfirmDlg ref="confirm"></ConfirmDlg>
   </div>

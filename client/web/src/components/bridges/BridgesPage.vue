@@ -1,57 +1,80 @@
 <template>
   <v-card flat>
-    <v-toolbar flat color="primary" extended extension-height="0px">
-      <v-toolbar-title class="white--text ">
-        Configure KubeMQ Bridges
-      </v-toolbar-title>
-    </v-toolbar>
-    <v-card flat style="margin-top: -00px;">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-column">
-          <div class="col-12 pb-0">
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="deploymentName"
-                  label="Deployment Name"
-                  :rules="rules"
-                  hide-details="auto"
-                  color="secondary"
-                  ref="deploymentName"
-                ></v-text-field>
-              </v-col>
-              <v-col>
-                <v-text-field
-                  label="Deployment Namespace"
-                  v-model="deploymentNamespace"
-                  :rules="rules"
-                  hide-details="auto"
-                  color="secondary"
-                  ref="deploymentNamespace"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </div>
-          <div class="pa-1">
-            <v-subheader>
-              <h3 class="secondary--text font-weight-bold pr-1">Bridges</h3>
-              <v-fab-transition>
-                <v-btn color="secondary" fab x-small @click="add">
-                  <v-icon>fa-plus</v-icon>
-                </v-btn>
-              </v-fab-transition>
-            </v-subheader>
-            <v-divider inset></v-divider>
+    <v-card-title>
+      <span class="primary--text text-h5 font-weight-bold">
+        KubeMQ Bridges
+      </span>
+    </v-card-title>
+    <v-divider></v-divider>
+    <v-card-text>
+      <v-row>
+        <v-col class="py-1">
+          <v-card flat tile>
+            <v-card-title>
+              <span class="secondary--text font-weight-bold pr-1">
+                Deployment
+              </span>
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col cols="4" class="py-1">
+                  <v-text-field
+                    v-model="deploymentName"
+                    label="Name"
+                    :rules="rules"
+                    hide-details="auto"
+                    color="secondary"
+                    ref="deploymentName"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4" class="py-1">
+                  <v-text-field
+                    label="Namespace"
+                    v-model="deploymentNamespace"
+                    :rules="rules"
+                    hide-details="auto"
+                    color="secondary"
+                    ref="deploymentNamespace"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="py-1">
+          <v-card flat tile>
+            <v-card-title class="pa-0">
+              <v-btn text color="secondary" @click="add">
+                <span class="secondary--text text-h6 font-weight-bold">
+                  Bridges
+                </span>
+                <v-icon right big>
+                  fa-plus
+                </v-icon>
+              </v-btn>
+            </v-card-title>
 
-            <BridgesList />
-          </div>
-        </div>
-        <div class="d-flex justify-end ma-3">
+            <v-card-text>
+              <v-divider v-show="hasBridges" inset></v-divider>
+              <BridgesList />
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col v-show="!hasBridges" class="py-1">
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row no-gutters justify="end" align-content="center" align="center">
+        <div>
           <v-btn
             :disabled="!hasBridges"
             rounded
             text
-            color="secondary"
+            color="primary"
             @click.stop="clearAll()"
           >
             <v-icon left small>
@@ -59,6 +82,8 @@
             </v-icon>
             Clear All</v-btn
           >
+        </div>
+        <div>
           <v-btn
             :disabled="!hasBridges"
             rounded
@@ -71,11 +96,11 @@
             </v-icon>
             Deploy</v-btn
           >
-          <BridgesBindingDlg ref="bindingDlg"></BridgesBindingDlg>
-          <ConfirmDlg ref="confirm"></ConfirmDlg>
         </div>
-      </div>
-    </v-card>
+        <BridgesBindingDlg ref="bindingDlg" />
+        <ConfirmDlg ref="confirm"></ConfirmDlg>
+      </v-row>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -83,8 +108,8 @@
 import { mapGetters, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 import BridgesList from "@/components/bridges/BridgesList";
-import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
 import { BridgesBinding } from "@/components/bridges/bridges";
+import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
 
 export default {
   name: "BridgesPage",

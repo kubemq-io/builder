@@ -1,48 +1,78 @@
 <template>
   <v-card flat>
-    <v-toolbar color="primary" extended flat extension-height="0px">
-      <v-toolbar-title class="white--text text-capitalize">
-        Configure KubeMQ {{ type }}
-      </v-toolbar-title>
-    </v-toolbar>
-    <v-card flat>
-      <div class="d-flex flex-column ">
-        <div class="col-12 pb-0">
-          <v-row>
-            <v-col>
-              <v-text-field
-                v-model="deploymentName"
-                label="Deployment Name"
-                :rules="rules"
-                hide-details="auto"
-                color="secondary"
-                ref="deploymentName"
-              ></v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                label="Deployment Namespace"
-                v-model="deploymentNamespace"
-                :rules="rules"
-                hide-details="auto"
-                color="secondary"
-                ref="deploymentNamespace"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </div>
-        <div class="pa-1">
-          <v-subheader>
-            <h3 class="secondary--text font-weight-bold text-capitalize">
-              {{ type }}
-            </h3>
-            <IntegrationSearch :type="type" />
-          </v-subheader>
-        </div>
-
-        <IntegrationList :type="type"></IntegrationList>
-
-        <div class="d-flex justify-end ma-3">
+    <v-card-title>
+      <span class="primary--text text-h5 text-capitalize font-weight-bold">
+        KubeMQ {{ type }}
+      </span>
+    </v-card-title>
+    <v-divider></v-divider>
+    <v-card-text>
+      <v-row>
+        <v-col class="py-1">
+          <v-card flat tile>
+            <v-card-title>
+              <span class="secondary--text font-weight-bold pr-1">
+                Deployment
+              </span>
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col cols="4" class="py-1">
+                  <v-text-field
+                    v-model="deploymentName"
+                    label="Name"
+                    :rules="rules"
+                    hide-details="auto"
+                    color="secondary"
+                    ref="deploymentName"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4" class="py-1">
+                  <v-text-field
+                    label="Namespace"
+                    v-model="deploymentNamespace"
+                    :rules="rules"
+                    hide-details="auto"
+                    color="secondary"
+                    ref="deploymentNamespace"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="py-1">
+          <v-card flat tile>
+            <v-card-title
+              class="pa-0 pb-1 d-flex justify-center align-center align-content-center"
+            >
+              <div class="pa-0 pl-2 pr-2">
+                <span
+                  class="secondary--text text-h6 font-weight-bold text-capitalize"
+                >
+                  {{ type }}
+                </span>
+              </div>
+              <div class=" flex-grow-1">
+                <IntegrationSearch :type="type" />
+              </div>
+            </v-card-title>
+            <v-card-text>
+              <v-divider v-show="hasIntegration" inset></v-divider>
+              <IntegrationList :type="type"></IntegrationList>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col v-show="!hasIntegration" class="py-1">
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row no-gutters justify="end" align-content="center" align="center">
+        <div>
           <v-btn
             :disabled="!hasIntegration"
             rounded
@@ -55,6 +85,8 @@
             </v-icon>
             Clear All</v-btn
           >
+        </div>
+        <div>
           <v-btn
             :disabled="!hasIntegration"
             rounded
@@ -67,10 +99,10 @@
             </v-icon>
             Deploy</v-btn
           >
-          <ConfirmDlg ref="confirm"></ConfirmDlg>
         </div>
-      </div>
-    </v-card>
+        <ConfirmDlg ref="confirm"></ConfirmDlg>
+      </v-row>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -82,7 +114,11 @@ import IntegrationList from "@/components/integrations/IntgerationsList";
 
 export default {
   name: "IntegrationsPage",
-  components: { IntegrationList, IntegrationSearch, ConfirmDlg },
+  components: {
+    IntegrationList,
+    IntegrationSearch,
+    ConfirmDlg
+  },
   props: {
     type: String
   },

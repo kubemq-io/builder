@@ -1,76 +1,78 @@
 <template>
   <v-dialog v-model="show" scrollable persistent>
-    <v-card tile>
-      <v-card-title class="pa-0">
-        <DialogTitle :title="bindingModel.Title" :mode="mode" />
-      </v-card-title>
+    <v-card tile class="pa-0">
+      <DialogTitle :title="bindingModel.Title" :mode="mode" />
       <v-card-text>
-        <v-row class="flex-column">
-          <v-col cols="6" class="pb-0">
-            <v-text-field
-              v-model="bindingModel.Name"
-              clearable
-              label="Integration Name"
-              :rules="[this.validateBindingName]"
-              ref="inputName"
-              :error="errorState"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" class="py-0">
-            <IntegrationsBindingProperties
-              ref="properties"
-              :binding="bindingModel"
-              :options="options"
-              :show="show"
-            />
-          </v-col>
-          <v-col cols="12" class="py-0">
-            <v-switch
-              v-model="setMiddleware"
-              label="Middlewares"
-              flat
-              dense
-              color="primary"
-              class="mt-1"
-            ></v-switch>
-            <v-card-text v-if="setMiddleware" class="pa-0 pb-2">
-              <IntegrationsBindingMiddlewares
-                :config="bindingModel.Middlewares"
-                :show="show"
-              ></IntegrationsBindingMiddlewares>
-            </v-card-text>
-          </v-col>
-          <v-col cols="12">
-            <v-row justify="end" align-content="center" align="center">
-              <div class="pr-1">
-                <v-btn color="secondary" text rounded @click.native="cancel"
-                  >CANCEL</v-btn
-                >
-              </div>
-              <div class="pr-2">
-                <v-btn
+        <v-card flat tile>
+          <v-card-text>
+            <v-row class="flex-column">
+              <v-col cols="6" class="pb-0">
+                <v-text-field
+                  v-model="bindingModel.Name"
+                  clearable
+                  label="Integration Name"
+                  :rules="[this.validateBindingName]"
+                  ref="inputName"
+                  :error="errorState"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="py-0">
+                <IntegrationsBindingProperties
+                  ref="properties"
+                  :binding="bindingModel"
+                  :options="options"
+                  :show="show"
+                />
+              </v-col>
+              <v-col cols="12" class="py-0">
+                <v-switch
+                  v-model="setMiddleware"
+                  label="Middlewares"
+                  flat
+                  dense
                   color="primary"
-                  v-if="mode === 'add'"
-                  outlined
-                  rounded
-                  @click="submit"
-                  >ADD</v-btn
-                >
-                <v-btn
-                  color="primary"
-                  class="pr-2"
-                  v-if="mode === 'edit'"
-                  outlined
-                  rounded
-                  @click="submit"
-                  >EDIT</v-btn
-                >
-              </div>
+                  class="mt-1"
+                ></v-switch>
+                <v-card-text v-if="setMiddleware" class="pa-0 pb-2">
+                  <IntegrationsBindingMiddlewares
+                    :config="bindingModel.Middlewares"
+                    :show="show"
+                  ></IntegrationsBindingMiddlewares>
+                </v-card-text>
+              </v-col>
+              <v-col cols="12">
+                <v-row justify="end" align-content="center" align="center">
+                  <div class="pr-1">
+                    <v-btn color="secondary" text rounded @click.native="cancel"
+                      >CANCEL</v-btn
+                    >
+                  </div>
+                  <div class="pr-2">
+                    <v-btn
+                      color="primary"
+                      v-if="mode === 'add'"
+                      outlined
+                      rounded
+                      @click="submit"
+                      >ADD</v-btn
+                    >
+                    <v-btn
+                      color="primary"
+                      class="pr-2"
+                      v-if="mode === 'edit'"
+                      outlined
+                      rounded
+                      @click="submit"
+                      >EDIT</v-btn
+                    >
+                  </div>
+                </v-row>
+              </v-col>
             </v-row>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
+          </v-card-text>
+        </v-card>
+      </v-card-text> </v-card
+    >s
   </v-dialog>
 </template>
 

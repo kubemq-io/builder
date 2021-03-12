@@ -5,7 +5,7 @@ class ClusterRoutingConfig extends ClusterConfigItem {
     return this.model.mode !== "disabled";
   }
   get tags() {
-    if (this.mode !== "disabled") {
+    if (this.getHasConfigured()) {
       return ["Routing"];
     }
     return [];

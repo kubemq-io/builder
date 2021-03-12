@@ -1,16 +1,22 @@
 <template>
   <div class="pt-0">
-    <v-card flat tile min-height="45vh">
+    <v-list two-line>
+      <v-subheader>
+        <h3 class="primary--text">CLUSTERS</h3>
+      </v-subheader>
+      <v-card-text v-if="clusters.length === 0" class="text-center">
+        <h5 class="primary--text body-2">No Clusters</h5>
+      </v-card-text>
       <template v-for="(cluster, index) in clusters">
         <v-list-item :key="'c' + index">
           <v-list-item-avatar>
-            <v-avatar class="secondary" size="35">
+            <v-avatar class="primary" size="35">
               <span class="white--text headline">{{ index + 1 }}</span>
             </v-avatar>
           </v-list-item-avatar>
           <v-list-item-content class="pb-0">
             <v-list-item-title>
-              <h3 class="secondary--text">
+              <h3 class="primary--text">
                 {{ cluster.clusterName }}
               </h3>
             </v-list-item-title>
@@ -20,31 +26,19 @@
               </h3>
             </v-list-item-subtitle>
             <v-list-item-subtitle class="pb-1">
-              <v-chip-group active-class="primary--text" column>
-                <v-chip
-                  v-for="(tag, index) in cluster.tags()"
-                  :key="'a' + tag + index"
-                  x-small
-                  outlined
-                  class="my-0 px-1"
-                  color="primary"
-                >
-                  {{ tag }}
-                </v-chip>
-              </v-chip-group>
+              <v-chip
+                v-for="(tag, index) in cluster.tags()"
+                :key="'a' + tag + index"
+                x-small
+                outlined
+                class="mr-1"
+              >
+                {{ tag }}
+              </v-chip>
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action class="ma-0">
             <div class="d-flex justify-start align-center align-content-center">
-              <v-btn icon>
-                <v-icon
-                  size="15"
-                  color="secondary"
-                  @click.stop="cloneCluster(cluster)"
-                >
-                  fa-clone
-                </v-icon>
-              </v-btn>
               <v-btn icon>
                 <v-icon
                   size="15"
@@ -54,7 +48,15 @@
                   fa-edit
                 </v-icon>
               </v-btn>
-
+              <v-btn icon>
+                <v-icon
+                  size="15"
+                  color="secondary"
+                  @click.stop="cloneCluster(cluster)"
+                >
+                  fa-clone
+                </v-icon>
+              </v-btn>
               <v-btn icon>
                 <v-icon
                   size="15"
@@ -69,7 +71,8 @@
         </v-list-item>
         <v-divider :key="'d' + index" inset></v-divider>
       </template>
-    </v-card>
+    </v-list>
+    <v-divider v-if="clusters.length === 0" inset></v-divider>
     <ClusterConfigDlg ref="clusterDlg"></ClusterConfigDlg>
     <ConfirmDlg ref="confirm"></ConfirmDlg>
   </div>

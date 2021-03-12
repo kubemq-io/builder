@@ -5,6 +5,9 @@ class ClusterNodesConfig extends ClusterConfigItem {
     return this.model.mode !== "disabled";
   }
   get tags() {
+    if (this.getHasConfigured()) {
+      return ["Nodes Selectors"];
+    }
     return [];
   }
 

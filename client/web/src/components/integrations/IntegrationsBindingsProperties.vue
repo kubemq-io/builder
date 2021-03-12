@@ -4,7 +4,7 @@
       <v-card class="pa-0 ">
         <v-card-title class="pa-0">
           <v-list-item-avatar color="primary" size="25">
-            <span class="white--text body-1">{{ source.Initial }}</span>
+            <span class="white--text body-2">{{ source.Initial }}</span>
           </v-list-item-avatar>
           <h5 class="secondary--text">
             {{ source.Title }}
@@ -32,7 +32,7 @@
       <v-card class="pa-0">
         <v-card-title class="pa-0 pb-2">
           <v-list-item-avatar color="primary" size="25">
-            <span class="white--text body-1">{{ target.Initial }}</span>
+            <span class="white--text body-2">{{ target.Initial }}</span>
           </v-list-item-avatar>
           <h5 class="secondary--text">
             {{ target.Title }}
