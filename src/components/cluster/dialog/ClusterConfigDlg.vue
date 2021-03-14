@@ -142,7 +142,7 @@ export default {
       }
     },
     submit: function() {
-      // add validations to all configs
+      // showAdd validations to all configs
       const configIsValid = true;
       if (configIsValid) {
         if (this.mode === "add") {

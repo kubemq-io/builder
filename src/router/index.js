@@ -2,8 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import IntegrationsPage from "@/components/integrations/IntegrationsPage";
 import BridgesPage from "@/components/bridges/BridgesPage";
-import ClusterPageNew from "@/components/cluster/ClusterPage";
+
 import HomePage from "@/pages/HomePage";
+import ClustersPage from "@/pages/ClustersPage";
 
 Vue.use(VueRouter);
 
@@ -16,7 +17,7 @@ const routes = [
   {
     path: "/clusters",
     name: "KubeMQ Clusters",
-    component: ClusterPageNew
+    component: ClustersPage
   },
   {
     path: "/targets",

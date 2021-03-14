@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-0">
-    <v-card flat tile min-height="45vh">
+  <div>
+    <v-card flat tile>
       <template v-for="(cluster, index) in clusters">
         <v-list-item :key="'c' + index">
           <v-list-item-avatar>
@@ -67,7 +67,11 @@
             </div>
           </v-list-item-action>
         </v-list-item>
-        <v-divider :key="'d' + index" inset></v-divider>
+        <v-divider
+          :key="'d' + index"
+          inset
+          class="secondary lighten-5"
+        ></v-divider>
       </template>
     </v-card>
     <ClusterConfigDlg ref="clusterDlg"></ClusterConfigDlg>

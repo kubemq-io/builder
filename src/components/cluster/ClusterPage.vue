@@ -1,72 +1,6 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span class="primary--text text-h5 font-weight-bold">
-        KubeMQ Clusters
-      </span>
-    </v-card-title>
-    <v-divider></v-divider>
-    <v-card-text>
-      <v-row>
-        <v-col class="py-2">
-          <v-card flat tile>
-            <v-card-title class="pa-0">
-              <v-btn text color="secondary" @click="add">
-                <span class="secondary--text text-h6 font-weight-bold">
-                  Clusters
-                </span>
-                <v-icon right big>
-                  fa-plus
-                </v-icon>
-              </v-btn>
-            </v-card-title>
 
-            <v-card-text>
-              <v-divider v-show="hasClusters" inset></v-divider>
-              <ClustersList />
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col v-show="!hasClusters" class="py-1">
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-      <v-row no-gutters justify="end" align-content="center" align="center">
-        <div>
-          <v-btn
-            :disabled="!hasClusters"
-            rounded
-            text
-            color="secondary"
-            @click.stop="clearAll()"
-          >
-            <v-icon left small>
-              fa-trash-alt
-            </v-icon>
-            Clear All</v-btn
-          >
-        </div>
-        <div>
-          <v-btn
-            :disabled="!hasClusters"
-            rounded
-            outlined
-            color="primary"
-            @click="deploy"
-          >
-            <v-icon left small>
-              fa-download
-            </v-icon>
-            Deploy</v-btn
-          >
-        </div>
-        <ClusterConfigDlg ref="clusterDlg"></ClusterConfigDlg>
-        <ConfirmDlg ref="confirm"></ConfirmDlg>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -77,7 +11,7 @@ import ClusterConfigDlg from "@/components/cluster/dialog/ClusterConfigDlg";
 import ClustersList from "@/components/cluster/ClustersList";
 
 export default {
-  name: "ClustersPage",
+  name: "ClustersPageOld",
   components: { ClustersList, ClusterConfigDlg, ConfirmDlg },
   data() {
     return {};
