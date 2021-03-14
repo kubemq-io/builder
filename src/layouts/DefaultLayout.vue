@@ -14,12 +14,7 @@
           </v-avatar>
           <h1 class="primary--text pl-2">KubeMQ Build & Deploy</h1>
         </div>
-
-        <div
-          class="d-flex flex-grow-1 justify-center align-center align-content-space-around"
-        >
-          <router-view :key="$route.fullPath"> </router-view>
-        </div>
+        <router-view :key="$route.fullPath"> </router-view>
       </v-card>
     </v-container>
   </v-main>
