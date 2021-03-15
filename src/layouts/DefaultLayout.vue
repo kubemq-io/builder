@@ -38,10 +38,12 @@
       >
         <v-card-text>
           <div class="d-flex justify-start align-end align-content-end">
-            <v-avatar size="65">
+            <v-avatar size="65" @click="$router.push(`/`)">
               <v-img src="@/assets/logo.svg" alt="logo" />
             </v-avatar>
-            <h1 class="primary--text pl-2">KubeMQ Build & Deploy</h1>
+            <h1 class="primary--text pl-2">
+              KubeMQ Build & Deploy
+            </h1>
           </div>
         </v-card-text>
         <router-view :key="$route.fullPath"> </router-view>
@@ -76,4 +78,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-avatar {
+  cursor: pointer;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="row-pointer pa-1 pl-2" @click="toggleShowAdvanced">
+    <v-card-title class="row-pointer pa-1 pl-2">
       <h3 :class="`${getColor}--text pr-1`">
         Advanced
       </h3>
@@ -57,7 +57,7 @@ export default {
   },
   data: function() {
     return {
-      showAdvanced: false
+      showAdvanced: true
     };
   },
   computed: {
