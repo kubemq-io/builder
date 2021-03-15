@@ -26,7 +26,7 @@ export default {
   components: { VJsf },
   props: {
     cluster: {},
-    show: {}
+    show: Boolean
   },
   data: function() {
     return {};

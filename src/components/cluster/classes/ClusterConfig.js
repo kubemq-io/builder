@@ -15,6 +15,13 @@ import { ClusterQueuesConfig } from "@/components/cluster/classes/ClusterQueuesC
 import { ClusterDeploymentConfig } from "@/components/cluster/classes/ClusterDeploymentConfig";
 
 class ClusterConfig {
+  get id() {
+    return this._id;
+  }
+
+  set id(value) {
+    this._id = value;
+  }
   get deployment() {
     return this._deployment;
   }
@@ -203,6 +210,7 @@ class ClusterConfig {
   }
 
   constructor() {
+    this._id = makeid(16);
     this._deployment = new ClusterDeploymentConfig();
 
     this._authentication = new ClusterAuthenticationConfig();
@@ -221,5 +229,14 @@ class ClusterConfig {
     this._queues = new ClusterQueuesConfig();
   }
 }
-
+const makeid = function(length) {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
 export { ClusterConfig };

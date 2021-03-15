@@ -55,10 +55,16 @@ export default {
   },
   computed: {
     isValid: function() {
-      return this.cluster.configAdvanceIsValid();
+      if (this.cluster) {
+        return this.cluster.configAdvanceIsValid();
+      }
+      return true;
     },
     hasEdits: function() {
-      return this.cluster.hasEdits();
+      if (this.cluster) {
+        return this.cluster.hasEdits();
+      }
+      return true;
     },
     toShow: function() {
       return this.show;

@@ -1,5 +1,20 @@
 <template>
   <v-main class="secondary lighten-5">
+    <v-snackbar
+      v-model="toast.show"
+      :timeout="toast.timeout"
+      :color="toast.color"
+      bottom
+    >
+      {{ toast.message }}
+      <v-btn
+        v-if="toast.timeout === 0"
+        color="white"
+        text
+        @click="toast.show = false"
+        >Close</v-btn
+      >
+    </v-snackbar>
     <v-toolbar color="primary" extended></v-toolbar>
     <v-col class="px-4">
       <v-card
@@ -25,8 +40,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  name: "DefaultLayout"
+  name: "DefaultLayout",
+  data: function() {
+    return {};
+  },
+  computed: {
+    ...mapState(["toast"])
+  }
 };
 </script>
 

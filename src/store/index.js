@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import ClustersModule from "@/store/modules/clusters";
 import BridgesModule from "@/store/modules/bridges";
 import IntegrationsModule from "@/store/modules/integrations";
+import ToastModule from "@/store/modules/toast";
 // import Go from "@/wasm_exec";
 // /* eslint no-undef: "off"*/
 // const go = new Go();
@@ -23,6 +24,8 @@ export default new Vuex.Store({
   modules: {
     clusters: ClustersModule,
     integrations: IntegrationsModule,
-    bridges: BridgesModule
+    bridges: BridgesModule,
+    toast: ToastModule
   }
+  // App.vue main toast
 });

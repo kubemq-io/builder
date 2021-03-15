@@ -4,7 +4,9 @@ import IntegrationsPage from "@/components/integrations/IntegrationsPage";
 import BridgesPage from "@/components/bridges/BridgesPage";
 
 import HomePage from "@/pages/HomePage";
-import ClustersPage from "@/pages/ClustersPage";
+import ClustersPage from "@/pages/clusters/ClustersPage";
+import ClustersConfigPage from "@/pages/clusters/ClustersConfigView";
+import ClustersListView from "@/pages/clusters/ClustersListView";
 
 Vue.use(VueRouter);
 
@@ -16,8 +18,21 @@ const routes = [
   },
   {
     path: "/clusters",
-    name: "KubeMQ Clusters",
-    component: ClustersPage
+    name: "clusters",
+    component: ClustersPage,
+    redirect: "clusters/list",
+    children: [
+      {
+        path: "config",
+        name: "configCluster",
+        component: ClustersConfigPage
+      },
+      {
+        path: "",
+        name: "clustersList",
+        component: ClustersListView
+      }
+    ]
   },
   {
     path: "/targets",
@@ -35,6 +50,12 @@ const routes = [
     path: "/bridges",
     name: "KubeMQ Bridges",
     component: BridgesPage
+  },
+  {
+    path: "*",
+    name: "error",
+    component: () =>
+      import(/* webpackChunkName: "error" */ "@/pages/NotFoundPage.vue")
   }
 ];
 
