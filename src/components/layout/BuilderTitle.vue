@@ -2,8 +2,8 @@
   <div class="d-flex flex-column">
     <div class="d-flex flex-column">
       <div class="d-flex pb-2 align-content-center align-center justify-center">
-        <div v-show="showBack" class="pr-2">
-          <v-btn color="secondary" icon @click="$emit('back')">
+        <div v-show="showBack" class="pr-1">
+          <v-btn color="secondary" text @click="$emit('back')">
             <v-icon size="30">fa-arrow-left</v-icon>
           </v-btn>
         </div>

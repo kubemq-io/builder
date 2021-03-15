@@ -2,16 +2,13 @@
   <div
     class="d-flex flex-grow-1 justify-space-between align-center align-content-space-between"
   >
+    <v-spacer></v-spacer>
     <div class="d-flex justify-end align-content-center align-center col-12">
-      <div class="col-5">
-        <v-img
-          max-height="550px"
-          max-width="550px"
-          src="@/assets/ship.svg"
-          alt="ship"
-        />
+      <v-spacer></v-spacer>
+      <div class="col-5 pr-4">
+        <v-img src="@/assets/ship.svg" alt="ship" />
       </div>
-      <div class="col-5 pr-15">
+      <div class="col-5 pl-4">
         <v-list elevation="1" two-line>
           <template v-for="(item, index) in menu">
             <v-divider v-if="item.divider" inset :key="index"></v-divider>
@@ -44,7 +41,9 @@
           </template>
         </v-list>
       </div>
+      <v-spacer></v-spacer>
     </div>
+    <v-spacer></v-spacer>
   </div>
 </template>
 

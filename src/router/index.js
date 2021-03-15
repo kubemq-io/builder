@@ -1,12 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import IntegrationsPage from "@/components/integrations/IntegrationsPage";
-import BridgesPage from "@/components/bridges/BridgesPage";
+import BridgesPage from "@/pages/bridges/BridgesPage";
 
 import HomePage from "@/pages/HomePage";
 import ClustersPage from "@/pages/clusters/ClustersPage";
-import ClustersConfigPage from "@/pages/clusters/ClustersConfigView";
+import ClustersConfigView from "@/pages/clusters/ClustersConfigView";
 import ClustersListView from "@/pages/clusters/ClustersListView";
+import BridgesListView from "@/pages/bridges/BridgesListView";
+import BridgesConfigView from "@/pages/bridges/BridgesConfigView";
 
 Vue.use(VueRouter);
 
@@ -25,7 +27,7 @@ const routes = [
       {
         path: "config",
         name: "configCluster",
-        component: ClustersConfigPage
+        component: ClustersConfigView
       },
       {
         path: "",
@@ -48,8 +50,21 @@ const routes = [
   },
   {
     path: "/bridges",
-    name: "KubeMQ Bridges",
-    component: BridgesPage
+    name: "bridges",
+    component: BridgesPage,
+    redirect: "bridges/list",
+    children: [
+      {
+        path: "config",
+        name: "configBridge",
+        component: BridgesConfigView
+      },
+      {
+        path: "",
+        name: "bridgesList",
+        component: BridgesListView
+      }
+    ]
   },
   {
     path: "*",

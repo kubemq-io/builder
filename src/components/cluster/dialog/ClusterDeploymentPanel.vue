@@ -1,9 +1,9 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="secondary--text font-weight-bold pr-1">
+      <h3 class="secondary--text pr-1">
         Deployment
-      </span>
+      </h3>
     </v-card-title>
     <v-card-text>
       <v-form v-if="toShow" ref="form" v-model="cluster.deployment.isValid">

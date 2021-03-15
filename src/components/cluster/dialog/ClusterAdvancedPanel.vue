@@ -1,30 +1,37 @@
 <template>
   <v-card>
     <v-card-title class="row-pointer pa-1 pl-2" @click="toggleShowAdvanced">
-      <span :class="`${getColor}--text font-weight-bold pr-1`">
+      <h3 :class="`${getColor}--text pr-1`">
         Advanced
-      </span>
+      </h3>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center align-center align-content-center">
-        <div class="pr-1">
-          <v-icon small v-if="!isValid" color="error">
+        <div class="pr-2">
+          <v-icon v-if="!isValid" color="error">
             fa-exclamation-circle
           </v-icon>
         </div>
-        <div>
-          <v-icon small v-if="hasEdits" :color="getColor">
+        <div class="pr-1">
+          <v-icon v-if="hasEdits" :color="getColor">
             fa-edit
           </v-icon>
+        </div>
+        <div class="pr-2">
+          <v-btn icon @click.stop="$emit('clear')">
+            <v-icon v-if="hasEdits" :color="getColor">
+              fa-trash-alt
+            </v-icon>
+          </v-btn>
         </div>
       </div>
     </v-card-title>
     <v-card-text v-show="showAdvanced">
       <v-expansion-panels flat>
-        <ClusterInterfacesSecurityPanel :cluster="cluster" :show="show" />
-        <ClusterAccessControlRoutingPanel :cluster="cluster" :show="show" />
-        <ClusterImageVolumePanel :cluster="cluster" :show="show" />
-        <ClusterHealthResourcesNodesPanel :cluster="cluster" :show="show" />
-        <ClusterStoreQueuesPanel :cluster="cluster" :show="show" />
+        <ClusterInterfacesSecurityPanel :cluster="cluster" :show="toShow" />
+        <ClusterAccessControlRoutingPanel :cluster="cluster" :show="toShow" />
+        <ClusterImageVolumePanel :cluster="cluster" :show="toShow" />
+        <ClusterHealthResourcesNodesPanel :cluster="cluster" :show="toShow" />
+        <ClusterStoreQueuesPanel :cluster="cluster" :show="toShow" />
       </v-expansion-panels>
     </v-card-text>
   </v-card>
@@ -46,7 +53,7 @@ export default {
   },
   props: {
     cluster: {},
-    show: {}
+    show: Boolean
   },
   data: function() {
     return {
@@ -73,8 +80,8 @@ export default {
       if (!this.isValid) {
         return "error";
       }
-      if (this.hasContent) {
-        return "secondary";
+      if (this.hasEdits) {
+        return "primary";
       }
       return "secondary";
     }
@@ -86,6 +93,7 @@ export default {
         this.$refs.form.validate();
       });
     },
+
     toggleShowAdvanced() {
       this.showAdvanced = !this.showAdvanced;
     }

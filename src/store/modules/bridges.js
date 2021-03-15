@@ -1,7 +1,15 @@
-import lodashArray from "lodash/array";
+import lodashLang from "lodash/lang";
+import { BridgesBinding } from "@/components/bridges/bridges";
 
 const state = {
-  bindings: []
+  bindings: [],
+  configBinding: {
+    mode: "add",
+    binding: lodashLang.cloneDeep(new BridgesBinding()),
+    originateName: "",
+    index: -1,
+    existedBindingNames: []
+  }
 };
 const getters = {
   getBridgesBindingNames: function() {
@@ -17,19 +25,58 @@ const mutations = {
   clearBridgesBindingsList(state) {
     state.bindings = [];
   },
-  addBridgesBinding(state, val) {
-    if (val) {
-      state.bindings.push(val.binding);
+  setConfigBinding(state, val) {
+    switch (val.mode) {
+      case "add": {
+        state.configBinding = {
+          mode: "add",
+          binding: lodashLang.cloneDeep(val.binding),
+          originateName: "",
+          index: -1,
+          existedBindingNames: []
+        };
+        break;
+      }
+      case "edit": {
+        state.configBinding = {
+          mode: "edit",
+          binding: lodashLang.cloneDeep(val.binding),
+          name: val.binding.name,
+          index: val.index,
+          existedBindingNames: []
+        };
+        break;
+      }
     }
-  },
-  replaceBridgesBinding(state, val) {
-    state.bindings.splice(val.index, 1, val.binding);
-  },
-  deleteBridgesBinding(state, val) {
-    const indexSource = lodashArray.findIndex(state.bindings, function(b) {
-      return b.Name === val.Name;
+
+    state.bindings.forEach(value => {
+      state.configBinding.existedBindingNames.push({ name: value.name });
     });
-    state.bindings.splice(indexSource, 1);
+  },
+  updateBindings(state, val) {
+    switch (val.mode) {
+      case "add": {
+        const newBinding = lodashLang.cloneDeep(state.configBinding.binding);
+        state.bindings.push(newBinding);
+        break;
+      }
+      case "clone": {
+        const newBinding = lodashLang.cloneDeep(val.binding);
+        state.bindings.push(newBinding);
+        break;
+      }
+      case "edit": {
+        const updatedBinding = lodashLang.cloneDeep(
+          state.configBinding.binding
+        );
+        state.bindings.splice(val.index, 1, updatedBinding);
+        break;
+      }
+      case "delete": {
+        state.bindings.splice(val.index, 1);
+        break;
+      }
+    }
   }
 };
 

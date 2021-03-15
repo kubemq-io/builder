@@ -4,13 +4,13 @@
       <v-card class="pa-0 ">
         <v-card-title class="pa-0">
           <v-list-item-avatar>
-            <v-avatar color="primary" size="25">
-              <span class="white--text body-2">S</span>
+            <v-avatar color="primary" size="30">
+              <span class="white--text body-1">S</span>
             </v-avatar>
           </v-list-item-avatar>
-          <h5 class="secondary--text">
+          <h4 class="secondary--text">
             Bridge Sources
-          </h5>
+          </h4>
         </v-card-title>
         <v-card-text class="pb-1">
           <v-form v-if="toShow" ref="formSource" v-model="source.IsModelValid">
@@ -24,8 +24,8 @@
       </v-card>
     </div>
     <div class="pl-3 flex-grow-1">
-      <v-list-item-avatar color="primary" size="25">
-        <v-icon size="15" color="white">
+      <v-list-item-avatar color="primary" size="30">
+        <v-icon size="20" color="white">
           fa-arrow-right
         </v-icon>
       </v-list-item-avatar>
@@ -34,13 +34,13 @@
       <v-card class="pa-0">
         <v-card-title class="pa-0 pb-2">
           <v-list-item-avatar>
-            <v-avatar color="primary" size="25">
-              <span class="white--text body-2">T</span>
+            <v-avatar color="primary" size="30">
+              <span class="white--text body-1">T</span>
             </v-avatar>
           </v-list-item-avatar>
-          <h5 class="secondary--text">
+          <h4 class="secondary--text">
             Bridge Targets
-          </h5>
+          </h4>
         </v-card-title>
         <v-card-text>
           <v-form v-if="toShow" ref="formTarget" v-model="target.IsModelValid">

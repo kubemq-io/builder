@@ -4,12 +4,14 @@
       <v-col cols="4">
         <v-card>
           <v-card-title class="pa-0 pb-2">
-            <v-list-item-avatar color="primary" size="25">
-              <span class="white--text body-2">L</span>
+            <v-list-item-avatar>
+              <v-avatar color="primary" size="30">
+                <span class="white--text body-1">L</span>
+              </v-avatar>
             </v-list-item-avatar>
-            <h5 class="secondary--text">
+            <h4 class="secondary--text">
               Logging
-            </h5>
+            </h4>
           </v-card-title>
           <v-card-text>
             <v-form
@@ -25,12 +27,14 @@
       <v-col cols="4">
         <v-card>
           <v-card-title class="pa-0 pb-2">
-            <v-list-item-avatar color="primary" size="25">
-              <span class="white--text body-2">R</span>
+            <v-list-item-avatar>
+              <v-avatar color="primary" size="30">
+                <span class="white--text body-1">R</span>
+              </v-avatar>
             </v-list-item-avatar>
-            <h5 class="secondary--text">
+            <h4 class="secondary--text">
               Retries
-            </h5>
+            </h4>
           </v-card-title>
           <v-card-text>
             <v-form
@@ -46,12 +50,14 @@
       <v-col cols="4">
         <v-card>
           <v-card-title class="pa-0 pb-2">
-            <v-list-item-avatar color="primary" size="25">
-              <span class="white--text body-2">R</span>
+            <v-list-item-avatar>
+              <v-avatar color="primary" size="30">
+                <span class="white--text body-1">R</span>
+              </v-avatar>
             </v-list-item-avatar>
-            <h5 class="secondary--text">
+            <h4 class="secondary--text">
               Rate Limiter
-            </h5>
+            </h4>
           </v-card-title>
           <v-card-text>
             <v-form

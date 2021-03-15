@@ -1,12 +1,14 @@
 <template>
   <v-card elevation="1" class="pa-0 ">
     <v-card-title class="pa-0">
-      <v-list-item-avatar color="secondary" size="20">
-        <span class="white--text body-2">{{ initial }}</span>
+      <v-list-item-avatar>
+        <v-avatar :color="getColor" size="30">
+          <span class="white--text body-1">{{ initial }}</span>
+        </v-avatar>
       </v-list-item-avatar>
-      <h5 class="secondary--text font-weight-regular">
+      <h4 :class="`${getColor}--text`">
         {{ title }}
-      </h5>
+      </h4>
     </v-card-title>
     <v-card-text class="py-1">
       <v-form v-if="toShow" ref="form" v-model="config.isValid">
@@ -32,7 +34,8 @@ export default {
   props: {
     title: String,
     config: ClusterConfigItem,
-    show: Boolean
+    show: Boolean,
+    color: String
   },
   data: function() {
     return {};
@@ -44,6 +47,15 @@ export default {
     },
     toShow: function() {
       return this.show;
+    },
+    getColor: function() {
+      if (!this.config.isValid) {
+        return "error";
+      }
+      if (this.config.getHasConfigured()) {
+        return "primary";
+      }
+      return "secondary";
     }
   },
   methods: {

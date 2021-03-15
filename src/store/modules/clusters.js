@@ -23,6 +23,9 @@ const getters = {
 };
 const actions = {};
 const mutations = {
+  resetSettings(state) {
+    state.configCluster.cluster.clearAdvanced();
+  },
   setConfigCluster(state, val) {
     switch (val.mode) {
       case "add": {
@@ -33,6 +36,9 @@ const mutations = {
           index: -1,
           existedClusterNames: []
         };
+        if (state.clusters.length !== 0) {
+          state.configCluster.cluster.deployment.clusterName = `kubemq-cluster-${state.clusters.length}`;
+        }
         state.configCluster.cluster.deployment.licenseKey =
           state.lastLicenseKey;
         break;

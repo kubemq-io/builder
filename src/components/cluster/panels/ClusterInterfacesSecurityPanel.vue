@@ -2,12 +2,14 @@
   <v-expansion-panel>
     <v-expansion-panel-header class="pa-0 pr-2">
       <v-card-title class="pa-0">
-        <v-list-item-avatar :color="getColor" size="25">
-          <span class="white--text body-2">IS</span>
+        <v-list-item-avatar>
+          <v-avatar :color="getColor" size="35">
+            <span class="white--text body-1">IS</span>
+          </v-avatar>
         </v-list-item-avatar>
-        <h5 :class="`${getColor}--text`">
+        <h4 :class="`${getColor}--text`">
           Interfaces & Security
-        </h5>
+        </h4>
       </v-card-title>
       <template v-slot:actions>
         <div class="d-flex justify-center align-center align-content-center">
@@ -16,7 +18,7 @@
               fa-exclamation-circle
             </v-icon>
           </div>
-          <div>
+          <div class="pr-1">
             <v-icon small v-if="hasContent" :color="getColor">
               fa-edit
             </v-icon>

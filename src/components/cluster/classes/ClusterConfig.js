@@ -13,6 +13,7 @@ import { ClusterRoutingConfig } from "@/components/cluster/classes/ClusterRoutin
 import { ClusterStoreConfig } from "@/components/cluster/classes/ClusterStoreConfig";
 import { ClusterQueuesConfig } from "@/components/cluster/classes/ClusterQueuesConfig";
 import { ClusterDeploymentConfig } from "@/components/cluster/classes/ClusterDeploymentConfig";
+import lodashLang from "lodash/lang";
 
 class ClusterConfig {
   get id() {
@@ -208,7 +209,30 @@ class ClusterConfig {
       this._queues.isValid
     );
   }
-
+  clearAdvanced() {
+    this._authentication = lodashLang.cloneDeep(
+      new ClusterAuthenticationConfig()
+    );
+    this._authorization = lodashLang.cloneDeep(
+      new ClusterAuthorizationConfig()
+    );
+    this._routing = lodashLang.cloneDeep(new ClusterRoutingConfig());
+    this._grpcInterface = lodashLang.cloneDeep(
+      new ClusterGrpcInterfaceConfig()
+    );
+    this._restInterface = lodashLang.cloneDeep(
+      new ClusterRestInterfaceConfig()
+    );
+    this._apiInterface = lodashLang.cloneDeep(new ClusterApiInterfaceConfig());
+    this._security = lodashLang.cloneDeep(new ClusterSecurityConfig());
+    this._image = lodashLang.cloneDeep(new ClusterImageConfig());
+    this._volume = lodashLang.cloneDeep(new ClusterVolumeConfig());
+    this._health = lodashLang.cloneDeep(new ClusterHealthConfig());
+    this._resources = lodashLang.cloneDeep(new ClusterResourcesConfig());
+    this._nodes = lodashLang.cloneDeep(new ClusterNodesConfig());
+    this._store = lodashLang.cloneDeep(new ClusterStoreConfig());
+    this._queues = lodashLang.cloneDeep(new ClusterQueuesConfig());
+  }
   constructor() {
     this._id = makeid(16);
     this._deployment = new ClusterDeploymentConfig();

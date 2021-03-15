@@ -15,18 +15,29 @@
         >Close</v-btn
       >
     </v-snackbar>
+    <v-btn
+      v-scroll="onScroll"
+      v-show="fab"
+      fab
+      dark
+      fixed
+      bottom
+      right
+      color="primary"
+      @click="toTop"
+    >
+      <v-icon>fa-arrow-up</v-icon>
+    </v-btn>
     <v-toolbar color="primary" extended></v-toolbar>
     <v-col class="px-4">
       <v-card
         style="margin-top: -102px;"
         rounded
         min-height="90vh"
-        class="d-flex flex-column justify-space-between align-stretch align-content-space-around"
+        class="container d-flex flex-column justify-space-between align-stretch align-content-space-around pt-0 pl-0"
       >
         <v-card-text>
-          <div
-            class="d-flex justify-start align-end align-content-end pt-2 pl-2"
-          >
+          <div class="d-flex justify-start align-end align-content-end">
             <v-avatar size="65">
               <v-img src="@/assets/logo.svg" alt="logo" />
             </v-avatar>
@@ -45,10 +56,22 @@ import { mapState } from "vuex";
 export default {
   name: "DefaultLayout",
   data: function() {
-    return {};
+    return {
+      fab: false
+    };
   },
   computed: {
     ...mapState(["toast"])
+  },
+  methods: {
+    onScroll(e) {
+      if (typeof window === "undefined") return;
+      const top = window.pageYOffset || e.target.scrollTop || 0;
+      this.fab = top > 20;
+    },
+    toTop() {
+      this.$vuetify.goTo(0);
+    }
   }
 };
 </script>

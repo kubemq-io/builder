@@ -7,7 +7,7 @@
         :title="getTitle"
         @save="save"
         show-back
-        @back="cancel"
+        @back="back"
         show-save
         :disable-save="!isValid"
       ></builder-title>
@@ -20,11 +20,16 @@
               <ClusterDeploymentPanel :cluster="cluster" :show="show" />
             </v-col>
             <v-col cols="12" class="pa-1">
-              <ClusterAdvancedPanel :cluster="cluster" :show="show" />
+              <ClusterAdvancedPanel
+                :cluster="cluster"
+                :show="show"
+                @clear="clearSettings"
+              />
             </v-col>
           </v-row>
         </v-card-text>
       </v-card>
+      <ConfirmDlg ref="confirm"></ConfirmDlg>
     </div>
   </div>
 </template>
@@ -39,6 +44,7 @@ import lodashArray from "lodash/array";
 import ClusterDeploymentPanel from "@/components/cluster/dialog/ClusterDeploymentPanel";
 import ClusterAdvancedPanel from "@/components/cluster/dialog/ClusterAdvancedPanel";
 import BuilderTitle from "@/components/layout/BuilderTitle";
+import ConfirmDlg from "@/components/common/ConfirmDlg";
 
 export default {
   name: "ClustersConfigView",
@@ -54,6 +60,7 @@ export default {
     next();
   },
   components: {
+    ConfirmDlg,
     BuilderTitle,
     ClusterAdvancedPanel,
     ClusterDeploymentPanel
@@ -61,19 +68,7 @@ export default {
   data: function() {
     return {
       enableAdvance: false,
-      show: false,
-      items: [
-        {
-          text: "Clusters",
-          disabled: false,
-          href: "/clusters"
-        },
-        {
-          text: "Add",
-          disabled: false,
-          href: "/clusters/config"
-        }
-      ]
+      show: false
     };
   },
 
@@ -106,7 +101,7 @@ export default {
   },
   watch: {},
   methods: {
-    ...mapMutations(["updateClusters"]),
+    ...mapMutations(["updateClusters", "resetSettings"]),
     ...mapGetters(["getClustersNames"]),
     ...mapActions(["showSuccess", "showError", "showToast"]),
     validateClusterName: function() {
@@ -130,7 +125,6 @@ export default {
       }
     },
     save: function() {
-      this.showToast("asdadsasdassda");
       const configIsValid = this.validateClusterName();
       if (configIsValid) {
         this.updateClusters(this.clusterConfig);
@@ -138,12 +132,24 @@ export default {
         this.$router.push("/clusters");
       }
     },
-    cancel: function() {
+    back: function() {
       this.show = false;
       this.$router.push("/clusters");
     },
-    showAdvance: function(value) {
-      this.enableAdvance = value;
+    async clearSettings() {
+      console.log("clear");
+      if (
+        await this.$refs.confirm.open(
+          "Confirm",
+          "Are you sure you want to clear all settings?"
+        )
+      ) {
+        this.show = false;
+        this.$nextTick(() => {
+          this.resetSettings();
+          this.show = true;
+        });
+      }
     }
   }
 };

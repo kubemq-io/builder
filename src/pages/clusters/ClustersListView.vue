@@ -3,7 +3,13 @@
     class="px-4 pb-4 d-flex flex-grow-1 flex-column justify-start align-start align-content-space-between"
   >
     <div class="col-12 pb-0">
-      <builder-title title="clusters" @add="add" show-add></builder-title>
+      <builder-title
+        title="clusters"
+        @add="add"
+        show-add
+        show-back
+        @back="back"
+      ></builder-title>
     </div>
     <div class="col-12 pt-0">
       <v-card flat tile>
@@ -44,28 +50,27 @@
               <div
                 class="d-flex justify-start align-center align-content-center"
               >
-                <v-btn icon>
+                <v-btn icon class="pr-1">
                   <v-icon
-                    size="15"
-                    color="secondary"
-                    @click.stop="cloneCluster(cluster)"
-                  >
-                    fa-clone
-                  </v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon
-                    size="15"
+                    size="20"
                     color="secondary"
                     @click.stop="edit(cluster, index)"
                   >
                     fa-edit
                   </v-icon>
                 </v-btn>
-
-                <v-btn icon>
+                <v-btn icon class="pr-1 pl-1">
                   <v-icon
-                    size="15"
+                    size="20"
+                    color="secondary"
+                    @click.stop="cloneCluster(cluster)"
+                  >
+                    fa-clone
+                  </v-icon>
+                </v-btn>
+                <v-btn icon class="pl-1">
+                  <v-icon
+                    size="20"
                     color="secondary"
                     @click.stop="delCluster(index)"
                   >
@@ -85,6 +90,10 @@
     </div>
     <v-spacer></v-spacer>
     <div v-show="!hasClusters" class="col-12">
+      <h4 class="gray--text text-center">NO CLUSTERS</h4>
+    </div>
+    <v-spacer></v-spacer>
+    <div v-show="!hasClusters" class="col-12">
       <v-divider class="secondary lighten-5"></v-divider>
     </div>
     <div class="col-12 d-flex pt-2">
@@ -100,7 +109,7 @@
           <v-icon left small>
             fa-trash-alt
           </v-icon>
-          Clear All</v-btn
+          CLEAR ALL</v-btn
         >
       </div>
       <div>
@@ -114,7 +123,7 @@
           <v-icon left small>
             fa-download
           </v-icon>
-          Deploy</v-btn
+          DEPLOY</v-btn
         >
       </div>
       <ConfirmDlg ref="confirm"></ConfirmDlg>
@@ -197,7 +206,9 @@ export default {
         name: "configCluster"
       });
     },
-
+    back: function() {
+      this.$router.push("/");
+    },
     deploy: function() {
       this.clusters.forEach(value => console.log(value));
     }
@@ -215,10 +226,4 @@ const makeid = function(length) {
 };
 </script>
 
-<style scoped>
-.side {
-  display: flex;
-  flex-direction: column;
-  width: auto;
-}
-</style>
+<style scoped></style>
