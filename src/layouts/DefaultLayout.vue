@@ -44,6 +44,11 @@
             <h1 class="primary--text pl-2">
               KubeMQ Build & Deploy
             </h1>
+            <v-spacer></v-spacer>
+            <v-btn href="https://kubemq.io" text large rounded color="primary">
+              <v-icon class="pr-2">fa-home</v-icon>
+              <h3>KubeMQ.io</h3>
+            </v-btn>
           </div>
         </v-card-text>
         <router-view :key="$route.fullPath"> </router-view>
