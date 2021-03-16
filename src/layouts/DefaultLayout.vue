@@ -45,7 +45,14 @@
               KubeMQ Build & Deploy
             </h1>
             <v-spacer></v-spacer>
-            <v-btn href="https://kubemq.io" text large rounded color="primary">
+            <v-btn
+              href="https://kubemq.io"
+              text
+              large
+              rounded
+              color="primary"
+              class="mb-n1"
+            >
               <v-icon class="pr-2">fa-home</v-icon>
               <h3>KubeMQ.io</h3>
             </v-btn>
