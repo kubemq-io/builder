@@ -8,7 +8,7 @@
       <div class="col-5 pr-4">
         <v-img src="@/assets/ship.svg" alt="ship" />
       </div>
-      <div class="col-5 pl-4">
+      <div class="col-6 pl-4">
         <v-list elevation="1" two-line>
           <template v-for="(item, index) in menu">
             <v-divider v-if="item.divider" inset :key="index"></v-divider>
@@ -55,28 +55,31 @@ export default {
       menu: [
         {
           title: "KubeMQ Clusters",
-          subTitle: "Build KubeMQ Clusters",
+          subTitle:
+            "Build KubeMQ Clusters, Kubernetes Queue and Message Broker",
           image: "/assets/images/cluster.svg",
           link: "/clusters"
         },
         { divider: true, inset: true },
         {
           title: "KubeMQ Bridges",
-          subTitle: "Build KubeMQ Bridges",
+          subTitle:
+            "Bridge, Transform, Replicate and Aggregate KubeMQ Clusters",
           image: "/assets/images/bridges.svg",
           link: "/bridges"
         },
         { divider: true, inset: true },
         {
           title: "KubeMQ Targets",
-          subTitle: "Build KubeMQ Targets",
+          subTitle:
+            "Connects and integrate KubeMQ Clusters to external services ",
           image: "/assets/images/targets.svg",
           link: "/targets"
         },
         { divider: true, inset: true },
         {
           title: "KubeMQ Sources",
-          subTitle: "Build KubeMQ Sources",
+          subTitle: "Ingests and Connect external services to KubeMQ Clusters ",
           image: "/assets/images/sources.svg",
           link: "/sources"
         }
