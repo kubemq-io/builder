@@ -129,12 +129,12 @@ export default {
       if (configIsValid) {
         this.updateClusters(this.clusterConfig);
         this.show = false;
-        this.$router.push("/clusters");
+        this.$router.back();
       }
     },
     back: function() {
       this.show = false;
-      this.$router.push("/clusters");
+      this.$router.back();
     },
     async clearSettings() {
       console.log("clear");

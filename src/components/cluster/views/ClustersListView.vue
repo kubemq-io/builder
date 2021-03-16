@@ -48,9 +48,9 @@
             </v-list-item-content>
             <v-list-item-action class="ma-0">
               <div
-                class="d-flex justify-start align-center align-content-center"
+                class="d-flex justify-start align-center align-content-space-between"
               >
-                <v-btn icon class="pr-1">
+                <v-btn icon>
                   <v-icon
                     size="20"
                     color="secondary"
@@ -59,7 +59,7 @@
                     fa-edit
                   </v-icon>
                 </v-btn>
-                <v-btn icon class="pr-1 pl-1">
+                <v-btn icon>
                   <v-icon
                     size="20"
                     color="secondary"
@@ -68,7 +68,7 @@
                     fa-clone
                   </v-icon>
                 </v-btn>
-                <v-btn icon class="pl-1">
+                <v-btn icon>
                   <v-icon
                     size="20"
                     color="secondary"
@@ -207,7 +207,7 @@ export default {
       });
     },
     back: function() {
-      this.$router.push("/");
+      this.$router.back();
     },
     deploy: function() {
       this.clusters.forEach(value => console.log(value));
