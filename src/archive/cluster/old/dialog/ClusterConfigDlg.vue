@@ -56,7 +56,7 @@ import "@koumoul/vjsf/lib/deps/third-party.js";
 import { mapGetters, mapMutations } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
-import DialogTitle from "@/components/common/DialogTitle";
+import DialogTitle from "@/archive/DialogTitle";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
 import ClusterDeploymentPanel from "@/components/cluster/panels/ClusterDeploymentPanel";
 import ClusterAdvancedPanel from "@/components/cluster/panels/ClusterAdvancedPanel";

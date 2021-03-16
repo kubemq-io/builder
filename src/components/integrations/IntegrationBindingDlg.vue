@@ -85,7 +85,7 @@ import { mapMutations } from "vuex";
 import lodashArray from "lodash/array";
 import lodashLang from "lodash/lang";
 import { IntegrationsBinding } from "@/components/integrations/Integrations";
-import DialogTitle from "@/components/common/DialogTitle";
+import DialogTitle from "@/archive/DialogTitle";
 
 export default {
   name: "IntegrationsBindingDlg",

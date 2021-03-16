@@ -87,7 +87,7 @@ import lodashLang from "lodash/lang";
 import { BridgesBinding } from "@/components/bridges/bridges";
 import BridgesBindingProperties from "@/components/bridges/BridgesBindingsProperties";
 import BridgesBindingMiddlewares from "@/components/bridges/BridgesBindingMiddlewares";
-import DialogTitle from "@/components/common/DialogTitle";
+import DialogTitle from "@/archive/DialogTitle";
 
 export default {
   name: "BridgesBindingDlg",
