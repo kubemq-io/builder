@@ -37,15 +37,15 @@
               <v-switch
                 v-model="setMiddleware"
                 flat
-                color="secondary"
+                :color="getMiddlewareColor"
                 class="mt-1"
               >
                 <template v-slot:label>
-                  <h2>Middlewares</h2>
+                  <h2 :class="`${getMiddlewareColor}--text`">Middlewares</h2>
                 </template>
               </v-switch>
 
-              <v-card-text v-show="getMiddlewareState" class="pa-0 pb-2">
+              <v-card-text v-show="setMiddleware" class="pa-0 pb-2">
                 <BridgesBindingMiddlewares
                   :config="bindingModel.Middlewares"
                   :show="show"
@@ -118,8 +118,11 @@ export default {
         return "bridges > edit";
       }
     },
-    getMiddlewareState: function() {
-      return this.setMiddleware || this.bindingModel.Middlewares.hasData();
+    getMiddlewareColor: function() {
+      if (this.bindingModel.Middlewares.hasData()) {
+        return "primary";
+      }
+      return "secondary";
     }
   },
   watch: {},

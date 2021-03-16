@@ -5,11 +5,11 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar>
-              <v-avatar color="secondary" size="30">
+              <v-avatar :color="getColorLogging" size="30">
                 <span class="white--text body-1">L</span>
               </v-avatar>
             </v-list-item-avatar>
-            <h4 class="secondary--text">
+            <h4 :class="`${getColorLogging}--text`">
               Logging
             </h4>
           </v-card-title>
@@ -28,11 +28,11 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar>
-              <v-avatar color="secondary" size="30">
+              <v-avatar :color="getColorRetries" size="30">
                 <span class="white--text body-1">R</span>
               </v-avatar>
             </v-list-item-avatar>
-            <h4 class="secondary--text">
+            <h4 :class="`${getColorRetries}--text`">
               Retries
             </h4>
           </v-card-title>
@@ -51,11 +51,11 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar>
-              <v-avatar color="secondary" size="30">
+              <v-avatar :color="getColorRate" size="30">
                 <span class="white--text body-1">R</span>
               </v-avatar>
             </v-list-item-avatar>
-            <h4 class="secondary--text">
+            <h4 :class="`${getColorRate}--text`">
               Rate Limiter
             </h4>
           </v-card-title>
@@ -106,6 +106,24 @@ export default {
     },
     toShow: function() {
       return this.show;
+    },
+    getColorLogging: function() {
+      if (this.logging.HasData()) {
+        return "primary";
+      }
+      return "secondary";
+    },
+    getColorRetries: function() {
+      if (this.retries.HasData()) {
+        return "primary";
+      }
+      return "secondary";
+    },
+    getColorRate: function() {
+      if (this.rate.HasData()) {
+        return "primary";
+      }
+      return "secondary";
     }
   }
 };

@@ -168,11 +168,16 @@ class BridgesBindingSide {
       "kind",
       "setDefaults"
     ]);
-
-    return {
-      kind: sideKind,
-      connections: sideProperties.connections
-    };
+    if (sideProperties.connections === undefined) {
+      return {
+        kind: sideKind,
+        connections: []
+      };
+    } else
+      return {
+        kind: sideKind,
+        connections: sideProperties.connections
+      };
   }
 
   constructor(side, name) {
@@ -271,8 +276,8 @@ class BridgesBindingMiddlewares {
 let bridgesLoggingModel = {
   Schema: {
     "x-class": "vjsf",
+    required: ["logLevel"],
     properties: {
-      required: ["logLevel"],
       logLevel: {
         type: "string",
         title: "Log Level",
@@ -280,6 +285,11 @@ let bridgesLoggingModel = {
         enum: ["No Logging", "Debug Level", "Info Level", "Error Level"]
       }
     }
+  },
+  HasData: function() {
+    return (
+      this.Model.logLevel !== "No Logging" && this.Model.logLevel !== undefined
+    );
   },
   Model: {},
   IsValid: false
@@ -345,6 +355,9 @@ let bridgesRetriesModel = {
   Model: {
     mode: "disabled"
   },
+  HasData: function() {
+    return this.Model.mode !== "disabled";
+  },
   IsValid: false
 };
 let bridgesRateLimiterModel = {
@@ -383,6 +396,9 @@ let bridgesRateLimiterModel = {
   },
   Model: {
     mode: "disabled"
+  },
+  HasData: function() {
+    return this.Model.mode !== "disabled";
   },
   IsValid: false
 };
