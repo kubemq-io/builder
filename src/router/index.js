@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import IntegrationsPage from "@/components/integrations/IntegrationsPage";
-import BridgesPage from "@/pages/bridges/BridgesPage";
+import BridgesPage from "@/pages/BridgesPage";
 
 import HomePage from "@/pages/HomePage";
 import ClustersPage from "@/pages/ClustersPage";

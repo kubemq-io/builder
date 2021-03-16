@@ -16,7 +16,7 @@
         <template v-for="(cluster, index) in clusters">
           <v-list-item :key="'c' + index">
             <v-list-item-avatar>
-              <v-avatar class="secondary" size="35">
+              <v-avatar class="secondary" size="40">
                 <span class="white--text headline">{{ index + 1 }}</span>
               </v-avatar>
             </v-list-item-avatar>
@@ -47,9 +47,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action class="ma-0">
-              <div
-                class="d-flex justify-start align-center align-content-space-between"
-              >
+              <div class="d-flex justify-end align-end align-content-end pt-5">
                 <v-btn icon>
                   <v-icon
                     size="20"

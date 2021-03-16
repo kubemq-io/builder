@@ -3,22 +3,37 @@
     class="px-4 pb-4 d-flex flex-grow-1 flex-column justify-start align-start align-content-space-between"
   >
     <div class="col-12 pb-0">
-      <builder-title title="bridges" @add="add" show-add></builder-title>
+      <builder-title
+        title="bridges"
+        @add="add"
+        show-add
+        show-back
+        @back="back"
+      ></builder-title>
     </div>
     <div class="col-12 pt-0">
       <v-card flat tile>
         <template v-for="(binding, index) in bindings">
           <v-list-item :key="'c' + index" class="px-0">
             <v-list-item-avatar>
-              <v-avatar class="secondary" size="35">
+              <v-avatar class="secondary" size="40">
                 <span class="white--text headline">{{ index + 1 }}</span>
               </v-avatar>
             </v-list-item-avatar>
             <v-list-item-content class="pb-1">
-              <v-list-item-title>
-                <h3 class="secondary--text">
+              <v-list-item-title class="d-flex align-end">
+                <h3 class="secondary--text pr-2">
                   {{ binding.Name }}
                 </h3>
+                <v-chip
+                  v-show="binding.Middlewares.hasData()"
+                  color="success"
+                  x-small
+                  outlined
+                  class="font-weight-bold"
+                >
+                  Middleware
+                </v-chip>
               </v-list-item-title>
               <v-list-item-subtitle>
                 <div
@@ -60,10 +75,8 @@
                     class="d-flex   flex-column justify-center align-center align-content-center pa-0"
                     cols="1"
                   >
-                    <v-list-item-avatar color="secondary" size="20">
-                      <v-icon size="15" color="white">
-                        fa-arrow-right
-                      </v-icon>
+                    <v-list-item-avatar color="secondary" size="35">
+                      <v-img :src="getBindingType(binding)" />
                     </v-list-item-avatar>
                   </v-col>
                   <v-col class="side pa-0" cols="5">
@@ -104,16 +117,7 @@
               <div class="d-flex justify-end align-end align-content-end pt-5">
                 <v-btn icon>
                   <v-icon
-                    size="15"
-                    color="secondary"
-                    @click.stop="cloneBinding(binding)"
-                  >
-                    fa-clone
-                  </v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon
-                    size="15"
+                    size="20"
                     color="secondary"
                     @click.stop="edit(binding, index)"
                   >
@@ -122,7 +126,17 @@
                 </v-btn>
                 <v-btn icon>
                   <v-icon
-                    size="15"
+                    size="20"
+                    color="secondary"
+                    @click.stop="cloneBinding(binding)"
+                  >
+                    fa-clone
+                  </v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                  <v-icon
+                    size="20"
                     color="secondary"
                     @click.stop="delBinding(index)"
                   >
@@ -135,6 +149,10 @@
           <v-divider :key="'d' + index"></v-divider>
         </template>
       </v-card>
+    </div>
+    <v-spacer></v-spacer>
+    <div v-show="!hasBindings" class="col-12">
+      <h4 class="gray--text text-center">NO BRIDGES</h4>
     </div>
     <v-spacer></v-spacer>
     <div v-show="!hasBindings" class="col-12">
@@ -240,19 +258,34 @@ export default {
     },
     add() {
       this.setConfigBinding({ mode: "add", binding: new BridgesBinding() });
-      this.$router.replace({
+      this.$router.push({
         name: "configBridge"
       });
     },
     edit(item, index) {
       this.setConfigBinding({ mode: "edit", binding: item, index: index });
-      this.$router.replace({
+      this.$router.push({
         name: "configBridge"
       });
     },
-
+    back: function() {
+      this.$router.back();
+    },
     deploy: function() {
       this.bindings.forEach(value => console.log(value));
+    },
+    getBindingType: function(binding) {
+      const type = binding.getType();
+      switch (type) {
+        case "bridge":
+          return "/assets/images/bridge.svg";
+        case "replicate":
+          return "/assets/images/replicate.svg";
+        case "aggregate":
+          return "/assets/images/aggregate.svg";
+        case "transform":
+          return "/assets/images/transform.svg";
+      }
     }
   }
 };

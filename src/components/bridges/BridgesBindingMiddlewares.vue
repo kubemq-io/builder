@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar>
-              <v-avatar color="primary" size="30">
+              <v-avatar color="secondary" size="30">
                 <span class="white--text body-1">L</span>
               </v-avatar>
             </v-list-item-avatar>
@@ -28,7 +28,7 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar>
-              <v-avatar color="primary" size="30">
+              <v-avatar color="secondary" size="30">
                 <span class="white--text body-1">R</span>
               </v-avatar>
             </v-list-item-avatar>
@@ -51,7 +51,7 @@
         <v-card>
           <v-card-title class="pa-0 pb-2">
             <v-list-item-avatar>
-              <v-avatar color="primary" size="30">
+              <v-avatar color="secondary" size="30">
                 <span class="white--text body-1">R</span>
               </v-avatar>
             </v-list-item-avatar>

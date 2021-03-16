@@ -35,13 +35,14 @@ const mutations = {
           index: -1,
           existedBindingNames: []
         };
+        state.configBinding.binding.Name = `bridges-${state.bindings.length}`;
         break;
       }
       case "edit": {
         state.configBinding = {
           mode: "edit",
           binding: lodashLang.cloneDeep(val.binding),
-          name: val.binding.name,
+          originateName: val.binding.Name,
           index: val.index,
           existedBindingNames: []
         };
@@ -50,7 +51,7 @@ const mutations = {
     }
 
     state.bindings.forEach(value => {
-      state.configBinding.existedBindingNames.push({ name: value.name });
+      state.configBinding.existedBindingNames.push({ name: value.Name });
     });
   },
   updateBindings(state, val) {

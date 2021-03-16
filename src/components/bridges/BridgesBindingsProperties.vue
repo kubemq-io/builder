@@ -4,7 +4,7 @@
       <v-card class="pa-0 ">
         <v-card-title class="pa-0">
           <v-list-item-avatar>
-            <v-avatar color="primary" size="30">
+            <v-avatar color="secondary" size="30">
               <span class="white--text body-1">S</span>
             </v-avatar>
           </v-list-item-avatar>
@@ -12,7 +12,7 @@
             Bridge Sources
           </h4>
         </v-card-title>
-        <v-card-text class="pb-1">
+        <v-card-text>
           <v-form v-if="toShow" ref="formSource" v-model="source.IsModelValid">
             <v-jsf
               v-model="source.Model"
@@ -25,16 +25,14 @@
     </div>
     <div class="pl-3 flex-grow-1">
       <v-list-item-avatar color="primary" size="30">
-        <v-icon size="20" color="white">
-          fa-arrow-right
-        </v-icon>
+        <v-img :src="getBindingType" />
       </v-list-item-avatar>
     </div>
-    <div class="side pl-2 pr-0 pt-0 pb-2">
+    <div class="side">
       <v-card class="pa-0">
-        <v-card-title class="pa-0 pb-2">
+        <v-card-title class="pa-0">
           <v-list-item-avatar>
-            <v-avatar color="primary" size="30">
+            <v-avatar color="secondary" size="30">
               <span class="white--text body-1">T</span>
             </v-avatar>
           </v-list-item-avatar>
@@ -90,6 +88,20 @@ export default {
     },
     source: function() {
       return this.binding.SourceSide;
+    },
+    getBindingType: function() {
+      const type = this.binding.getType();
+      switch (type) {
+        case "bridge":
+          return "/assets/images/bridge.svg";
+        case "replicate":
+          return "/assets/images/replicate.svg";
+        case "aggregate":
+          return "/assets/images/aggregate.svg";
+        case "transform":
+          return "/assets/images/transform.svg";
+      }
+      return "/assets/images/bridge.svg";
     },
     toShow: function() {
       return this.show;

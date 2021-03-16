@@ -9,7 +9,6 @@
         show-back
         @back="cancel"
         show-save
-        :disable-save="errorState"
       ></builder-title>
     </div>
     <div class="col-12 pb-0">
@@ -38,7 +37,7 @@
               <v-switch
                 v-model="setMiddleware"
                 flat
-                color="primary"
+                color="secondary"
                 class="mt-1"
               >
                 <template v-slot:label>
@@ -46,7 +45,7 @@
                 </template>
               </v-switch>
 
-              <v-card-text v-if="setMiddleware" class="pa-0 pb-2">
+              <v-card-text v-show="getMiddlewareState" class="pa-0 pb-2">
                 <BridgesBindingMiddlewares
                   :config="bindingModel.Middlewares"
                   :show="show"
@@ -99,8 +98,8 @@ export default {
     mode: function() {
       return this.$store.state.bridges.configBinding.mode;
     },
-    name: function() {
-      return this.$store.state.bridges.configBinding.name;
+    originateName: function() {
+      return this.$store.state.bridges.configBinding.originateName;
     },
     forbiddenNames: function() {
       return this.$store.state.bridges.configBinding.existedBindingNames;
@@ -118,6 +117,9 @@ export default {
       } else {
         return "bridges > edit";
       }
+    },
+    getMiddlewareState: function() {
+      return this.setMiddleware || this.bindingModel.Middlewares.hasData();
     }
   },
   watch: {},
@@ -141,13 +143,18 @@ export default {
           return true;
         }
       }
-      if (this.mode === "edit" && found >= 0 && checkName !== this.name) {
+      if (
+        this.mode === "edit" &&
+        found >= 0 &&
+        checkName !== this.originateName
+      ) {
         return "Bridge name must be unique";
       } else {
         this.isValidName = true;
         return true;
       }
     },
+
     save: function() {
       this.isValidName = this.$refs.inputName.validate();
       this.$refs.properties.$refs.formSource.validate();
@@ -159,12 +166,12 @@ export default {
       ) {
         this.updateBindings(this.bindingConfig);
         this.show = false;
-        this.$router.replace("/bridges");
+        this.$router.back();
       }
     },
     cancel: function() {
       this.show = false;
-      this.$router.replace("/bridges");
+      this.$router.back();
     }
   }
 };

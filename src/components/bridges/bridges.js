@@ -45,6 +45,22 @@ class BridgesBinding {
     return this._targetSide;
   }
 
+  getType() {
+    const sourceConnections = this.SourceSide.getConnections().length;
+    const targetConnections = this.TargetSide.getConnections().length;
+    if (sourceConnections === 1 && targetConnections === 1) {
+      return "bridge";
+    }
+    if (sourceConnections === 1 && targetConnections > 1) {
+      return "replicate";
+    }
+    if (sourceConnections > 1 && targetConnections === 1) {
+      return "aggregate";
+    }
+    if (sourceConnections > 1 && targetConnections > 1) {
+      return "transform";
+    }
+  }
   constructor() {
     this._type = "";
     this._bindingType = "";
@@ -169,7 +185,10 @@ class BridgesBindingSide {
       this._schema = targetSchema;
     }
     this._type = "";
-    this._model = {};
+    this._model = {
+      kind: "",
+      connections: []
+    };
     this._isModelValid = false;
     this._category = "";
   }
