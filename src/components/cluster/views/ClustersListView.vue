@@ -70,7 +70,7 @@
                   <v-icon
                     size="20"
                     color="secondary"
-                    @click.stop="delCluster(index)"
+                    @click.stop="delCluster(cluster, index)"
                   >
                     fa-trash-alt
                   </v-icon>
@@ -107,7 +107,7 @@
           <v-icon left small>
             fa-trash-alt
           </v-icon>
-          CLEAR ALL</v-btn
+          DELETE ALL</v-btn
         >
       </div>
       <div>
@@ -131,7 +131,7 @@
 <script>
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
 import BuilderTitle from "@/components/common/BuilderTitle";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
@@ -151,20 +151,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["showSuccess"]),
     ...mapGetters(["getClustersNames"]),
     ...mapMutations([
       "updateClusters",
       "clearClustersList",
       "setConfigCluster"
     ]),
-    async delCluster(index) {
+    async delCluster(item, index) {
       if (
         await this.$refs.confirm.open(
           "Confirm",
           "Are you sure you want to delete this cluster?"
         )
       ) {
-        this.deleteCluster(index);
+        this.deleteCluster(item, index);
       }
     },
 
@@ -172,9 +173,11 @@ export default {
       let clonedItem = lodashLang.cloneDeep(item);
       clonedItem.clusterName = `${clonedItem.clusterName}-${makeid(5)}`;
       this.updateClusters({ mode: "clone", cluster: clonedItem });
+      this.showSuccess(`Cluster ${item.clusterName} was cloned successfully`);
     },
-    deleteCluster(index) {
+    deleteCluster(item, index) {
       this.updateClusters({ mode: "delete", index: index });
+      this.showSuccess(`Cluster ${item.clusterName} was deleted successfully`);
     },
     getColor(type, more) {
       return "primary" + more;
@@ -190,6 +193,7 @@ export default {
         )
       ) {
         this.clearClustersList();
+        this.showSuccess(`All clusters were deleted successfully`);
       }
     },
     add() {

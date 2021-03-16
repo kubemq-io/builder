@@ -122,7 +122,7 @@
                   <v-icon
                     size="20"
                     color="secondary"
-                    @click.stop="delBinding(index)"
+                    @click.stop="delBinding(integration, index)"
                   >
                     fa-trash-alt
                   </v-icon>
@@ -159,7 +159,7 @@
           <v-icon left small>
             fa-trash-alt
           </v-icon>
-          Clear All</v-btn
+          DELETE ALL</v-btn
         >
       </div>
       <div>
@@ -173,7 +173,7 @@
           <v-icon left small>
             fa-download
           </v-icon>
-          Deploy</v-btn
+          DEPLOY</v-btn
         >
       </div>
       <ConfirmDlg ref="confirm"></ConfirmDlg>
@@ -215,21 +215,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["loadIntegrations"]),
+    ...mapActions(["loadIntegrations", "showSuccess"]),
     ...mapGetters(["getIntegrationsBindingNames"]),
     ...mapMutations([
       "updateIntegrationBinding",
       "clearIntegrationsList",
       "setConfigIntegrationBinding"
     ]),
-    async delBinding(index) {
+    async delBinding(item, index) {
       if (
         await this.$refs.confirm.open(
           "Confirm",
           "Are you sure you want to delete this integration?"
         )
       ) {
-        this.deleteBinding(index);
+        this.deleteBinding(item, index);
       }
     },
 
@@ -241,13 +241,15 @@ export default {
         mode: "clone",
         binding: clonedItem
       });
+      this.showSuccess(`Integration ${item.Name} was cloned successfully`);
     },
-    deleteBinding(index) {
+    deleteBinding(item, index) {
       this.updateIntegrationBinding({
         type: this.type,
         mode: "delete",
         index: index
       });
+      this.showSuccess(`Integration ${item.Name} was deleted successfully`);
     },
 
     async clearAll() {
@@ -258,6 +260,7 @@ export default {
         )
       ) {
         this.clearIntegrationsList();
+        this.showSuccess(`All integrations were deleted successfully`);
       }
     },
     add() {

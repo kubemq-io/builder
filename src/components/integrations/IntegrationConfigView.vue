@@ -180,6 +180,15 @@ export default {
         this.updateIntegrationBinding(this.bindingConfig);
         this.show = false;
         this.$router.back();
+        if (this.mode === "add") {
+          this.showSuccess(
+            `Integration ${this.bindingModel.Name} was added successfully`
+          );
+        } else {
+          this.showSuccess(
+            `Integration ${this.bindingModel.Name} was edited successfully`
+          );
+        }
       }
     },
     cancel: function() {

@@ -130,6 +130,15 @@ export default {
         this.updateClusters(this.clusterConfig);
         this.show = false;
         this.$router.back();
+        if (this.mode === "add") {
+          this.showSuccess(
+            `Cluster ${this.clusterConfig.cluster.clusterName} was added successfully`
+          );
+        } else {
+          this.showSuccess(
+            `Cluster ${this.clusterConfig.cluster.clusterName} was edited successfully`
+          );
+        }
       }
     },
     back: function() {

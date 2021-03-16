@@ -138,7 +138,7 @@
                   <v-icon
                     size="20"
                     color="secondary"
-                    @click.stop="delBinding(index)"
+                    @click.stop="delBinding(binding, index)"
                   >
                     fa-trash-alt
                   </v-icon>
@@ -171,7 +171,7 @@
           <v-icon left small>
             fa-trash-alt
           </v-icon>
-          Clear All</v-btn
+          DELETE ALL</v-btn
         >
       </div>
       <div>
@@ -185,7 +185,7 @@
           <v-icon left small>
             fa-download
           </v-icon>
-          Deploy</v-btn
+          DEPLOY</v-btn
         >
       </div>
       <ConfirmDlg ref="confirm"></ConfirmDlg>
@@ -195,7 +195,7 @@
 <script>
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
 import BuilderTitle from "@/components/common/BuilderTitle";
 import { BridgesBinding } from "@/components/bridges/bridges";
@@ -215,20 +215,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["showSuccess"]),
     ...mapGetters(["getBridgesBindingNames"]),
     ...mapMutations([
       "updateBindings",
       "clearBridgesBindingsList",
       "setConfigBinding"
     ]),
-    async delBinding(index) {
+    async delBinding(item, index) {
       if (
         await this.$refs.confirm.open(
           "Confirm",
           "Are you sure you want to delete this binding?"
         )
       ) {
-        this.deleteBinding(index);
+        this.deleteBinding(item, index);
       }
     },
 
@@ -236,9 +237,11 @@ export default {
       let clonedItem = lodashLang.cloneDeep(item);
       clonedItem.Name = `${clonedItem.Name}-${makeid(5)}`;
       this.updateBindings({ mode: "clone", binding: clonedItem });
+      this.showSuccess(`Bridge ${item.Name} was cloned successfully`);
     },
-    deleteBinding(index) {
+    deleteBinding(item, index) {
       this.updateBindings({ mode: "delete", index: index });
+      this.showSuccess(`Bridge ${item.Name} was deleted successfully`);
     },
 
     async clearAll() {

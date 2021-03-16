@@ -170,8 +170,18 @@ export default {
         this.updateBindings(this.bindingConfig);
         this.show = false;
         this.$router.back();
+        if (this.mode === "add") {
+          this.showSuccess(
+            `Bridge ${this.bindingConfig.binding.Name} was added successfully`
+          );
+        } else {
+          this.showSuccess(
+            `Bridge ${this.bindingConfig.binding.Name} was edited successfully`
+          );
+        }
       }
     },
+
     cancel: function() {
       this.show = false;
       this.$router.back();

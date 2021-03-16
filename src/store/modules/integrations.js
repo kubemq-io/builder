@@ -4,6 +4,7 @@ import {
 } from "@/components/integrations/Integrations";
 import integrationList from "@/store/modules/integrationList";
 import lodashLang from "lodash/lang";
+
 const state = {
   integrationsMetadata: {
     connectors: []
