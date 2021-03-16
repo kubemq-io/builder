@@ -43,7 +43,7 @@ import lodashArray from "lodash/array";
 
 import ClusterDeploymentPanel from "@/components/cluster/panels/ClusterDeploymentPanel";
 import ClusterAdvancedPanel from "@/components/cluster/panels/ClusterAdvancedPanel";
-import BuilderTitle from "@/components/layout/BuilderTitle";
+import BuilderTitle from "@/components/common/BuilderTitle";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 
 export default {

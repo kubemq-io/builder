@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import IntegrationsPage from "@/components/integrations/IntegrationsPage";
+import IntegrationsPage from "@/pages/IntegrationsPage";
 import BridgesPage from "@/pages/BridgesPage";
 
 import HomePage from "@/pages/HomePage";
@@ -9,6 +9,8 @@ import ClustersConfigView from "@/components/cluster/views/ClustersConfigView";
 import ClustersListView from "@/components/cluster/views/ClustersListView";
 import BridgesListView from "@/components/bridges/BridgesListView";
 import BridgesConfigView from "@/components/bridges/BridgesConfigView";
+import IntegrationConfigView from "@/components/integrations/IntegrationConfigView";
+import IntgerationsListView from "@/components/integrations/IntgerationsListView";
 
 Vue.use(VueRouter);
 
@@ -38,15 +40,45 @@ const routes = [
   },
   {
     path: "/targets",
-    name: "KubeMQ Targets",
+    name: "targets",
     component: IntegrationsPage,
-    props: { type: "targets" }
+    props: { type: "targets" },
+    redirect: "targets/list",
+    children: [
+      {
+        path: "config",
+        name: "configTargetIntegration",
+        component: IntegrationConfigView,
+        props: { type: "targets" }
+      },
+      {
+        path: "",
+        name: "targetsList",
+        component: IntgerationsListView,
+        props: { type: "targets" }
+      }
+    ]
   },
   {
     path: "/sources",
-    name: "KubeMQ Sources",
+    name: "sources",
     component: IntegrationsPage,
-    props: { type: "sources" }
+    props: { type: "sources" },
+    redirect: "sources/list",
+    children: [
+      {
+        path: "config",
+        name: "configSourceIntegration",
+        component: IntegrationConfigView,
+        props: { type: "sources" }
+      },
+      {
+        path: "",
+        name: "sourcesList",
+        component: IntgerationsListView,
+        props: { type: "sources" }
+      }
+    ]
   },
   {
     path: "/bridges",

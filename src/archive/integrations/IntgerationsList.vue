@@ -95,7 +95,7 @@
   </div>
 </template>
 <script>
-import IntegrationsBindingDlg from "@/components/integrations/IntegrationBindingDlg";
+import IntegrationsBindingDlg from "@/archive/integrations/IntegrationBindingDlg";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 import { mapMutations } from "vuex";
 import lodashLang from "lodash/lang";

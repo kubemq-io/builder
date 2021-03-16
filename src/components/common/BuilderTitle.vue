@@ -11,6 +11,9 @@
           <h2 class="secondary--text text-uppercase">{{ title }}</h2>
         </div>
         <v-spacer></v-spacer>
+        <div class="flex-grow-1" v-show="showSearch">
+          <integration-search :type="type" @add="$emit('add')" />
+        </div>
         <div v-show="showSave">
           <v-btn
             text
@@ -39,14 +42,18 @@
 </template>
 
 <script>
+import IntegrationSearch from "@/components/common/IntegrationSearch";
 export default {
   name: "BuilderTitle",
+  components: { IntegrationSearch },
   props: {
     title: String,
     showAdd: Boolean,
     showBack: Boolean,
     showSave: Boolean,
-    disableSave: Boolean
+    disableSave: Boolean,
+    showSearch: Boolean,
+    type: String
   },
   data: function() {
     return {};

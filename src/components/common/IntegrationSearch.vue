@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <div>
     <v-autocomplete
       dense
       ref="autocomplete"
@@ -12,11 +12,12 @@
       cache-items
       no-data-text="No integrations were found for this query"
       hide-details
-      placeholder="Search for Integration"
+      placeholder="Add an Integration"
+      prepend-inner-icon="fa-search"
       filled
     >
       <template v-slot:selection="data">
-        <v-list-item dense class="pa-0">
+        <v-list-item dense class="pa-0 col-12">
           <v-list-item-avatar color="primary" size="25">
             <span class="white--text">{{ data.item.getInitial() }}</span>
           </v-list-item-avatar>
@@ -30,10 +31,10 @@
         </v-list-item>
       </template>
       <template v-slot:item="data">
-        <v-list>
+        <v-list class="col-12">
           <v-list-item dense class="pa-0">
             <v-list-item-avatar>
-              <v-avatar color="secondary" size="35">
+              <v-avatar color="secondary" size="40">
                 <span class="white--text headline">{{
                   data.item.getInitial()
                 }}</span>
@@ -42,12 +43,12 @@
 
             <v-list-item-content class="pa-0">
               <v-list-item-title>
-                <h3 class="secondary--text">
+                <h2 class="secondary--text">
                   {{ data.item.title }}
-                </h3>
+                </h2>
               </v-list-item-title>
               <v-list-item-subtitle>
-                <span class="secondary--text body-2">{{
+                <span class="secondary--text body-1">{{
                   data.item.category
                 }}</span>
               </v-list-item-subtitle>
@@ -56,7 +57,7 @@
                   <v-chip
                     v-for="(tag, index) in data.item.tags"
                     :key="'b' + tag + index"
-                    x-small
+                    small
                     color="primary"
                     outlined
                   >
@@ -69,17 +70,15 @@
         </v-list>
       </template>
     </v-autocomplete>
-    <IntegrationsBindingDlg ref="bindingDlg"></IntegrationsBindingDlg>
   </div>
 </template>
 <script>
 import { mapActions, mapMutations } from "vuex";
-import IntegrationsBindingDlg from "@/components/integrations/IntegrationBindingDlg";
 import { IntegrationsBinding } from "@/components/integrations/Integrations";
 
 export default {
   name: "IntegrationSearch",
-  components: { IntegrationsBindingDlg },
+  components: {},
   props: {
     type: String
   },
@@ -103,7 +102,7 @@ export default {
   },
   methods: {
     ...mapActions(["loadIntegrations"]),
-    ...mapMutations(["addIntegrationsBinding"]),
+    ...mapMutations(["setConfigIntegrationBinding"]),
     customFilter(item, queryText) {
       if (item.divider) {
         return false;
@@ -130,17 +129,16 @@ export default {
         param4.indexOf(searchText) > -1
       );
     },
-    async add() {
+    add() {
       if (this.selectedItem !== null) {
-        let newBinding = this.getNewBinding();
-        await this.$refs.bindingDlg
-          .open(
-            newBinding,
-            this.$store.getters.getIntegrationsBindingNames(this.type),
-            "add"
-          )
-          .then(result => this.addIntegrationsBinding(result));
+        this.setConfigIntegrationBinding({
+          type: this.type,
+          mode: "add",
+          binding: this.getNewBinding()
+        });
+
         this.$nextTick(() => {
+          this.$emit("add");
           this.selectedItem = null;
         });
       }

@@ -109,8 +109,8 @@
 <script>
 import { mapActions, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
-import IntegrationSearch from "@/components/integrations/IntegrationSearch";
-import IntegrationList from "@/components/integrations/IntgerationsList";
+import IntegrationSearch from "@/components/common/IntegrationSearch";
+import IntegrationList from "@/archive/integrations/IntgerationsList";
 
 export default {
   name: "IntegrationsPage",

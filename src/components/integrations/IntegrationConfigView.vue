@@ -19,14 +19,14 @@
               <v-text-field
                 v-model="bindingModel.Name"
                 clearable
-                label="Bridge Name"
+                label="Integration Name"
                 :rules="[this.validateBindingName]"
                 ref="inputName"
                 :error="errorState"
               ></v-text-field>
             </v-col>
             <v-col cols="12" class="py-0">
-              <BridgesBindingProperties
+              <IntegrationsBindingsProperties
                 ref="properties"
                 :binding="bindingModel"
                 :options="options"
@@ -44,12 +44,11 @@
                   <h2 :class="`${getMiddlewareColor}--text`">Middlewares</h2>
                 </template>
               </v-switch>
-
-              <v-card-text v-show="setMiddleware" class="pa-0 pb-2">
-                <BridgesBindingMiddlewares
+              <v-card-text v-if="setMiddleware" class="pa-0 pb-2">
+                <IntegrationsBindingMiddlewares
                   :config="bindingModel.Middlewares"
                   :show="show"
-                ></BridgesBindingMiddlewares>
+                ></IntegrationsBindingMiddlewares>
               </v-card-text>
             </v-col>
           </v-row>
@@ -62,25 +61,27 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import IntegrationsBindingMiddlewares from "@/components/integrations/IntegrationsBindingMiddlewares";
+import IntegrationsBindingsProperties from "@/components/integrations/IntegrationsBindingsProperties";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import lodashArray from "lodash/array";
-
 import BuilderTitle from "@/components/common/BuilderTitle";
-import BridgesBindingProperties from "@/components/bridges/BridgesBindingsProperties";
-import BridgesBindingMiddlewares from "@/components/bridges/BridgesBindingMiddlewares";
 
 export default {
-  name: "BridgesConfigView",
+  name: "IntegrationConfigView",
+  props: {
+    type: String
+  },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.show = true;
     });
   },
   components: {
-    BridgesBindingMiddlewares,
-    BridgesBindingProperties,
-    BuilderTitle
+    BuilderTitle,
+
+    IntegrationsBindingsProperties,
+    IntegrationsBindingMiddlewares
   },
   data: function() {
     return {
@@ -90,32 +91,35 @@ export default {
       isValidName: true
     };
   },
-
   computed: {
-    bindingModel: function() {
-      return this.$store.state.bridges.configBinding.binding;
-    },
-    mode: function() {
-      return this.$store.state.bridges.configBinding.mode;
-    },
-    originateName: function() {
-      return this.$store.state.bridges.configBinding.originateName;
-    },
-    forbiddenNames: function() {
-      return this.$store.state.bridges.configBinding.existedBindingNames;
-    },
-    bindingConfig: function() {
-      return this.$store.state.bridges.configBinding;
-    },
-
     errorState: function() {
       return !this.isValidName;
     },
+    bindingModel: function() {
+      return this.bindingConfig.binding;
+    },
+    mode: function() {
+      return this.bindingConfig.mode;
+    },
+    originateName: function() {
+      return this.bindingConfig.originateName;
+    },
+    forbiddenNames: function() {
+      return this.bindingConfig.existedBindingNames;
+    },
+    bindingConfig: function() {
+      if (this.type === "sources") {
+        return this.$store.state.integrations.configSourcesBinding;
+      } else {
+        return this.$store.state.integrations.configTargetsBinding;
+      }
+    },
+
     getTitle: function() {
       if (this.mode === "add") {
-        return "bridges > add";
+        return `${this.type} > add`;
       } else {
-        return "bridges > edit";
+        return `${this.type} > edit`;
       }
     },
     getMiddlewareColor: function() {
@@ -123,13 +127,21 @@ export default {
         return "primary";
       }
       return "secondary";
+    },
+    isValidForm: function() {
+      return (
+        this.$refs.inputName.validate() &&
+        this.$refs.properties.$refs.formSource.validate() &&
+        this.$refs.properties.$refs.formTarget.validate()
+      );
     }
   },
   watch: {},
   methods: {
-    ...mapMutations(["updateBindings"]),
-    ...mapGetters(["getBridgesBindingNames"]),
+    ...mapMutations(["updateIntegrationBinding"]),
+    ...mapGetters(["getIntegrationsBindingNames"]),
     ...mapActions(["showSuccess", "showError", "showToast"]),
+
     validateBindingName: function() {
       if (this.bindingModel.Name === "" || this.bindingModel.Name === null) {
         return "Set bridge name";
@@ -159,15 +171,8 @@ export default {
     },
 
     save: function() {
-      this.isValidName = this.$refs.inputName.validate();
-      this.$refs.properties.$refs.formSource.validate();
-      this.$refs.properties.$refs.formTarget.validate();
-      if (
-        this.bindingModel.SourceSide.IsModelValid &&
-        this.bindingModel.TargetSide.IsModelValid &&
-        this.isValidName
-      ) {
-        this.updateBindings(this.bindingConfig);
+      if (this.isValidForm) {
+        this.updateIntegrationBinding(this.bindingConfig);
         this.show = false;
         this.$router.back();
       }
@@ -180,4 +185,18 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/*.v-text-field >>> input {*/
+/*  font-size: 0.9em;*/
+/*}*/
+/*.v-text-field >>> label {*/
+/*  font-size: 0.9em;*/
+/*}*/
+/*.v-text-field >>> button {*/
+/*  font-size: 0.9em;*/
+/*}*/
+.v-dialog__content {
+  align-items: flex-start;
+  justify-content: center;
+}
+</style>

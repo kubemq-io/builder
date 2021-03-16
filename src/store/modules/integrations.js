@@ -1,10 +1,29 @@
-import { Integrations } from "@/components/integrations/Integrations";
+import {
+  Integrations,
+  IntegrationsBinding
+} from "@/components/integrations/Integrations";
 import integrationList from "@/store/modules/integrationList";
-import lodashArray from "lodash/array";
+import lodashLang from "lodash/lang";
 const state = {
   integrationsMetadata: {},
   targets: [],
-  sources: []
+  sources: [],
+  configTargetsBinding: {
+    type: "targets",
+    mode: "add",
+    binding: lodashLang.cloneDeep(new IntegrationsBinding()),
+    originateName: "",
+    index: -1,
+    existedBindingNames: []
+  },
+  configSourcesBinding: {
+    type: "sources",
+    mode: "add",
+    binding: lodashLang.cloneDeep(new IntegrationsBinding()),
+    originateName: "",
+    index: -1,
+    existedBindingNames: []
+  }
 };
 const getters = {
   getIntegrationsBindingNames: state => type => {
@@ -34,45 +53,127 @@ const mutations = {
     state.sources = [];
     state.targets = [];
   },
-  addIntegrationsBinding(state, val) {
-    if (val) {
-      switch (val.binding.Type) {
-        case "sources":
-          state.sources.push(val.binding);
+  setConfigIntegrationBinding(state, val) {
+    console.log(val);
+    if (val.type === "targets") {
+      switch (val.mode) {
+        case "add": {
+          state.configTargetsBinding = {
+            type: "targets",
+            mode: "add",
+            binding: lodashLang.cloneDeep(val.binding),
+            originateName: "",
+            index: -1,
+            existedBindingNames: []
+          };
+          state.configTargetsBinding.binding.Name = `target-${state.targets.length}`;
           break;
-        case "targets":
-          state.targets.push(val.binding);
+        }
+        case "edit": {
+          state.configTargetsBinding = {
+            type: "targets",
+            mode: "edit",
+            binding: lodashLang.cloneDeep(val.binding),
+            originateName: val.binding.Name,
+            index: val.index,
+            existedBindingNames: []
+          };
           break;
+        }
       }
+      state.targets.forEach(value => {
+        state.configTargetsBinding.existedBindingNames.push({
+          name: value.Name
+        });
+      });
+    }
+    if (val.type === "sources") {
+      switch (val.mode) {
+        case "add": {
+          state.configSourcesBinding = {
+            type: "sources",
+            mode: "add",
+            binding: lodashLang.cloneDeep(val.binding),
+            originateName: "",
+            index: -1,
+            existedBindingNames: []
+          };
+          state.configSourcesBinding.binding.Name = `source-${state.sources.length}`;
+          break;
+        }
+        case "edit": {
+          state.configSourcesBinding = {
+            type: "sources",
+            mode: "edit",
+            binding: lodashLang.cloneDeep(val.binding),
+            originateName: val.binding.Name,
+            index: val.index,
+            existedBindingNames: []
+          };
+          break;
+        }
+      }
+      state.sources.forEach(value => {
+        state.configSourcesBinding.existedBindingNames.push({
+          name: value.Name
+        });
+      });
     }
   },
-  replaceIntegrationsBinding(state, val) {
-    switch (val.binding.Type) {
-      case "sources":
-        state.sources.splice(val.index, 1, val.binding);
-
-        break;
-      case "targets":
-        state.targets.splice(val.index, 1, val.binding);
-        break;
-    }
-  },
-  deleteIntegrationsBinding(state, val) {
-    switch (val.Type) {
-      case "sources": {
-        const indexSource = lodashArray.findIndex(state.sources, function(b) {
-          return b.Name === val.Name;
-        });
-        state.sources.splice(indexSource, 1);
-
-        break;
+  updateIntegrationBinding(state, val) {
+    if (val.type === "targets") {
+      switch (val.mode) {
+        case "add": {
+          const newBinding = lodashLang.cloneDeep(
+            state.configTargetsBinding.binding
+          );
+          state.targets.push(newBinding);
+          break;
+        }
+        case "clone": {
+          const newBinding = lodashLang.cloneDeep(val.binding);
+          state.targets.push(newBinding);
+          break;
+        }
+        case "edit": {
+          const updatedBinding = lodashLang.cloneDeep(
+            state.configTargetsBinding.binding
+          );
+          state.targets.splice(val.index, 1, updatedBinding);
+          break;
+        }
+        case "delete": {
+          state.targets.splice(val.index, 1);
+          break;
+        }
       }
-      case "targets": {
-        const indexTarget = lodashArray.findIndex(state.targets, function(b) {
-          return b.Name === val.Name;
-        });
-        state.targets.splice(indexTarget, 1);
-        break;
+    }
+
+    if (val.type === "sources") {
+      switch (val.mode) {
+        case "add": {
+          const newBinding = lodashLang.cloneDeep(
+            state.configSourcesBinding.binding
+          );
+          state.sources.push(newBinding);
+          break;
+        }
+        case "clone": {
+          const newBinding = lodashLang.cloneDeep(val.binding);
+          state.sources.push(newBinding);
+          break;
+        }
+        case "edit": {
+          const updatedBinding = lodashLang.cloneDeep(
+            state.configSourcesBinding.binding
+          );
+          state.sources.splice(val.index, 1, updatedBinding);
+          break;
+        }
+        case "delete": {
+          state.sources.splice(val.index, 1);
+          break;
+        }
       }
     }
   }

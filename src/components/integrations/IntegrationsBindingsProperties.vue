@@ -3,14 +3,16 @@
     <div class="side">
       <v-card class="pa-0 ">
         <v-card-title class="pa-0">
-          <v-list-item-avatar color="primary" size="25">
-            <span class="white--text body-2">{{ source.Initial }}</span>
+          <v-list-item-avatar>
+            <v-avatar color="secondary" size="30">
+              <span class="white--text body-1">{{ source.Initial }}</span>
+            </v-avatar>
           </v-list-item-avatar>
-          <h5 class="secondary--text">
+          <h4 class="secondary--text">
             {{ source.Title }}
-          </h5>
+          </h4>
         </v-card-title>
-        <v-card-text class="pb-1">
+        <v-card-text>
           <v-form v-if="toShow" ref="formSource" v-model="source.IsModelValid">
             <v-jsf
               v-model="source.Model"
@@ -22,23 +24,25 @@
       </v-card>
     </div>
     <div class="pl-3 flex-grow-1">
-      <v-list-item-avatar color="primary" size="25">
-        <v-icon size="15" color="white">
+      <v-list-item-avatar color="secondary" size="30">
+        <v-icon size="20" color="white">
           fa-arrow-right
         </v-icon>
       </v-list-item-avatar>
     </div>
     <div class="side">
       <v-card class="pa-0">
-        <v-card-title class="pa-0 pb-2">
-          <v-list-item-avatar color="primary" size="25">
-            <span class="white--text body-2">{{ target.Initial }}</span>
+        <v-card-title class="pa-0">
+          <v-list-item-avatar>
+            <v-avatar color="secondary" size="30">
+              <span class="white--text body-1">{{ target.Initial }}</span>
+            </v-avatar>
           </v-list-item-avatar>
-          <h5 class="secondary--text">
+          <h4 class="secondary--text">
             {{ target.Title }}
-          </h5>
+          </h4>
         </v-card-title>
-        <v-card-text class="pb-1">
+        <v-card-text>
           <v-form v-if="toShow" ref="formTarget" v-model="target.IsModelValid">
             <v-jsf
               v-model="target.Model"
@@ -55,7 +59,7 @@
 import VJsf from "@koumoul/vjsf/lib/VJsf";
 
 export default {
-  name: "Properties",
+  name: "IntegrationsBindingsProperties",
   components: { VJsf },
   props: {
     binding: {},

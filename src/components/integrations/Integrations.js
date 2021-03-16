@@ -389,8 +389,8 @@ class IntegrationsBindingMiddlewares {
 let integrationsLoggingModel = {
   Schema: {
     "x-class": "vjsf",
+    required: ["logLevel"],
     properties: {
-      required: ["logLevel"],
       logLevel: {
         type: "string",
         title: "Log Level",
@@ -398,6 +398,11 @@ let integrationsLoggingModel = {
         enum: ["No Logging", "Debug Level", "Info Level", "Error Level"]
       }
     }
+  },
+  HasData: function() {
+    return (
+      this.Model.logLevel !== "No Logging" && this.Model.logLevel !== undefined
+    );
   },
   Model: {},
   IsValid: false
@@ -463,6 +468,9 @@ let integrationsRetriesModel = {
   Model: {
     mode: "disabled"
   },
+  HasData: function() {
+    return this.Model.mode !== "disabled";
+  },
   IsValid: false
 };
 let integrationsRateLimiterModel = {
@@ -501,6 +509,9 @@ let integrationsRateLimiterModel = {
   },
   Model: {
     mode: "disabled"
+  },
+  HasData: function() {
+    return this.Model.mode !== "disabled";
   },
   IsValid: false
 };

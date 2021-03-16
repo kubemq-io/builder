@@ -22,21 +22,21 @@
             </v-list-item-avatar>
             <v-list-item-content class="pb-0">
               <v-list-item-title>
-                <h3 class="secondary--text">
+                <h2 class="secondary--text">
                   {{ cluster.clusterName }}
-                </h3>
+                </h2>
               </v-list-item-title>
               <v-list-item-subtitle class="pb-1">
-                <h3>
+                <h2>
                   {{ cluster.clusterNamespace }}
-                </h3>
+                </h2>
               </v-list-item-subtitle>
               <v-list-item-subtitle class="pb-1">
                 <v-chip-group active-class="primary--text" column>
                   <v-chip
                     v-for="(tag, index) in cluster.tags()"
                     :key="'a' + tag + index"
-                    x-small
+                    small
                     outlined
                     class="my-0 px-1"
                     color="primary"
@@ -133,7 +133,7 @@ import ConfirmDlg from "@/components/common/ConfirmDlg";
 
 import { mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
-import BuilderTitle from "@/components/layout/BuilderTitle";
+import BuilderTitle from "@/components/common/BuilderTitle";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
 
 export default {
