@@ -83,18 +83,18 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import ClusterVolume from "@/components/cluster/old/VolumeForm";
-import ClusterImage from "@/components/cluster/old/ImageForm";
-import ClusterHealth from "@/components/cluster/old/HealthForm";
-import ClusterResource from "@/components/cluster/old/ResourceForm";
-import ClusterNode from "@/components/cluster/old/NodesForm";
-import ClusterInterfaces from "@/components/cluster/old/InterfacesForm";
-import ClusterStore from "@/components/cluster/old/StoreForm";
-import ClusterQueue from "@/components/cluster/old/QueueForm";
-import ClusterRouting from "@/components/cluster/old/RoutingForm";
-import ClusterTlsForm from "@/components/cluster/old/TLSForm";
-import ClusterAuthentication from "@/components/cluster/old/AuthenticationForm";
-import ClusterAuthorization from "@/components/cluster/old/AuthorizationForm";
+import ClusterVolume from "@/archive/cluster/old/VolumeForm";
+import ClusterImage from "@/archive/cluster/old/ImageForm";
+import ClusterHealth from "@/archive/cluster/old/HealthForm";
+import ClusterResource from "@/archive/cluster/old/ResourceForm";
+import ClusterNode from "@/archive/cluster/old/NodesForm";
+import ClusterInterfaces from "@/archive/cluster/old/InterfacesForm";
+import ClusterStore from "@/archive/cluster/old/StoreForm";
+import ClusterQueue from "@/archive/cluster/old/QueueForm";
+import ClusterRouting from "@/archive/cluster/old/RoutingForm";
+import ClusterTlsForm from "@/archive/cluster/old/TLSForm";
+import ClusterAuthentication from "@/archive/cluster/old/AuthenticationForm";
+import ClusterAuthorization from "@/archive/cluster/old/AuthorizationForm";
 
 export default {
   name: "ClusterAdvancedSection",

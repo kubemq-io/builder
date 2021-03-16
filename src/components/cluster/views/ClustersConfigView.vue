@@ -41,8 +41,8 @@ import "@koumoul/vjsf/lib/deps/third-party.js";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import lodashArray from "lodash/array";
 
-import ClusterDeploymentPanel from "@/components/cluster/dialog/ClusterDeploymentPanel";
-import ClusterAdvancedPanel from "@/components/cluster/dialog/ClusterAdvancedPanel";
+import ClusterDeploymentPanel from "@/components/cluster/panels/ClusterDeploymentPanel";
+import ClusterAdvancedPanel from "@/components/cluster/panels/ClusterAdvancedPanel";
 import BuilderTitle from "@/components/layout/BuilderTitle";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 

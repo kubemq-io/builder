@@ -19,7 +19,7 @@
   </v-card>
 </template>
 <script>
-import ClusterConfigItemCard from "@/components/cluster/ClusterConfigItemCard";
+import ClusterConfigItemCard from "@/components/cluster/panels/ClusterConfigItemCard";
 
 export default {
   name: "ClusterBasicPanel",

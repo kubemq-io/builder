@@ -205,7 +205,7 @@
   <!--  </div>-->
 </template>
 <script>
-import ClusterAccessControlRoutingTab from "@/components/cluster/old/ClusterAccessControlRoutingTab";
+import ClusterAccessControlRoutingTab from "@/archive/cluster/old/ClusterAccessControlRoutingTab";
 export default {
   name: "ClusterConfigAdvancedPanle",
   components: { ClusterAccessControlRoutingTab },

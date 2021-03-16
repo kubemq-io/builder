@@ -7,7 +7,7 @@
 import { mapGetters, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
-import ClusterConfigDlg from "@/components/cluster/dialog/ClusterConfigDlg";
+import ClusterConfigDlg from "@/archive/cluster/old/dialog/ClusterConfigDlg";
 import ClustersList from "@/pages/clusters/ClustersList";
 
 export default {

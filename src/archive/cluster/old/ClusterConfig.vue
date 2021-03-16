@@ -31,8 +31,8 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import ClusterGeneralSection from "@/components/cluster/old/GeneralSection";
-import ClusterAdvancedSection from "@/components/cluster/old/AdvancedSection";
+import ClusterGeneralSection from "@/archive/cluster/old/GeneralSection";
+import ClusterAdvancedSection from "@/archive/cluster/old/AdvancedSection";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "ClusterConfig",

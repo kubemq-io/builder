@@ -69,7 +69,7 @@
   </v-expansion-panel>
 </template>
 <script>
-import ClusterConfigItemCard from "@/components/cluster/ClusterConfigItemCard";
+import ClusterConfigItemCard from "@/components/cluster/panels/ClusterConfigItemCard";
 
 export default {
   name: "ClusterInterfacesSecurityPanel",

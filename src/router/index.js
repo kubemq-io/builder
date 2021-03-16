@@ -4,9 +4,9 @@ import IntegrationsPage from "@/components/integrations/IntegrationsPage";
 import BridgesPage from "@/pages/bridges/BridgesPage";
 
 import HomePage from "@/pages/HomePage";
-import ClustersPage from "@/pages/clusters/ClustersPage";
-import ClustersConfigView from "@/pages/clusters/ClustersConfigView";
-import ClustersListView from "@/pages/clusters/ClustersListView";
+import ClustersPage from "@/pages/ClustersPage";
+import ClustersConfigView from "@/components/cluster/views/ClustersConfigView";
+import ClustersListView from "@/components/cluster/views/ClustersListView";
 import BridgesListView from "@/pages/bridges/BridgesListView";
 import BridgesConfigView from "@/pages/bridges/BridgesConfigView";
 

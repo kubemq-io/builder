@@ -7,7 +7,7 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import ClusterGeneral from "@/components/cluster/old/GeneralForm";
+import ClusterGeneral from "@/archive/cluster/old/GeneralForm";
 
 export default {
   name: "ClusterGeneralSection",
