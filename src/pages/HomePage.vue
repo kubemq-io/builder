@@ -5,10 +5,10 @@
     <v-spacer></v-spacer>
     <div class="d-flex justify-end align-content-center align-center col-12">
       <v-spacer></v-spacer>
-      <div class="col-5 pr-4">
+      <div class="col-5 pr-2">
         <v-img src="@/assets/ship.svg" alt="ship" />
       </div>
-      <div class="col-6 pl-4">
+      <div class="col-6 pl-2">
         <v-list elevation="1" two-line>
           <template v-for="(item, index) in menu">
             <v-divider v-if="item.divider" inset :key="index"></v-divider>
