@@ -91,6 +91,11 @@ export default {
       isValidName: true
     };
   },
+  beforeMount() {
+    if (this.bindingModel.Type === "") {
+      this.$router.replace("/");
+    }
+  },
   computed: {
     errorState: function() {
       return !this.isValidName;

@@ -5,7 +5,9 @@ import {
 import integrationList from "@/store/modules/integrationList";
 import lodashLang from "lodash/lang";
 const state = {
-  integrationsMetadata: {},
+  integrationsMetadata: {
+    connectors: []
+  },
   targets: [],
   sources: [],
   configTargetsBinding: {
@@ -54,7 +56,6 @@ const mutations = {
     state.targets = [];
   },
   setConfigIntegrationBinding(state, val) {
-    console.log(val);
     if (val.type === "targets") {
       switch (val.mode) {
         case "add": {
