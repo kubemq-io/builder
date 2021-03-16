@@ -7,8 +7,8 @@ import HomePage from "@/pages/HomePage";
 import ClustersPage from "@/pages/ClustersPage";
 import ClustersConfigView from "@/components/cluster/views/ClustersConfigView";
 import ClustersListView from "@/components/cluster/views/ClustersListView";
-import BridgesListView from "@/pages/bridges/BridgesListView";
-import BridgesConfigView from "@/pages/bridges/BridgesConfigView";
+import BridgesListView from "@/components/bridges/BridgesListView";
+import BridgesConfigView from "@/components/bridges/BridgesConfigView";
 
 Vue.use(VueRouter);
 

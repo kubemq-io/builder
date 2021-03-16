@@ -107,9 +107,9 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import ConfirmDlg from "@/components/common/ConfirmDlg";
-import BridgesList from "@/components/bridges/BridgesList";
+import BridgesList from "@/archive/bridges/BridgesList";
 import { BridgesBinding } from "@/components/bridges/bridges";
-import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
+import BridgesBindingDlg from "@/archive/bridges/BridgesBindingDlg";
 
 export default {
   name: "BridgesPage",

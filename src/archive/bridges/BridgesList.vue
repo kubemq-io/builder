@@ -139,7 +139,7 @@ import ConfirmDlg from "@/components/common/ConfirmDlg";
 
 import { mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
-import BridgesBindingDlg from "@/components/bridges/BridgesBindingDlg";
+import BridgesBindingDlg from "@/archive/bridges/BridgesBindingDlg";
 
 export default {
   name: "BridgesList",
