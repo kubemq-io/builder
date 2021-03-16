@@ -47,9 +47,19 @@
                       </h2>
                     </div>
                     <div>
-                      <v-chip small color="primary" outlined class="my-1 px-1">
-                        {{ integration.SourceSide.Category }}
-                      </v-chip>
+                      <v-chip-group active-class="primary--text" column>
+                        <v-chip
+                          v-for="(tag,
+                          indexTag) in integration.SourceSide.getTags()"
+                          :key="'a' + tag + indexTag"
+                          small
+                          outlined
+                          class="px-1"
+                          color="primary"
+                        >
+                          {{ tag }}
+                        </v-chip>
+                      </v-chip-group>
                     </div>
                   </v-col>
                   <v-col
@@ -69,9 +79,19 @@
                       </h2>
                     </div>
                     <div>
-                      <v-chip small color="primary" outlined class="my-1 px-1">
-                        {{ integration.TargetSide.Category }}
-                      </v-chip>
+                      <v-chip-group active-class="primary--text" column>
+                        <v-chip
+                          v-for="(tag,
+                          indexTag) in integration.TargetSide.getTags()"
+                          :key="'a' + tag + indexTag"
+                          small
+                          outlined
+                          class="px-1"
+                          color="primary"
+                        >
+                          {{ tag }}
+                        </v-chip>
+                      </v-chip-group>
                     </div>
                   </v-col>
                 </div>

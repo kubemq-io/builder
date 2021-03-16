@@ -154,7 +154,11 @@ class IntegrationsBinding {
   }
 
   get Title() {
-    return `${this.SourceSide.Name} - ${this.TargetSide.Name} Integration`;
+    if (this.Type === "sources") {
+      return `${this.SourceSide.Name}`;
+    } else {
+      return `${this.TargetSide.Name}`;
+    }
   }
 
   get Name() {
@@ -247,7 +251,38 @@ class IntegrationsBindingSide {
     }
     return this._category;
   }
+  getTags() {
+    const list = [this.Category];
 
+    if (this._model.address) {
+      list.push(this._model.address);
+    }
+    if (this._model.channel) {
+      list.push(this._model.channel);
+    }
+    if (this._model.host) {
+      list.push(this._model.host);
+    }
+    if (this._model.hosts) {
+      list.push(this._model.hosts);
+    }
+    if (this._model.destination) {
+      list.push(this._model.destination);
+    }
+    if (this._model.url) {
+      list.push(this._model.url);
+    }
+    if (this._model.urls) {
+      list.push(this._model.urls);
+    }
+    if (this._model.endpoint) {
+      list.push(this._model.endpoint);
+    }
+    if (this._model.end_point) {
+      list.push(this._model.end_point);
+    }
+    return list;
+  }
   set Category(value) {
     this._category = value;
   }

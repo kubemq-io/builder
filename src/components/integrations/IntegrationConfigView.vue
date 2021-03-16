@@ -117,7 +117,7 @@ export default {
 
     getTitle: function() {
       if (this.mode === "add") {
-        return `${this.type} > add`;
+        return `${this.type} > add ${this.bindingModel.Title}`;
       } else {
         return `${this.type} > edit`;
       }
