@@ -2,7 +2,9 @@
   <v-dialog v-model="dialog" :max-width="options.width" @keydown.esc="cancel">
     <v-card>
       <v-toolbar color="primary" dense flat>
-        <v-toolbar-title class="text-body-3 font-weight-bold white--text">
+        <v-toolbar-title
+          class="text-body-3 font-weight-bold white--text text-uppercase"
+        >
           {{ title }}
         </v-toolbar-title>
       </v-toolbar>

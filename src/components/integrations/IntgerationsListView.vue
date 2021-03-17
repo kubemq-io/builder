@@ -177,6 +177,7 @@
         >
       </div>
       <ConfirmDlg ref="confirm"></ConfirmDlg>
+      <deploy-dlg ref="deploy"></deploy-dlg>
     </div>
   </div>
 </template>
@@ -185,10 +186,11 @@ import ConfirmDlg from "@/components/common/ConfirmDlg";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
 import BuilderTitle from "@/components/common/BuilderTitle";
+import DeployDlg from "@/components/deploy/DeployDlg";
 
 export default {
   name: "IntegrationListView",
-  components: { BuilderTitle, ConfirmDlg },
+  components: { DeployDlg, BuilderTitle, ConfirmDlg },
   props: {
     type: String
   },
@@ -294,8 +296,17 @@ export default {
     back: function() {
       this.$router.back();
     },
-    deploy: function() {
-      this.integrations.forEach(value => console.log(value));
+    async deploy() {
+      const bindings = [];
+      this.integrations.forEach(value =>
+        bindings.push(value.GetConfiguration())
+      );
+      const deployOptions = {
+        title: this.type,
+        type: this.type,
+        configuration: bindings
+      };
+      await this.$refs.deploy.open(deployOptions);
     }
   }
 };

@@ -125,6 +125,7 @@
         >
       </div>
       <ConfirmDlg ref="confirm"></ConfirmDlg>
+      <deploy-dlg ref="deploy"></deploy-dlg>
     </div>
   </div>
 </template>
@@ -135,10 +136,11 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
 import BuilderTitle from "@/components/common/BuilderTitle";
 import { ClusterConfig } from "@/components/cluster/classes/ClusterConfig";
+import DeployDlg from "@/components/deploy/DeployDlg";
 
 export default {
   name: "ClustersListView",
-  components: { BuilderTitle, ConfirmDlg },
+  components: { DeployDlg, BuilderTitle, ConfirmDlg },
   data() {
     return {};
   },
@@ -211,8 +213,15 @@ export default {
     back: function() {
       this.$router.back();
     },
-    deploy: function() {
-      this.clusters.forEach(value => console.log(value));
+    async deploy() {
+      const clusters = [];
+      this.clusters.forEach(value => clusters.push(value.GetConfiguration()));
+      const deployOptions = {
+        title: "Clusters",
+        type: "clusters",
+        configuration: clusters
+      };
+      await this.$refs.deploy.open(deployOptions);
     }
   }
 };

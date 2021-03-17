@@ -233,10 +233,53 @@ class ClusterConfig {
     this._store = lodashLang.cloneDeep(new ClusterStoreConfig());
     this._queues = lodashLang.cloneDeep(new ClusterQueuesConfig());
   }
+
+  GetConfiguration() {
+    return {
+      deployment: this._deployment.model,
+      authentication: this._authentication.getHasConfigured()
+        ? this._authentication.model
+        : null,
+      authorization: this._authorization.getHasConfigured()
+        ? this._authorization.model
+        : null,
+
+      routing: this._routing.getHasConfigured() ? this._routing.model : null,
+
+      grpcInterface: this._grpcInterface.getHasConfigured()
+        ? this._grpcInterface.model
+        : null,
+
+      restInterface: this._restInterface.getHasConfigured()
+        ? this._restInterface.model
+        : null,
+
+      apiInterface: this._apiInterface.getHasConfigured()
+        ? this._apiInterface.model
+        : null,
+
+      security: this._security.getHasConfigured() ? this._security.model : null,
+
+      image: this._image.getHasConfigured() ? this._image.model : null,
+
+      volume: this._volume.getHasConfigured() ? this._volume.model : null,
+
+      health: this._health.getHasConfigured() ? this._health.model : null,
+
+      resources: this._resources.getHasConfigured()
+        ? this._resources.model
+        : null,
+
+      nodes: this._nodes.getHasConfigured() ? this._nodes.model : null,
+
+      store: this._store.getHasConfigured() ? this._store.model : null,
+
+      queues: this._queues.getHasConfigured() ? this._queues.model : null
+    };
+  }
   constructor() {
     this._id = makeid(16);
     this._deployment = new ClusterDeploymentConfig();
-
     this._authentication = new ClusterAuthenticationConfig();
     this._authorization = new ClusterAuthorizationConfig();
     this._routing = new ClusterRoutingConfig();

@@ -1,7 +1,14 @@
 <template>
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <div ref="copylabel" class="copylabel animate__faster" v-on="on" @click.stop.prevent="copy">{{ text }}</div>
+      <div
+        ref="copylabel"
+        class="copylabel animate__faster"
+        v-on="on"
+        @click.stop.prevent="copy"
+      >
+        {{ text }}
+      </div>
     </template>
     <span>{{ tooltip }}</span>
   </v-tooltip>
@@ -21,12 +28,12 @@ export default {
     // Text to copy to clipboard
     text: {
       type: String,
-      default: ''
+      default: ""
     },
     // Text to show on toast
     toastText: {
       type: String,
-      default: 'Copied to clipboard!'
+      default: "Copied to clipboard!"
     },
     /**
      * CSS animation with animate.css
@@ -34,30 +41,30 @@ export default {
      */
     animation: {
       type: String,
-      default: 'heartBeat'
+      default: "headShake"
     }
   },
   data() {
     return {
-      tooltip: 'Copy',
+      tooltip: "Copy",
       timeout: null
-    }
+    };
   },
   beforeDestroy() {
-    if (this.timeout) clearTimeout(this.timeout)
+    if (this.timeout) clearTimeout(this.timeout);
   },
   methods: {
-    copy() {
-      this.$animate(this.$refs.copylabel, this.animation)
-      this.$clipboard(this.text, this.toastText)
-      this.tooltip = 'Copied!'
+    async copy() {
+      this.$animate(this.$refs.copylabel, this.animation);
+      await navigator.clipboard.writeText(this.text);
+      this.tooltip = "Copied!";
 
       this.timeout = setTimeout(() => {
-        this.tooltip = 'Copy'
-      }, 2000)
+        this.tooltip = "Copy";
+      }, 2000);
     }
   }
-}
+};
 </script>
 
 <style scoped>

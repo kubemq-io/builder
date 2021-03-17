@@ -189,6 +189,7 @@
         >
       </div>
       <ConfirmDlg ref="confirm"></ConfirmDlg>
+      <deploy-dlg ref="deploy"></deploy-dlg>
     </div>
   </div>
 </template>
@@ -199,10 +200,11 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 import lodashLang from "lodash/lang";
 import BuilderTitle from "@/components/common/BuilderTitle";
 import { BridgesBinding } from "@/components/bridges/bridges";
+import DeployDlg from "@/components/deploy/DeployDlg";
 
 export default {
   name: "BridgesListView",
-  components: { BuilderTitle, ConfirmDlg },
+  components: { DeployDlg, BuilderTitle, ConfirmDlg },
   data() {
     return {};
   },
@@ -269,8 +271,15 @@ export default {
     back: function() {
       this.$router.back();
     },
-    deploy: function() {
-      this.bindings.forEach(value => console.log(value));
+    async deploy() {
+      const bindings = [];
+      this.bindings.forEach(value => bindings.push(value.GetConfiguration()));
+      const deployOptions = {
+        title: "Bridges",
+        type: "bridges",
+        configuration: bindings
+      };
+      await this.$refs.deploy.open(deployOptions);
     },
     getBindingType: function(binding) {
       const type = binding.getType();
