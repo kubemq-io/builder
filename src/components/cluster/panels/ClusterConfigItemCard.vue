@@ -10,7 +10,7 @@
         {{ title }}
       </h4>
     </v-card-title>
-    <v-card-text class="py-1">
+    <v-card-text class="py-2">
       <v-form v-if="toShow" ref="form" v-model="config.isValid">
         <v-jsf
           @change="validateForm"
