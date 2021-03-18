@@ -61,16 +61,38 @@ const clusterRoutingSchema = {
                   key: {
                     type: "string",
                     title: "Key",
+                    description: "Route key name",
                     default: "",
-                    "x-cols": 4,
-                    "x-class": "pr-2"
+                    "x-cols": 8
                   },
-                  route: {
+                  events: {
                     type: "string",
-                    title: "Routes",
+                    title: "Events Channels",
+                    description: "Events channels destinations separated by ; ",
                     default: "",
-                    "x-cols": 8,
-                    "x-class": "pl-2"
+                    "x-cols": 12
+                  },
+                  events_store: {
+                    type: "string",
+                    title: "Events Store Channels",
+                    description:
+                      "Events Store channels destinations separated by ; ",
+                    default: "",
+                    "x-cols": 12
+                  },
+                  queues: {
+                    type: "string",
+                    title: "Queues Channels",
+                    description: "Queues channels destinations separated by ; ",
+                    default: "",
+                    "x-cols": 12
+                  },
+                  routes: {
+                    type: "string",
+                    title: "Other Routes",
+                    description: "Route Keys destinations separated by ; ",
+                    default: "",
+                    "x-cols": 12
                   }
                 }
               }
