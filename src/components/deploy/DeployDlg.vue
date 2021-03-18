@@ -21,7 +21,7 @@
             <h4 class="secondary--text">DEPLOYMENT SETTINGS</h4>
           </v-card-title>
           <v-card-text class="col-8 pb-0">
-            <v-form ref="form" v-model="options.settings.isValid">
+            <v-form ref="deployForm" v-model="options.settings.isValid">
               <v-jsf
                 v-model="options.settings.model"
                 :schema="options.settings.schema"
@@ -63,7 +63,7 @@
                     </div>
                     <v-list-item-title class="pl-2">
                       <div>
-                        <copy-label :text="item.link"></copy-label>
+                        <copy-label :text="item"></copy-label>
                       </div>
                     </v-list-item-title>
                   </v-list-item>
@@ -89,6 +89,7 @@ import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
 import lodashLang from "lodash/lang";
 import CopyLabel from "@/components/common/CopyLabel";
+import axios from "axios";
 export default {
   name: "DeployDlg",
   components: { CopyLabel, VJsf },
@@ -123,6 +124,7 @@ export default {
       this.manifests = [];
       this.options = Object.assign(this.options, options);
       this.options.settings = getSettings(options.type);
+      console.log(this.isLoading, this.options.settings.isValid);
       return new Promise((resolve, reject) => {
         this.resolve = resolve;
         this.reject = reject;
@@ -137,19 +139,19 @@ export default {
       let request = {
         id: 0,
         type: this.options.type,
-        deploymentName: this.options.settings.model.name,
-        deploymentNamespace: this.options.settings.model.namespace,
+        model: this.options.model,
         configuration: this.options.configuration
       };
 
       request.id = getHash(JSON.stringify(request));
       console.log(JSON.stringify(request));
       this.isLoading = true;
-      await fetchDeploymentManifest(request)
-        .then(result => (this.manifests = result))
-        .catch(e => {
-          this.generateError = e;
-        });
+      await axios
+        .post("http://localhost:10100/build", request)
+        .then(response => {
+          this.manifests = response.data.links;
+        })
+        .catch(error => (this.generateError = error));
       this.isLoading = false;
     },
     close() {
@@ -175,29 +177,6 @@ const getHash = function(str, seed = 0) {
     Math.imul(h1 ^ (h1 >>> 13), 3266489909);
   return 4294967296 * (2097151 & h2) + (h1 >>> 0);
 };
-async function fetchDeploymentManifest(request) {
-  return new Promise((resolve, reject) => {
-    if (request.type !== "") {
-      setTimeout(
-        () =>
-          resolve([
-            {
-              label: "Operator Manifest",
-              link: "kubectl apply -f https://builder.kubemq.io/init"
-            },
-            {
-              label: "Connector Manifest",
-              link:
-                "kubectl apply -f https://builder.kubemq.io/connectors/544203234234234"
-            }
-          ]),
-        3000
-      );
-    } else {
-      setTimeout(() => reject("some error"), 1000);
-    }
-  });
-}
 
 const getSettings = function(type) {
   switch (type) {
@@ -224,9 +203,52 @@ const connectorForm = {
         title: "Connector Namespace",
         description: "Set connector deployment namespace"
       },
+      expose: {
+        type: "object",
+        oneOf: [
+          {
+            title: "Cluster IP",
+            properties: {
+              mode: {
+                type: "string",
+                description: "Set connector deployment namespace",
+                title: "Expose Mode",
+                const: "ClusterIP"
+              }
+            }
+          },
+          {
+            title: "Node Port",
+            properties: {
+              mode: {
+                type: "string",
+                title: "Expose Mode",
+                const: "NodePort"
+              },
+              nodePort: {
+                type: "integer",
+                title: "Node Port",
+                default: 0,
+                minimum: 0,
+                maximum: 65355
+              }
+            }
+          },
+          {
+            title: "Load Balancer",
+            properties: {
+              mode: {
+                type: "string",
+                title: "Expose Mode",
+                const: "LoadBalancer"
+              }
+            }
+          }
+        ]
+      },
       setOperator: {
         type: "boolean",
-        title: "Add KubeMQ Operator Manifest",
+        title: "Add KubeMQ Init Manifest",
         default: true,
         "x-display": "checkbox"
       }
@@ -235,9 +257,13 @@ const connectorForm = {
   model: {
     name: "kubemq-bridges",
     namespace: "kubemq",
+    expose: {
+      mode: "ClusterIP",
+      nodePort: 0
+    },
     setOperator: true
   },
-  isValid: false
+  isValid: true
 };
 
 const clusterForm = {
@@ -245,7 +271,7 @@ const clusterForm = {
     properties: {
       setOperator: {
         type: "boolean",
-        title: "Add KubeMQ Operator Manifest",
+        title: "Add KubeMQ Init Manifest",
         default: true,
         "x-display": "checkbox"
       }
@@ -254,7 +280,7 @@ const clusterForm = {
   model: {
     setOperator: true
   },
-  isValid: false
+  isValid: true
 };
 </script>
 
