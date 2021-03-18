@@ -184,6 +184,7 @@ class IntegrationsBinding {
   }
 
   constructor() {
+    this._id = makeid(16);
     this._type = "";
     this._bindingType = "";
     this._name = "";
@@ -224,6 +225,7 @@ class IntegrationsBinding {
 
   GetConfiguration() {
     return {
+      id: this._id,
       name: this._name,
       properties: this._middlewares.getConfiguration(),
       source: this.SourceSide.GetSideConfiguration(),
@@ -550,7 +552,16 @@ let integrationsRateLimiterModel = {
   },
   IsValid: false
 };
-
+const makeid = function(length) {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
 export { Integrations };
 export { IntegrationsConnector };
 export { IntegrationsBindingSide };

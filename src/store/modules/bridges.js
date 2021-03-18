@@ -35,7 +35,8 @@ const mutations = {
           index: -1,
           existedBindingNames: []
         };
-        state.configBinding.binding.Name = `bridges-${state.bindings.length}`;
+        state.configBinding.binding.Name = `bridge-${state.bindings.length +
+          1}`;
         break;
       }
       case "edit": {

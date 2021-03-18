@@ -236,6 +236,7 @@ class ClusterConfig {
 
   GetConfiguration() {
     return {
+      id: this._id,
       deployment: this._deployment.model,
       authentication: this._authentication.getHasConfigured()
         ? this._authentication.model

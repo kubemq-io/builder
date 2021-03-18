@@ -68,7 +68,8 @@ const mutations = {
             index: -1,
             existedBindingNames: []
           };
-          state.configTargetsBinding.binding.Name = `target-${state.targets.length}`;
+          state.configTargetsBinding.binding.Name = `target-${state.targets
+            .length + 1}`;
           break;
         }
         case "edit": {
@@ -100,7 +101,8 @@ const mutations = {
             index: -1,
             existedBindingNames: []
           };
-          state.configSourcesBinding.binding.Name = `source-${state.sources.length}`;
+          state.configSourcesBinding.binding.Name = `source-${state.sources
+            .length + 1}`;
           break;
         }
         case "edit": {

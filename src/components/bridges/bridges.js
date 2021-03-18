@@ -62,9 +62,10 @@ class BridgesBinding {
     }
   }
   constructor() {
+    this._id = makeid(16);
     this._type = "";
     this._bindingType = "";
-    this._name = `bridge-${makeid(5)}`;
+    this._name = `bridge-1`;
     this._sourceSide = new BridgesBindingSide("Source", "Bridge", {});
     this._targetSide = new BridgesBindingSide("Target", "Bridge", {});
     this._middlewares = new BridgesBindingMiddlewares();
@@ -82,6 +83,7 @@ class BridgesBinding {
 
   GetConfiguration() {
     return {
+      id: this._id,
       name: this._name,
       properties: this._middlewares.getConfiguration(),
       sources: this.SourceSide.GetSideConfiguration(),
