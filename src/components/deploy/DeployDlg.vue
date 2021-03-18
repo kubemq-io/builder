@@ -27,15 +27,17 @@
                 :schema="options.settings.schema"
               />
             </v-form>
-            <v-btn
-              :disabled="!generateBtnEnabled"
-              color="secondary"
-              outlined
-              rounded
-              @click.native="generate"
-            >
-              GENERATE DEPLOY MANIFEST
-            </v-btn>
+            <div>
+              <v-btn
+                :disabled="!generateBtnEnabled"
+                color="secondary"
+                outlined
+                rounded
+                @click.native="generate"
+              >
+                GET DEPLOY MANIFESTS
+              </v-btn>
+            </div>
           </v-card-text>
           <v-card-actions>
             <v-col class="pa-0 pl-2 pt-1" v-if="generateError">

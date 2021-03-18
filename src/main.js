@@ -4,15 +4,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import VueCodemirror from "vue-codemirror";
 import colors from "vuetify/lib/util/colors";
 import "./plugins/animate";
 // FILTERS
-import "./filters/capitalize";
-import "./filters/lowercase";
-import "./filters/uppercase";
-import "./filters/formatCurrency";
-import "./filters/formatDate";
+
 // Animation library - https://animate.style/
 import "animate.css/animate.min.css";
 
@@ -34,6 +29,5 @@ new Vue({
   router,
   store,
   vuetify,
-  VueCodemirror,
   render: h => h(App)
 }).$mount("#app");

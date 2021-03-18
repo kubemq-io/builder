@@ -100,8 +100,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.row-pointer {
-  cursor: pointer;
-}
-</style>
+<style scoped></style>

@@ -4,7 +4,7 @@
       <v-card-title class="pa-0">
         <v-list-item-avatar>
           <v-avatar :color="getColor" size="35">
-            <span class="white--text body-1">QS</span>
+            <span class="white--text body-1">SQ</span>
           </v-avatar>
         </v-list-item-avatar>
         <h4 :class="`${getColor}--text`">
