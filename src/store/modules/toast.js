@@ -33,7 +33,7 @@ const actions = {
 
     setTimeout(() => {
       commit("showToast", {
-        color: "primary",
+        color: "secondary",
         message,
         timeout: 3000
       });

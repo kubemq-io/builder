@@ -2,8 +2,6 @@
   <div
     class="d-flex flex-grow-1 justify-space-between align-center align-content-space-between"
   >
-    <v-btn @click="deploy">DEPLOY</v-btn>
-    <deploy-dlg ref="deploy"></deploy-dlg>
     <v-spacer></v-spacer>
     <div class="d-flex justify-end align-content-center align-center col-12">
       <v-spacer></v-spacer>
@@ -50,10 +48,8 @@
 </template>
 
 <script>
-import DeployDlg from "@/components/deploy/DeployDlg";
 export default {
   name: "HomePage",
-  components: { DeployDlg },
   data() {
     return {
       menu: [
@@ -90,18 +86,7 @@ export default {
       ]
     };
   },
-  methods: {
-    async deploy() {
-      if (
-        await this.$refs.deploy.open({
-          title: "Deploy KubeMQ Clusters",
-          type: "clusters"
-        })
-      ) {
-        console.log("close");
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 

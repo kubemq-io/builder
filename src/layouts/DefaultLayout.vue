@@ -4,7 +4,7 @@
       v-model="toast.show"
       :timeout="toast.timeout"
       :color="toast.color"
-      bottom
+      top
     >
       {{ toast.message }}
       <v-btn
