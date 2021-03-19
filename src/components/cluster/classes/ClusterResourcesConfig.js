@@ -52,43 +52,43 @@ const clusterResourcesSchema = {
         limitsCpu: {
           type: "number",
           title: "CPU Limits (Cores)",
-          default: 0,
-          minimum: 0,
+          default: 1,
+          minimum: 1,
           description: "Set CPU Limits in cores"
         },
         requestCpu: {
           type: "number",
           title: "CPU Request (Cores)",
-          default: 0,
-          minimum: 0,
+          default: 1,
+          minimum: 1,
           description: "Set CPU Requests in cores"
         },
         limitsMemory: {
           type: "number",
           title: "Memory Limits (Gi)",
-          default: 0,
-          minimum: 0,
+          default: 1,
+          minimum: 1,
           description: "Set Memory Limits size in Gi"
         },
         requestMemory: {
           type: "number",
           title: "Memory Request (Gi)",
-          default: 0,
-          minimum: 0,
+          default: 1,
+          minimum: 1,
           description: "Set Memory Requests in Gi"
         },
         limitsEphemeralStorage: {
           type: "number",
           title: "Storage Limits (Gi)",
-          default: 0,
-          minimum: 0,
+          default: 1,
+          minimum: 1,
           description: "Set Ephemeral Storage Limits size in Gi"
         },
         requestsEphemeralStorage: {
           type: "number",
           title: "Storage Request (Gi)",
-          default: 0,
-          minimum: 0,
+          default: 1,
+          minimum: 1,
           description: "Set Ephemeral storage in Gi"
         }
       }

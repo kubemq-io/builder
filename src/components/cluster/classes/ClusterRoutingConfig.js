@@ -15,7 +15,19 @@ class ClusterRoutingConfig extends ClusterConfigItem {
     super()
       .setName("Routing")
       .setSchema(clusterRoutingSchema)
-      .setModel(clusterRoutingModel);
+      .setModel(clusterRoutingModel)
+      .setOptions({
+        dialogProps: { maxWidth: 500 },
+        rules: {
+          validateRulesArray: function(array) {
+            if (array.length === 0) {
+              return "At least one routing rule must be defined";
+            } else {
+              return true;
+            }
+          }
+        }
+      });
   }
 }
 const clusterRoutingModel = {
@@ -54,9 +66,10 @@ const clusterRoutingSchema = {
             keyRoutes: {
               type: "array",
               title: "Add Routes",
+              "x-rules": ["validateRulesArray"],
               items: {
                 type: "object",
-                required: ["key", "route"],
+                required: ["key"],
                 properties: {
                   key: {
                     type: "string",
@@ -86,13 +99,6 @@ const clusterRoutingSchema = {
                     description: "Queues channels destinations separated by ; ",
                     default: "",
                     "x-cols": 12
-                  },
-                  routes: {
-                    type: "string",
-                    title: "Other Routes",
-                    description: "Route Keys destinations separated by ; ",
-                    default: "",
-                    "x-cols": 12
                   }
                 }
               }
@@ -113,11 +119,14 @@ const clusterRoutingSchema = {
         url: {
           type: "string",
           title: "Routes Server URL",
-          default: ""
+          description: "Routing API fetch address",
+          default: "https://{your-routing-api-address}"
         },
         fetchInterval: {
           type: "integer",
-          title: "Fetch Interval Seconds",
+          title: "Fetch Interval (Seconds)",
+          description: "Refresh Rules intervals in seconds",
+
           default: 3600
         }
       }

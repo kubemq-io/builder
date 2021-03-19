@@ -30,15 +30,8 @@
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <v-row no-gutters>
-        <v-col cols="4" class="pr-1">
-          <ClusterConfigItemCard
-            :config="cluster.authentication"
-            title="Authentication"
-            :show="show"
-          ></ClusterConfigItemCard>
-        </v-col>
-        <v-col cols="4" class="pr-1 pl-1">
+      <v-row no-gutters class="">
+        <v-col cols="6" class="pr-1 pb-2">
           <ClusterConfigItemCard
             :config="cluster.authorization"
             title="Authorization"
@@ -46,7 +39,15 @@
           >
           </ClusterConfigItemCard>
         </v-col>
-        <v-col cols="4" class="pl-1">
+        <v-col cols="6" class="pl-1 pb-2">
+          <ClusterConfigItemCard
+            :config="cluster.authentication"
+            title="Authentication"
+            :show="show"
+          ></ClusterConfigItemCard>
+        </v-col>
+
+        <v-col cols="6" class="pb-1 pr-1">
           <ClusterConfigItemCard
             :config="cluster.routing"
             title="Routing"

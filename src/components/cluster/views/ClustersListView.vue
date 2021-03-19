@@ -219,7 +219,8 @@ export default {
       const deployOptions = {
         title: "Clusters",
         type: "clusters",
-        configuration: clusters
+        //configuration: clusters
+        configuration: JSON.stringify(clusters)
       };
       await this.$refs.deploy.open(deployOptions);
     }

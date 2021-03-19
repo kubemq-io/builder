@@ -15,7 +15,19 @@ class ClusterNodesConfig extends ClusterConfigItem {
     super()
       .setName("Nodes")
       .setSchema(clusterNodesSchema)
-      .setModel(clusterNodesModel);
+      .setModel(clusterNodesModel)
+      .setOptions({
+        dialogProps: { maxWidth: 500 },
+        rules: {
+          validateNodesArray: function(array) {
+            if (array.length === 0) {
+              return "At least one key/value must be defined";
+            } else {
+              return true;
+            }
+          }
+        }
+      });
   }
 }
 
@@ -53,6 +65,7 @@ const clusterNodesSchema = {
             kv: {
               type: "array",
               title: "Add Node Selectors Key Value",
+              "x-rules": ["validateNodesArray"],
               items: {
                 type: "object",
                 required: ["key", "value"],

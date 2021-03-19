@@ -42,7 +42,6 @@ const clusterAuthenticationSchema = {
   oneOf: [
     {
       title: "Disabled",
-      "x-cols": "6",
       properties: {
         mode: {
           type: "string",

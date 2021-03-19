@@ -28,7 +28,19 @@ class ClusterAuthorizationConfig extends ClusterConfigItem {
     super()
       .setName("Authorization")
       .setSchema(clusterAuthorizationSchema)
-      .setModel(clusterAuthorizationModel);
+      .setModel(clusterAuthorizationModel)
+      .setOptions({
+        dialogProps: { minWidth: 500, maxWidth: 960 },
+        rules: {
+          validateRulesArray: function(array) {
+            if (array.length === 0) {
+              return "At least one policy rule must be defined";
+            } else {
+              return true;
+            }
+          }
+        }
+      });
   }
 }
 const clusterAuthorizationModel = {
@@ -68,90 +80,74 @@ const clusterAuthorizationSchema = {
             rules: {
               type: "array",
               title: "Add Policy Rules",
+              "x-rules": ["validateRulesArray"],
               items: {
                 type: "object",
                 required: ["clientId", "channel"],
                 properties: {
-                  clientId: {
+                  ClientID: {
                     type: "string",
                     title: "Client ID",
-                    default: "",
+                    default: ".*",
                     description: "Set access for clients - regular expression",
                     "x-cols": 6
                   },
-                  channel: {
+                  Channel: {
                     type: "string",
                     title: "Channel",
-                    default: "",
+                    default: ".*",
                     description: "Set access for channels - regular expression",
                     "x-cols": 6
                   },
-                  events: {
-                    type: "string",
-                    title: "Events",
-                    enum: [
-                      "No Access",
-                      "Send Only",
-                      "Receive Only",
-                      "Send and Receive"
-                    ],
-                    default: "No Access",
-                    "x-cols": 6,
-                    "x-class": "pr-2"
-                  },
-                  events_store: {
-                    type: "string",
-                    title: "Events Store",
-                    enum: [
-                      "No Access",
-                      "Send Only",
-                      "Receive Only",
-                      "Send and Receive"
-                    ],
-                    default: "No Access",
-                    "x-cols": 6,
-                    "x-class": "pl-2"
-                  },
-
-                  query: {
-                    type: "string",
-                    title: "Queries",
-                    enum: [
-                      "No Access",
-                      "Send Only",
-                      "Receive Only",
-                      "Send and Receive"
-                    ],
-                    default: "No Access",
-                    "x-cols": 6,
-                    "x-class": "pr-2"
-                  },
-                  commands: {
-                    type: "string",
-                    title: "Commands",
-                    enum: [
-                      "No Access",
-                      "Send Only",
-                      "Receive Only",
-                      "Send and Receive"
-                    ],
-                    default: "No Access",
-                    "x-cols": 6,
-                    "x-class": "pl-2"
-                  },
-
-                  queue: {
-                    type: "string",
+                  Queues: {
+                    type: "boolean",
                     title: "Queues",
-                    enum: [
-                      "No Access",
-                      "Send Only",
-                      "Receive Only",
-                      "Send and Receive"
-                    ],
-                    default: "No Access",
-                    "x-cols": 6,
-                    "x-class": "pr-2"
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 3
+                  },
+                  Events: {
+                    type: "boolean",
+                    title: "Events",
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 3
+                  },
+                  EventsStore: {
+                    type: "boolean",
+                    title: "Events Store",
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 2
+                  },
+
+                  Queries: {
+                    type: "boolean",
+                    title: "Queries",
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 2
+                  },
+                  Commands: {
+                    type: "boolean",
+                    title: "Commands",
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 2
+                  },
+                  Read: {
+                    type: "boolean",
+                    title: "Read (Subscribe)",
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 3
+                  },
+                  Write: {
+                    type: "boolean",
+                    title: "Write (Send)",
+                    "x-display": "checkbox",
+                    default: false,
+                    "x-cols": 3
                   }
                 }
               }
@@ -162,7 +158,7 @@ const clusterAuthorizationSchema = {
     },
     {
       title: "Fetch Authorization Policy",
-      "x-cols": 10,
+
       required: ["url", "fetchInterval"],
       properties: {
         mode: {
@@ -172,11 +168,14 @@ const clusterAuthorizationSchema = {
         url: {
           type: "string",
           title: "Authorization Policy Server URL",
-          default: ""
+          description: "Authorization API fetch address",
+          default: "https://{your-authorization-api-address}"
         },
         fetchInterval: {
           type: "integer",
-          title: "Fetch Interval Seconds",
+          title: "Fetch Interval (Seconds)",
+          description: "Refresh Policy intervals in seconds",
+
           default: 3600
         }
       }
