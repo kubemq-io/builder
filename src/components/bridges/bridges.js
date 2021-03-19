@@ -83,7 +83,6 @@ class BridgesBinding {
 
   GetConfiguration() {
     return {
-      id: this._id,
       name: this._name,
       properties: this._middlewares.getConfiguration(),
       sources: this.SourceSide.GetSideConfiguration(),
@@ -321,8 +320,8 @@ let bridgesRetriesModel = {
           type: {
             type: "string",
             title: "Type",
-            default: "Fixed",
-            enum: ["Fixed", "Back-Off", "Random"],
+            default: "fixed",
+            enum: ["fixed", "back-off", "random"],
             "x-cols": "6",
             "x-class": "pr-2"
           },
@@ -435,8 +434,7 @@ const sourceSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel",
-                default: "queues"
+                title: "Source Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -528,8 +526,7 @@ const sourceSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel",
-                default: "queues"
+                title: "Source Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -613,14 +610,12 @@ const sourceSchema = {
               },
               channel: {
                 type: "string",
-                title: "Source Channel",
-                default: "queries"
+                title: "Source Channel"
               },
               setDefaults: {
                 type: "boolean",
                 "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
+                title: "Set Default Properties"
               }
             },
 
@@ -690,8 +685,7 @@ const sourceSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel",
-                default: "commands"
+                title: "Source Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -767,8 +761,7 @@ const sourceSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel",
-                default: "events"
+                title: "Source Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -843,8 +836,7 @@ const sourceSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel",
-                default: "events-store"
+                title: "Source Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -915,7 +907,7 @@ const targetSchema = {
           "x-rules": ["validateConnections"],
           items: {
             type: "object",
-            required: ["address", "channel"],
+            required: ["address", "channels"],
             description: "Queue Target Connection",
             properties: {
               address: {
@@ -924,10 +916,9 @@ const targetSchema = {
                 default: "kubemq-cluster-grpc:50000"
               },
 
-              channel: {
+              channels: {
                 type: "string",
-                title: "Target Channel",
-                default: "queues"
+                title: "Target Channels"
               },
               setDefaults: {
                 type: "boolean",
@@ -1007,7 +998,7 @@ const targetSchema = {
           "x-rules": ["validateConnections"],
           items: {
             type: "object",
-            required: ["address", "channel"],
+            required: ["address", "default_channel"],
             description: "Query Target Connection",
             properties: {
               address: {
@@ -1015,10 +1006,9 @@ const targetSchema = {
                 title: "Target Address",
                 default: "kubemq-cluster-grpc:50000"
               },
-              channel: {
+              default_channel: {
                 type: "string",
-                title: "Target Channel",
-                default: "queries"
+                title: "Target Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -1075,7 +1065,7 @@ const targetSchema = {
           "x-rules": ["validateConnections"],
           items: {
             type: "object",
-            required: ["address", "channel"],
+            required: ["address", "default_channel"],
             description: "Command Target Connection",
             properties: {
               address: {
@@ -1083,10 +1073,9 @@ const targetSchema = {
                 title: "Target Address",
                 default: "kubemq-cluster-grpc:50000"
               },
-              channel: {
+              default_channel: {
                 type: "string",
-                title: "Target Channel",
-                default: "commands"
+                title: "Target Channel"
               },
               setDefaults: {
                 type: "boolean",
@@ -1144,7 +1133,7 @@ const targetSchema = {
           "x-rules": ["validateConnections"],
           items: {
             type: "object",
-            required: ["address", "channel"],
+            required: ["address", "channels"],
             description: "Events Target Connection",
             properties: {
               address: {
@@ -1153,10 +1142,9 @@ const targetSchema = {
                 default: "kubemq-cluster-grpc:50000"
               },
 
-              channel: {
+              channels: {
                 type: "string",
-                title: "Target Channel",
-                default: "events"
+                title: "Target Channels"
               },
               setDefaults: {
                 type: "boolean",
@@ -1216,10 +1204,9 @@ const targetSchema = {
                 default: "kubemq-cluster-grpc:50000"
               },
 
-              channel: {
+              channels: {
                 type: "string",
-                title: "Target Channel",
-                default: "events-store"
+                title: "Target Channels"
               },
               setDefaults: {
                 type: "boolean",

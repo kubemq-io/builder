@@ -304,7 +304,7 @@ export default {
       const deployOptions = {
         title: this.type,
         type: this.type,
-        configuration: bindings
+        configuration: JSON.stringify({ bindings: bindings })
       };
       await this.$refs.deploy.open(deployOptions);
     }

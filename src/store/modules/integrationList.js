@@ -1855,6 +1855,24 @@ export default {
         },
         then: {
           properties: {
+            default_headers: {
+              type: "array",
+              title: "Add Default Headers Key Value Pairs",
+              items: {
+                type: "object",
+                required: ["key", "value"],
+                properties: {
+                  key: {
+                    type: "string",
+                    title: "Set Key"
+                  },
+                  value: {
+                    type: "string",
+                    title: "Set Value"
+                  }
+                }
+              }
+            },
             proxy: {
               type: "string",
               title: "Proxy",
@@ -1877,24 +1895,6 @@ export default {
               title: "Client Public Key",
               description: "Set Client Public Key",
               "x-display": "textarea"
-            },
-            default_headers: {
-              type: "array",
-              title: "Add Default Headers Key Value Pairs",
-              items: {
-                type: "object",
-                required: ["key", "value"],
-                properties: {
-                  key: {
-                    type: "string",
-                    title: "Set Key"
-                  },
-                  value: {
-                    type: "string",
-                    title: "Set Value"
-                  }
-                }
-              }
             }
           }
         }
@@ -5363,6 +5363,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5447,6 +5448,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5524,6 +5526,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5605,6 +5608,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5691,6 +5695,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5777,6 +5782,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5865,6 +5871,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5945,6 +5952,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -6003,6 +6011,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -6053,6 +6062,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -6103,6 +6113,7 @@ export default {
           address: {
             type: "string",
             title: "KubeMQ Address",
+            default: "kubemq-cluster-grpc:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {

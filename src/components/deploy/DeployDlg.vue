@@ -124,7 +124,6 @@ export default {
       this.manifests = [];
       this.options = Object.assign(this.options, options);
       this.options.settings = getSettings(options.type);
-      console.log(this.isLoading, this.options.settings.isValid);
       return new Promise((resolve, reject) => {
         this.resolve = resolve;
         this.reject = reject;
@@ -139,7 +138,7 @@ export default {
       let request = {
         id: 0,
         type: this.options.type,
-        model: this.options.model,
+        model: this.options.settings.model,
         configuration: this.options.configuration
       };
 
@@ -149,9 +148,11 @@ export default {
       await axios
         .post("http://localhost:10100/build", request)
         .then(response => {
-          this.manifests = response.data.links;
+          this.manifests = response.data.data.links;
         })
-        .catch(error => (this.generateError = error));
+        .catch(error => {
+          this.generateError = error.response.data;
+        });
       this.isLoading = false;
     },
     close() {
@@ -246,10 +247,16 @@ const connectorForm = {
           }
         ]
       },
-      setOperator: {
+      setInit: {
         type: "boolean",
         title: "Add KubeMQ Init Manifest",
-        default: true,
+        default: false,
+        "x-display": "checkbox"
+      },
+      setOperator: {
+        type: "boolean",
+        title: "Add KubeMQ Operator Manifest",
+        default: false,
         "x-display": "checkbox"
       }
     }
@@ -261,7 +268,8 @@ const connectorForm = {
       mode: "ClusterIP",
       nodePort: 0
     },
-    setOperator: true
+    setInit: false,
+    setOperator: false
   },
   isValid: true
 };
@@ -269,15 +277,22 @@ const connectorForm = {
 const clusterForm = {
   schema: {
     properties: {
-      setOperator: {
+      setInit: {
         type: "boolean",
         title: "Add KubeMQ Init Manifest",
+        default: true,
+        "x-display": "checkbox"
+      },
+      setOperator: {
+        type: "boolean",
+        title: "Add KubeMQ Operator Manifest",
         default: true,
         "x-display": "checkbox"
       }
     }
   },
   model: {
+    setInit: true,
     setOperator: true
   },
   isValid: true

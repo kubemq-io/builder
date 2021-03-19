@@ -469,8 +469,8 @@ let integrationsRetriesModel = {
           type: {
             type: "string",
             title: "Type",
-            default: "Fixed",
-            enum: ["Fixed", "Back-Off", "Random"],
+            default: "fixed",
+            enum: ["fixed", "back-off", "random"],
             "x-cols": "6",
             "x-class": "pr-2"
           },

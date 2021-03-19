@@ -277,7 +277,7 @@ export default {
       const deployOptions = {
         title: "Bridges",
         type: "bridges",
-        configuration: bindings
+        configuration: JSON.stringify({ bindings: bindings })
       };
       await this.$refs.deploy.open(deployOptions);
     },
