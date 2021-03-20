@@ -1,5 +1,6 @@
 import lodashObject from "lodash/object";
 import lodashString from "lodash/string";
+import lodashLang from "lodash/lang";
 
 class Bridges {}
 
@@ -46,28 +47,29 @@ class BridgesBinding {
   }
 
   getType() {
-    const sourceConnections = this.SourceSide.getConnections().length;
-    const targetConnections = this.TargetSide.getConnections().length;
-    if (sourceConnections === 1 && targetConnections === 1) {
-      return "bridge";
-    }
-    if (sourceConnections === 1 && targetConnections > 1) {
-      return "replicate";
-    }
-    if (sourceConnections > 1 && targetConnections === 1) {
-      return "aggregate";
-    }
-    if (sourceConnections > 1 && targetConnections > 1) {
-      return "transform";
-    }
+    return this._sourceSide.mode;
+    // const sourceConnections = this.SourceSide.getConnections().length;
+    // const targetConnections = this.TargetSide.getConnections().length;
+    // if (sourceConnections === 1 && targetConnections === 1) {
+    //   return "bridge";
+    // }
+    // if (sourceConnections === 1 && targetConnections > 1) {
+    //   return "replicate";
+    // }
+    // if (sourceConnections > 1 && targetConnections === 1) {
+    //   return "aggregate";
+    // }
+    // if (sourceConnections > 1 && targetConnections > 1) {
+    //   return "transform";
+    // }
   }
   constructor() {
     this._id = makeid(16);
     this._type = "";
     this._bindingType = "";
     this._name = `bridge-1`;
-    this._sourceSide = new BridgesBindingSide("Source", "Bridge", {});
-    this._targetSide = new BridgesBindingSide("Target", "Bridge", {});
+    this._sourceSide = new BridgesBindingSide("Source", "Bridge", "bridge");
+    this._targetSide = new BridgesBindingSide("Target", "Bridge", "bridge");
     this._middlewares = new BridgesBindingMiddlewares();
   }
 
@@ -111,6 +113,13 @@ class BridgesBindingSideConnection {
   }
 }
 class BridgesBindingSide {
+  get mode() {
+    return this._mode;
+  }
+
+  set mode(value) {
+    this._mode = value;
+  }
   get Type() {
     if (this._model.kind) {
       switch (this._model.kind) {
@@ -159,7 +168,15 @@ class BridgesBindingSide {
   getConnections() {
     const list = [];
     this.GetSideConfiguration().connections.forEach(value => {
-      list.push(new BridgesBindingSideConnection(value.address, value.channel));
+      if (value.channels) {
+        list.push(
+          new BridgesBindingSideConnection(value.address, value.channels)
+        );
+      } else {
+        list.push(
+          new BridgesBindingSideConnection(value.address, value.channel)
+        );
+      }
     });
     return list;
   }
@@ -174,27 +191,62 @@ class BridgesBindingSide {
         kind: sideKind,
         connections: []
       };
-    } else
+    } else if (Array.isArray(sideProperties.connections)) {
       return {
         kind: sideKind,
         connections: sideProperties.connections
       };
+    } else {
+      return {
+        kind: sideKind,
+        connections: [sideProperties.connections]
+      };
+    }
   }
+  setSide(mode) {
+    switch (mode) {
+      case "bridge": {
+        return bridgeMode();
+      }
+      case "replicate": {
+        return replicateMode();
+      }
+      case "aggregate": {
+        return aggregateMode();
+      }
+      case "transform": {
+        return transformMode();
+      }
+    }
+  }
+  switchMode(side, mode) {
+    this._mode = mode;
+    let schemaModel = this.setSide(mode);
+    if (side === "Source") {
+      this._schema = schemaModel.source.schema;
+      this._model = schemaModel.source.model;
+    } else {
+      this._schema = schemaModel.target.schema;
+      this._model = schemaModel.target.model;
+    }
+  }
+  constructor(side, name, mode) {
+    this._mode = mode;
+    let schemaModel = this.setSide(mode);
 
-  constructor(side, name) {
+    if (side === "Source") {
+      this._schema = schemaModel.source.schema;
+      this._model = schemaModel.source.model;
+    } else {
+      this._schema = schemaModel.target.schema;
+      this._model = schemaModel.target.model;
+    }
     this._name = name;
     this._title = `${name} ${side}`;
     this._initial = name.charAt(0).toUpperCase();
-    if (side === "Source") {
-      this._schema = sourceSchema;
-    } else {
-      this._schema = targetSchema;
-    }
+
     this._type = "";
-    this._model = {
-      kind: "",
-      connections: []
-    };
+
     this._isModelValid = false;
     this._category = "";
   }
@@ -404,7 +456,533 @@ let bridgesRateLimiterModel = {
   IsValid: false
 };
 
-const sourceSchema = {
+const bridgeMode = function() {
+  return {
+    source: {
+      schema: lodashLang.cloneDeep(sourceSingleSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    },
+    target: {
+      schema: lodashLang.cloneDeep(targetSingleSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    }
+  };
+};
+const replicateMode = function() {
+  return {
+    source: {
+      schema: lodashLang.cloneDeep(sourceSingleSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    },
+    target: {
+      schema: lodashLang.cloneDeep(targetMultiSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    }
+  };
+};
+const aggregateMode = function() {
+  return {
+    source: {
+      schema: lodashLang.cloneDeep(sourceMultiSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    },
+    target: {
+      schema: lodashLang.cloneDeep(targetSingleSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    }
+  };
+};
+const transformMode = function() {
+  return {
+    source: {
+      schema: lodashLang.cloneDeep(sourceMultiSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    },
+    target: {
+      schema: lodashLang.cloneDeep(targetMultiSchema),
+      model: {
+        kind: "",
+        connections: []
+      }
+    }
+  };
+};
+const sourceSingleSchema = {
+  title: "Source Type",
+  type: "object",
+  "x-class": "vjsf",
+  oneOf: [
+    {
+      title: "Queue",
+      required: ["address", "channel"],
+      properties: {
+        kind: {
+          type: "string",
+          const: "source.queue"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Queue Source Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Source Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channel: {
+              type: "string",
+              title: "Source Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              sources: {
+                type: "integer",
+                title: "Concurrent Connections",
+                default: 1,
+                description: "How many concurrent channel connections",
+                minimum: 1
+              },
+              max_requeue: {
+                type: "integer",
+                title: "Max ReQueues",
+                default: 0,
+                description:
+                  "How many times to re-queue a message on target error",
+                minimum: 0
+              },
+              batch_size: {
+                type: "integer",
+                title: "Pull Messages Batch Size",
+                default: 1,
+                description: "How many messages to pull in one request",
+                minimum: 1
+              },
+              wait_timeout: {
+                type: "integer",
+                title: "Pull Messages Timeout",
+                default: 60,
+                description:
+                  "How long to wait for messages batch size on each request",
+                minimum: 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Queue Stream",
+      required: ["address", "channel"],
+      properties: {
+        kind: {
+          type: "string",
+          const: "source.queue-stream"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Queue Stream Source Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Source Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channel: {
+              type: "string",
+              title: "Source Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              sources: {
+                type: "integer",
+                title: "Concurrent Connections",
+                default: 1,
+                description: "How many concurrent channel connections",
+                minimum: 1
+              },
+              visibilityTimeoutSeconds: {
+                type: "integer",
+                title: "Message Visibility Timeout (Seconds)",
+                default: 3600,
+                description:
+                  "How low to hold processing message before sending back to queue",
+                minimum: 1
+              },
+              wait_timeout: {
+                type: "integer",
+                title: "Push Messages Timeout",
+                default: 60,
+                description: "How long to wait for a message",
+                minimum: 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Query",
+      required: ["address", "channel"],
+      properties: {
+        kind: {
+          type: "string",
+          const: "source.query"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Query Source Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Source Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+            channel: {
+              type: "string",
+              title: "Source Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties"
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              sources: {
+                type: "integer",
+                title: "Concurrent Connections",
+                default: 1,
+                description: "How many concurrent channel connections",
+                minimum: 1
+              },
+              group: {
+                type: "string",
+                title: "Channel Group",
+                default: "",
+                description: "Subscribers Group"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Command",
+      required: ["address", "channel"],
+      properties: {
+        kind: {
+          type: "string",
+          const: "source.command"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Command Source Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Source Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channel: {
+              type: "string",
+              title: "Source Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              sources: {
+                type: "integer",
+                title: "Concurrent Connections",
+                default: 1,
+                description: "How many concurrent channel connections",
+                minimum: 1
+              },
+              group: {
+                type: "string",
+                title: "Channel Group",
+                default: "",
+                description: "Subscribers Group"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Events",
+      required: ["address", "channel"],
+      properties: {
+        kind: {
+          type: "string",
+          const: "source.events"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Events Source Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Source Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channel: {
+              type: "string",
+              title: "Source Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              sources: {
+                type: "integer",
+                title: "Concurrent Connections",
+                default: 1,
+                description: "How many concurrent channel connections",
+                minimum: 1
+              },
+              group: {
+                type: "string",
+                title: "Channel Group",
+                default: "",
+                description: "Subscribers Group"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Events Store",
+      properties: {
+        kind: {
+          type: "string",
+          const: "source.events-store"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Events Store Source Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Source Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channel: {
+              type: "string",
+              title: "Source Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              sources: {
+                type: "integer",
+                title: "Concurrent Connections",
+                default: 1,
+                description: "How many concurrent channel connections",
+                minimum: 1
+              },
+              group: {
+                type: "string",
+                title: "Channel Group",
+                default: "",
+                description: "Subscribers Group"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+};
+const sourceMultiSchema = {
   title: "Source Type",
   type: "object",
   "x-class": "vjsf",
@@ -888,7 +1466,340 @@ const sourceSchema = {
     }
   ]
 };
-const targetSchema = {
+const targetSingleSchema = {
+  title: "Target Type",
+  type: "object",
+  "x-class": "vjsf",
+  oneOf: [
+    {
+      title: "Queue",
+      required: ["connections"],
+      properties: {
+        kind: {
+          type: "string",
+          const: "target.queue"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channels"],
+          description: "Queue Target Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Target Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channels: {
+              type: "string",
+              title: "Target Channels"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              expirationSeconds: {
+                type: "integer",
+                title: "Message Expiration (Seconds)",
+                default: 0,
+                description:
+                  "How long the message will be queue before expiration",
+                minimum: 0
+              },
+              delaySeconds: {
+                type: "integer",
+                title: "Message Delay (Seconds)",
+                default: 0,
+                description:
+                  "How long the message will wait before entering the queue",
+                minimum: 0
+              },
+              maxReceiveCount: {
+                type: "integer",
+                title: "Max Rejects",
+                default: 0,
+                description:
+                  "How many times the message can be rejected before moving to dead-letter queue",
+                minimum: 0
+              },
+              deadLetterQueue: {
+                type: "string",
+                title: "Dead-Letter Queue Channel",
+                default: "",
+                description: "Channel name for dead-letter queue"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Query",
+      properties: {
+        kind: {
+          type: "string",
+          const: "target.query"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "default_channel"],
+          description: "Query Target Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Target Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+            default_channel: {
+              type: "string",
+              title: "Target Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              timeoutSeconds: {
+                type: "integer",
+                title: "Sending Timout (Seconds)",
+                default: 600,
+                description: "How long to wait for a response",
+                minimum: 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Command",
+      properties: {
+        kind: {
+          type: "string",
+          const: "target.command"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "default_channel"],
+          description: "Command Target Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Target Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+            default_channel: {
+              type: "string",
+              title: "Target Channel"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              },
+              timeoutSeconds: {
+                type: "integer",
+                title: "Sending Timout (Seconds)",
+                default: 600,
+                description: "How long to wait for a response",
+                minimum: 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Events",
+      properties: {
+        kind: {
+          type: "string",
+          const: "target.events"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channels"],
+          description: "Events Target Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Target Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channels: {
+              type: "string",
+              title: "Target Channels"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      title: "Events Store",
+      properties: {
+        kind: {
+          type: "string",
+          const: "target.events-store"
+        },
+        connections: {
+          type: "object",
+          required: ["address", "channel"],
+          description: "Events Store Target Connection",
+          properties: {
+            address: {
+              type: "string",
+              title: "Target Address",
+              default: "kubemq-cluster-grpc:50000"
+            },
+
+            channels: {
+              type: "string",
+              title: "Target Channels"
+            },
+            setDefaults: {
+              type: "boolean",
+              "x-display": "checkbox",
+              title: "Set Default Properties",
+              default: true
+            }
+          },
+
+          if: {
+            required: ["setDefaults"],
+            properties: {
+              setDefaults: {
+                const: false
+              }
+            }
+          },
+          then: {
+            properties: {
+              client_id: {
+                type: "string",
+                title: "Client ID",
+                default: "",
+                description: "Connection Client ID"
+              },
+              auth_token: {
+                type: "string",
+                title: "Client Authentication Token",
+                default: "",
+                description: "Connection Authentication Token"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+};
+const targetMultiSchema = {
   title: "Target Type",
   type: "object",
   "x-class": "vjsf",

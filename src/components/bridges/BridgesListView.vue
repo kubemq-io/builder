@@ -66,7 +66,11 @@
                           outlined
                           class="my-0 px-1"
                         >
-                          {{ connection.channel }}
+                          {{
+                            connection.channel !== undefined
+                              ? connection.channel
+                              : connection.channels
+                          }}
                         </v-chip>
                       </v-chip-group>
                     </div>
