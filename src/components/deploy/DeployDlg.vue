@@ -122,6 +122,7 @@ export default {
     open(options) {
       this.dialog = true;
       this.manifests = [];
+      this.generateError = "";
       this.options = Object.assign(this.options, options);
       this.options.settings = getSettings(options.type);
       return new Promise((resolve, reject) => {
@@ -133,27 +134,36 @@ export default {
       this.isLoading = val;
     },
     async generate() {
-      this.manifests = [];
-      this.generateError = "";
-      let request = {
-        id: 0,
-        type: this.options.type,
-        model: this.options.settings.model,
-        configuration: this.options.configuration
-      };
+      try {
+        this.manifests = [];
+        this.generateError = "";
+        let request = {
+          id: 0,
+          type: this.options.type,
+          model: this.options.settings.model,
+          configuration: this.options.configuration
+        };
 
-      request.id = getHash(JSON.stringify(request));
-      console.log(JSON.stringify(request));
-      this.isLoading = true;
-      await axios
-        .post("https://deploy.kubemq.io/build", request)
-        .then(response => {
-          this.manifests = response.data.data.links;
-        })
-        .catch(error => {
-          this.generateError = error.response.data;
-        });
-      this.isLoading = false;
+        request.id = getHash(JSON.stringify(request));
+        this.isLoading = true;
+
+        await axios
+          .post("https://deploy.kubemq.io/build", request)
+          .then(response => {
+            this.manifests = response.data.data.links;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.generateError = error.response.data;
+            } else {
+              this.generateError = error;
+            }
+          });
+      } catch (error) {
+        this.generateError = error;
+      } finally {
+        this.isLoading = false;
+      }
     },
     close() {
       this.resolve(true);
