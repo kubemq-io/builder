@@ -171,6 +171,9 @@ class ClusterConfig {
     let list = [];
 
     list.push(...this._deployment.tags);
+    list.push(`${this._deployment.clusterName}-grpc:50000`);
+    list.push(`${this._deployment.clusterName}-rest:9090`);
+
     list.push(...this._grpcInterface.tags);
     list.push(...this._restInterface.tags);
     list.push(...this._apiInterface.tags);

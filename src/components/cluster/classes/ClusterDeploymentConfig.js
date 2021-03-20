@@ -43,7 +43,11 @@ class ClusterDeploymentConfig extends ClusterConfigItem {
     this.model.spec.mode = value;
   }
   get tags() {
-    return [this.model.spec.replicas, this.model.spec.mode];
+    if (this.model.spec.mode === "Standalone") {
+      return [this.model.spec.replicas, this.model.spec.mode];
+    } else {
+      return [this.model.spec.replicas];
+    }
   }
 
   constructor() {

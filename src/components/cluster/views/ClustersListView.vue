@@ -38,7 +38,7 @@
                     :key="'a' + tag + index"
                     small
                     outlined
-                    class="my-0 px-1"
+                    class="pa-1"
                     color="primary"
                   >
                     {{ tag }}
