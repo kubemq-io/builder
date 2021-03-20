@@ -146,7 +146,7 @@ export default {
       console.log(JSON.stringify(request));
       this.isLoading = true;
       await axios
-        .post("http://localhost:10100/build", request)
+        .post("https://deploy.kubemq.io/build", request)
         .then(response => {
           this.manifests = response.data.data.links;
         })
