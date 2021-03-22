@@ -67,6 +67,9 @@
                       </div>
                     </v-list-item-title>
                   </v-list-item>
+                  <p class="error--text pt-1 pl-4">
+                    (Manifests will be expire in 10 minutes)
+                  </p>
                 </v-card-text>
               </v-card>
             </v-col>
@@ -148,6 +151,7 @@ export default {
         this.isLoading = true;
 
         await axios
+          //.post("http://localhost:10100/build", request)
           .post("https://deploy.kubemq.io/build", request)
           .then(response => {
             this.manifests = response.data.data.links;
