@@ -83,19 +83,17 @@ const clusterAuthorizationSchema = {
               "x-rules": ["validateRulesArray"],
               items: {
                 type: "object",
-                required: ["clientId", "channel"],
+                required: ["ClientID", "Channel"],
                 properties: {
                   ClientID: {
                     type: "string",
-                    title: "Client ID",
-                    default: ".*",
+                    title: "Client ID (Regular Expression)",
                     description: "Set access for clients - regular expression",
                     "x-cols": 6
                   },
                   Channel: {
                     type: "string",
-                    title: "Channel",
-                    default: ".*",
+                    title: "Channel (Regular Expression)",
                     description: "Set access for channels - regular expression",
                     "x-cols": 6
                   },
