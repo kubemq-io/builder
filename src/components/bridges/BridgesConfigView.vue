@@ -130,11 +130,20 @@ export default {
     ...mapMutations(["updateBindings"]),
     ...mapGetters(["getBridgesBindingNames"]),
     ...mapActions(["showSuccess", "showError", "showToast"]),
+
     validateBindingName: function() {
-      if (this.bindingModel.Name === "" || this.bindingModel.Name === null) {
+      const val = this.bindingModel.Name;
+      if (val !== val.toLowerCase()) {
+        return "Value must be lowercase only";
+      }
+      if (val.indexOf(" ") > 0) {
+        return "Value cannot contain white space";
+      }
+
+      if (val === "" || val === null) {
         return "Set bridge name";
       }
-      const checkName = this.bindingModel.Name;
+      const checkName = val;
       const found = lodashArray.findIndex(this.forbiddenNames, function(b) {
         return b.name === checkName;
       });

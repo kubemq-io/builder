@@ -54,9 +54,24 @@ class ClusterDeploymentConfig extends ClusterConfigItem {
     super()
       .setName("Deployment")
       .setSchema(clusterDeploymentSchema)
-      .setModel(clusterDeploymentModel);
+      .setModel(clusterDeploymentModel)
+      .setOptions({
+        initialValidation: "all",
+        rules: {
+          validateClusterInput: function(val) {
+            if (val !== val.toLowerCase()) {
+              return "Value must be lowercase only";
+            }
+            if (val.indexOf(" ") > 0) {
+              return "Value cannot contain white space";
+            }
+            return true;
+          }
+        }
+      });
   }
 }
+
 const clusterDeploymentModel = {
   base: {
     clusterName: "kubemq-cluster",
@@ -85,14 +100,16 @@ const clusterDeploymentSchema = {
           title: "Cluster Name",
           default: "kubemq-cluster",
           "x-cols": 6,
-          "x-class": "pl-2"
+          "x-class": "pl-2",
+          "x-rules": ["validateClusterInput"]
         },
         clusterNamespace: {
           type: "string",
           title: "Cluster Namespace",
           default: "kubemq",
           "x-cols": 6,
-          "x-class": "pl-2"
+          "x-class": "pl-2",
+          "x-rules": ["validateClusterInput"]
         },
         licenseKey: {
           type: "string",

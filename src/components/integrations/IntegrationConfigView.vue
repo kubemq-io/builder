@@ -148,10 +148,17 @@ export default {
     ...mapActions(["showSuccess", "showError", "showToast"]),
 
     validateBindingName: function() {
-      if (this.bindingModel.Name === "" || this.bindingModel.Name === null) {
+      const val = this.bindingModel.Name;
+      if (val !== val.toLowerCase()) {
+        return "Value must be lowercase only";
+      }
+      if (val.indexOf(" ") > 0) {
+        return "Value cannot contain white space";
+      }
+      if (val === "" || val === null) {
         return "Set bridge name";
       }
-      const checkName = this.bindingModel.Name;
+      const checkName = val;
       const found = lodashArray.findIndex(this.forbiddenNames, function(b) {
         return b.name === checkName;
       });
@@ -200,17 +207,5 @@ export default {
 </script>
 
 <style scoped>
-/*.v-text-field >>> input {*/
-/*  font-size: 0.9em;*/
-/*}*/
-/*.v-text-field >>> label {*/
-/*  font-size: 0.9em;*/
-/*}*/
-/*.v-text-field >>> button {*/
-/*  font-size: 0.9em;*/
-/*}*/
-.v-dialog__content {
-  align-items: flex-start;
-  justify-content: center;
-}
+
 </style>

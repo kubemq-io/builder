@@ -25,6 +25,7 @@
               <v-jsf
                 v-model="options.settings.model"
                 :schema="options.settings.schema"
+                :options="options.settings.options"
               />
             </v-form>
             <div>
@@ -111,6 +112,7 @@ export default {
         settings: {
           schema: {},
           model: {},
+          options: {},
           isValid: false
         }
       }
@@ -211,12 +213,14 @@ const connectorForm = {
       name: {
         type: "string",
         title: "Connector Name",
-        description: "Set connector deployment name"
+        description: "Set connector deployment name",
+        "x-rules": ["validateInput"]
       },
       namespace: {
         type: "string",
         title: "Connector Namespace",
-        description: "Set connector deployment namespace"
+        description: "Set connector deployment namespace",
+        "x-rules": ["validateInput"]
       },
       expose: {
         type: "object",
@@ -285,6 +289,20 @@ const connectorForm = {
     setInit: false,
     setOperator: false
   },
+  options: {
+    initialValidation: "all",
+    rules: {
+      validateInput: function(val) {
+        if (val !== val.toLowerCase()) {
+          return "Value must be lowercase only";
+        }
+        if (val.indexOf(" ") > 0) {
+          return "Value cannot contain white space";
+        }
+        return true;
+      }
+    }
+  },
   isValid: true
 };
 
@@ -309,6 +327,7 @@ const clusterForm = {
     setInit: true,
     setOperator: true
   },
+  options: {},
   isValid: true
 };
 </script>
