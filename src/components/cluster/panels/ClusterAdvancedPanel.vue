@@ -19,7 +19,7 @@
         <div class="pr-2">
           <v-btn icon @click.stop="$emit('clear')">
             <v-icon v-if="hasEdits" :color="getColor">
-              fa-trash-alt
+              fa-redo
             </v-icon>
           </v-btn>
         </div>
