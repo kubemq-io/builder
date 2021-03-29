@@ -14,12 +14,12 @@
       <template v-slot:actions>
         <div class="d-flex justify-center align-center align-content-center">
           <div class="pr-1">
-            <v-icon v-if="!isValid" color="error">
+            <v-icon small v-if="!isValid" color="error">
               fa-exclamation-circle
             </v-icon>
           </div>
           <div class="pr-1">
-            <v-icon v-if="hasContent" :color="getColor">
+            <v-icon small v-if="hasContent" :color="getColor">
               fa-edit
             </v-icon>
           </div>
