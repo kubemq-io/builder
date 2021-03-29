@@ -126,14 +126,6 @@ const clusterDeploymentSchema = {
       "x-class": "vjsf pl-2",
       "x-cols": 6,
       properties: {
-        replicas: {
-          type: "string",
-          title: "Replicas",
-          enum: ["3 Nodes", "5 Nodes", "7 Nodes"],
-          "x-display": "radio",
-          "x-cols": 6,
-          default: "3 Nodes"
-        },
         mode: {
           type: "string",
           title: "Mode",
@@ -141,6 +133,14 @@ const clusterDeploymentSchema = {
           "x-display": "radio",
           "x-cols": 6,
           enum: ["Grouped", "Standalone"]
+        },
+        replicas: {
+          type: "string",
+          title: "Replicas",
+          enum: ["3 Nodes", "5 Nodes", "7 Nodes"],
+          "x-display": "radio",
+          "x-cols": 6,
+          default: "3 Nodes"
         }
       }
     }

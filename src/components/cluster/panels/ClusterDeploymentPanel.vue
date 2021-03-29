@@ -9,7 +9,7 @@
       <v-form v-if="toShow" ref="form" v-model="cluster.deployment.isValid">
         <v-jsf
           @change="validateForm"
-          v-model="cluster.deployment.model"
+          v-model="model"
           :schema="cluster.deployment.schema"
           :options="cluster.deployment.options"
         />
@@ -29,7 +29,9 @@ export default {
     show: Boolean
   },
   data: function() {
-    return {};
+    return {
+      model: {}
+    };
   },
   computed: {
     isValid: function() {
@@ -48,11 +50,17 @@ export default {
       return "primary";
     }
   },
-
+  mounted() {
+    this.model = this.cluster.deployment.model;
+    if (localStorage.licenseKey) {
+      this.model.base.licenseKey = localStorage.licenseKey;
+    }
+  },
   methods: {
     validateForm() {
       this.$nextTick(() => {
         this.$refs.form.validate();
+        localStorage.licenseKey = this.model.base.licenseKey;
       });
     }
   }
