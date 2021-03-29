@@ -89,7 +89,7 @@ const clusterDeploymentSchema = {
         },
         clusterNamespace: {
           type: "string",
-          title: "Cluster Name",
+          title: "Cluster Namespace",
           default: "kubemq",
           "x-cols": 6,
           "x-class": "pl-2"
