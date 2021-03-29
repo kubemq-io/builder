@@ -137,7 +137,7 @@ class BridgesBindingSide {
           return "Events Store";
         case "target.queue":
         case "source.queue":
-          return "Queues";
+          return "Queue";
         case "source.queue-stream":
           return "Queue Stream";
       }
@@ -171,6 +171,10 @@ class BridgesBindingSide {
       if (value.channels) {
         list.push(
           new BridgesBindingSideConnection(value.address, value.channels)
+        );
+      } else if (value.default_channel) {
+        list.push(
+          new BridgesBindingSideConnection(value.address, value.default_channel)
         );
       } else {
         list.push(
