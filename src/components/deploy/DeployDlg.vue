@@ -63,8 +63,19 @@
                       </v-avatar>
                     </div>
                     <v-list-item-title class="pl-2">
-                      <div>
-                        <copy-label :text="item"></copy-label>
+                      <div
+                        class="d-flex justify-space-between align-content-center align-center"
+                      >
+                        <div>
+                          <copy-label :text="item.action"></copy-label>
+                        </div>
+                        <div class="pl-2">
+                          <v-btn icon :href="item.view" target="_blank">
+                            <v-icon size="20" color="secondary">
+                              fa-eye
+                            </v-icon>
+                          </v-btn>
+                        </div>
                       </div>
                     </v-list-item-title>
                   </v-list-item>
