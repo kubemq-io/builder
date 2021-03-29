@@ -548,8 +548,8 @@ const sourceSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Source gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channel: {
@@ -635,8 +635,8 @@ const sourceSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Source gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channel: {
@@ -715,8 +715,8 @@ const sourceSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Source gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
             channel: {
               type: "string",
@@ -784,8 +784,8 @@ const sourceSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Source gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channel: {
@@ -855,8 +855,8 @@ const sourceSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Source gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channel: {
@@ -925,8 +925,8 @@ const sourceSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Source Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Source gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channel: {
@@ -1006,8 +1006,8 @@ const sourceMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Source gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channel: {
@@ -1098,8 +1098,8 @@ const sourceMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Source gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channel: {
@@ -1183,8 +1183,8 @@ const sourceMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Source gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
               channel: {
                 type: "string",
@@ -1257,8 +1257,8 @@ const sourceMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Source gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channel: {
@@ -1333,8 +1333,8 @@ const sourceMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Source gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channel: {
@@ -1408,8 +1408,8 @@ const sourceMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Source Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Source gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channel: {
@@ -1486,8 +1486,8 @@ const targetSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Target Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Target gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channels: {
@@ -1572,8 +1572,8 @@ const targetSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Target Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Target gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
             default_channel: {
               type: "string",
@@ -1634,8 +1634,8 @@ const targetSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Target Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Target gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
             default_channel: {
               type: "string",
@@ -1697,8 +1697,8 @@ const targetSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Target Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Target gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channels: {
@@ -1754,8 +1754,8 @@ const targetSingleSchema = {
           properties: {
             address: {
               type: "string",
-              title: "Target Address",
-              default: "kubemq-cluster-grpc:50000"
+              title: "Target gRPC Service Address",
+              default: "kubemq-cluster-grpc.kubemq:50000"
             },
 
             channels: {
@@ -1823,8 +1823,8 @@ const targetMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Target Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Target gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channels: {
@@ -1914,8 +1914,8 @@ const targetMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Target Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Target gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
               default_channel: {
                 type: "string",
@@ -1981,8 +1981,8 @@ const targetMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Target Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Target gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
               default_channel: {
                 type: "string",
@@ -2049,8 +2049,8 @@ const targetMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Target Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Target gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channels: {
@@ -2111,8 +2111,8 @@ const targetMultiSchema = {
             properties: {
               address: {
                 type: "string",
-                title: "Target Address",
-                default: "kubemq-cluster-grpc:50000"
+                title: "Target gRPC Service Address",
+                default: "kubemq-cluster-grpc.kubemq:50000"
               },
 
               channels: {

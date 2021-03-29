@@ -1318,6 +1318,40 @@ export default {
             title: "Receive Type",
             oneOf: [
               {
+                title: "With Epoch",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "with_epoch"
+                  },
+                  epoch: {
+                    type: "integer",
+                    title: "Epoch",
+                    default: 0,
+                    description: "Set Timestamp To Collect Events From (Epoch)",
+                    minimum: 0,
+                    maximum: 2147483647
+                  }
+                }
+              },
+              {
+                title: "With Prefetch Count",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "with_prefetch_count"
+                  },
+                  prefetch_count: {
+                    type: "integer",
+                    title: "Prefetch Count",
+                    default: 0,
+                    description: "Set Prefetch Count To Collect Events From",
+                    minimum: 0,
+                    maximum: 2147483647
+                  }
+                }
+              },
+              {
                 title: "With Starting Offset",
                 properties: {
                   key: {
@@ -1360,40 +1394,6 @@ export default {
                     type: "string",
                     title: "Consumer Group",
                     description: "Set The Consumer Group To Collect Events From"
-                  }
-                }
-              },
-              {
-                title: "With Epoch",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "with_epoch"
-                  },
-                  epoch: {
-                    type: "integer",
-                    title: "Epoch",
-                    default: 0,
-                    description: "Set Timestamp To Collect Events From (Epoch)",
-                    minimum: 0,
-                    maximum: 2147483647
-                  }
-                }
-              },
-              {
-                title: "With Prefetch Count",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "with_prefetch_count"
-                  },
-                  prefetch_count: {
-                    type: "integer",
-                    title: "Prefetch Count",
-                    default: 0,
-                    description: "Set Prefetch Count To Collect Events From",
-                    minimum: 0,
-                    maximum: 2147483647
                   }
                 }
               }
@@ -3390,23 +3390,6 @@ export default {
             title: "Connection Type",
             oneOf: [
               {
-                title: "Direct",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "Direct"
-                  },
-                  "": null,
-                  connection: {
-                    type: "string",
-                    title: "Connection String",
-                    default:
-                      "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
-                    description: "Set Mysql Connection String"
-                  }
-                }
-              },
-              {
                 title: "Proxy",
                 properties: {
                   key: {
@@ -3439,6 +3422,23 @@ export default {
                     title: "Credentials",
                     description: "Set Mysql Credentials",
                     "x-display": "textarea"
+                  }
+                }
+              },
+              {
+                title: "Direct",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "Direct"
+                  },
+                  "": null,
+                  connection: {
+                    type: "string",
+                    title: "Connection String",
+                    default:
+                      "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
+                    description: "Set Mysql Connection String"
                   }
                 }
               }
@@ -4891,18 +4891,6 @@ export default {
               type: "string",
               title: "Token",
               description: "Set S3 Token"
-            },
-            downloader: {
-              type: "boolean",
-              title: "Allow Downloads",
-              default: true,
-              description: "Create S3 Downloader Instance"
-            },
-            uploader: {
-              type: "boolean",
-              title: "Allow Uploads",
-              default: true,
-              description: "Create S3 Uploader Instance"
             }
           }
         }
@@ -5362,8 +5350,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5447,8 +5435,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5525,8 +5513,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5607,8 +5595,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5694,8 +5682,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5781,8 +5769,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5870,8 +5858,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -5951,8 +5939,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -6010,8 +5998,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -6061,8 +6049,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
@@ -6112,8 +6100,8 @@ export default {
           },
           address: {
             type: "string",
-            title: "KubeMQ Address",
-            default: "kubemq-cluster-grpc:50000",
+            title: "KubeMQ gRPC Service Address",
+            default: "kubemq-cluster-grpc.kubemq:50000",
             description: "Set Kubemq Grpc Endpoint Address"
           },
           channel: {
