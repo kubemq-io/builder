@@ -12,7 +12,7 @@
       cache-items
       no-data-text="No integrations were found for this query"
       hide-details
-      placeholder="Add an Integration"
+      placeholder="Type for available integrations"
       prepend-inner-icon="fa-search"
       filled
     >
