@@ -23,9 +23,24 @@ class ClusterApiInterfaceConfig extends ClusterConfigItem {
     super()
       .setName("ApiInterface")
       .setSchema(clusterApiInterfaceSchema)
-      .setModel(clusterApiInterfaceModel);
+      .setModel(clusterApiInterfaceModel)
+      .setOptions(clusterApiInterfaceOptions);
   }
 }
+const clusterApiInterfaceOptions = {
+  initialValidation: "all",
+  rules: {
+    validateNodePort: function(val) {
+      if (val === 0) {
+        return true;
+      }
+      if (val < 30000 || val > 32000) {
+        return "Node port must be in range of 30000-32000";
+      }
+      return true;
+    }
+  }
+};
 const clusterApiInterfaceModel = {
   mode: "ClusterIP",
   nodePort: 0
@@ -57,6 +72,7 @@ const clusterApiInterfaceSchema = {
         nodePort: {
           type: "integer",
           title: "Node Port",
+          "x-rules": ["validateNodePort"],
           default: 0,
           minimum: 0,
           maximum: 65355

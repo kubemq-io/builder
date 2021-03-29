@@ -23,9 +23,24 @@ class ClusterGrpcInterfaceConfig extends ClusterConfigItem {
     super()
       .setName("GrpcInterface")
       .setSchema(clusterGrpcInterfaceSchema)
-      .setModel(clusterGrpcInterfaceModel);
+      .setModel(clusterGrpcInterfaceModel)
+      .setOptions(clusterGrpcInterfaceOptions);
   }
 }
+const clusterGrpcInterfaceOptions = {
+  initialValidation: "all",
+  rules: {
+    validateNodePort: function(val) {
+      if (val === 0) {
+        return true;
+      }
+      if (val < 30000 || val > 32000) {
+        return "Node port must be in range of 30000-32000";
+      }
+      return true;
+    }
+  }
+};
 const clusterGrpcInterfaceModel = {
   mode: "ClusterIP",
   nodePort: 0
@@ -57,6 +72,7 @@ const clusterGrpcInterfaceSchema = {
         nodePort: {
           type: "integer",
           title: "Node Port",
+          "x-rules": ["validateNodePort"],
           default: 0,
           minimum: 0,
           maximum: 65355

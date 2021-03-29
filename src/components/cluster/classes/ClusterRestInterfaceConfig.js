@@ -23,9 +23,24 @@ class ClusterRestInterfaceConfig extends ClusterConfigItem {
     super()
       .setName("RestInterface")
       .setSchema(clusterRestInterfaceSchema)
-      .setModel(clusterRestInterfaceModel);
+      .setModel(clusterRestInterfaceModel)
+      .setOptions(clusterRestInterfaceOptions);
   }
 }
+const clusterRestInterfaceOptions = {
+  initialValidation: "all",
+  rules: {
+    validateNodePort: function(val) {
+      if (val === 0) {
+        return true;
+      }
+      if (val < 30000 || val > 32000) {
+        return "Node port must be in range of 30000-32000";
+      }
+      return true;
+    }
+  }
+};
 const clusterRestInterfaceModel = {
   mode: "ClusterIP",
   nodePort: 0
@@ -57,7 +72,7 @@ const clusterRestInterfaceSchema = {
         nodePort: {
           type: "integer",
           title: "Node Port",
-          "x-cols": 6,
+          "x-rules": ["validateNodePort"],
           default: 0,
           minimum: 0,
           maximum: 65355
