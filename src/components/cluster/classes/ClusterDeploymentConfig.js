@@ -66,6 +66,16 @@ class ClusterDeploymentConfig extends ClusterConfigItem {
               return "Value cannot contain white space";
             }
             return true;
+          },
+          isUUID(uuid) {
+            let s = "" + uuid;
+            s = s.match(
+              "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+            );
+            if (s === null) {
+              return "The provided key is not valid";
+            }
+            return true;
           }
         }
       });
@@ -116,7 +126,8 @@ const clusterDeploymentSchema = {
           title: "Key",
           default: "",
           "x-cols": 12,
-          "x-class": "pl-2"
+          "x-class": "pl-2",
+          "x-rules": ["isUUID"]
         }
       }
     },
