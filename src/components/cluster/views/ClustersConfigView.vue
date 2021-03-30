@@ -146,7 +146,6 @@ export default {
       this.$router.back();
     },
     async clearSettings() {
-      console.log("clear");
       if (
         await this.$refs.confirm.open(
           "Confirm",
