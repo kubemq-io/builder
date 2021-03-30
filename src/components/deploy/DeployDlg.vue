@@ -304,11 +304,13 @@ const connectorForm = {
     initialValidation: "all",
     rules: {
       validateInput: function(val) {
-        if (val !== val.toLowerCase()) {
-          return "Value must be lowercase only";
-        }
-        if (val.indexOf(" ") > 0) {
-          return "Value cannot contain white space";
+        if (val) {
+          if (val !== val.toLowerCase()) {
+            return "Value must be lowercase only";
+          }
+          if (/\s/.test(val)) {
+            return "Value cannot contain white spaces";
+          }
         }
         return true;
       }

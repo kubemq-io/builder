@@ -59,12 +59,15 @@ class ClusterDeploymentConfig extends ClusterConfigItem {
         initialValidation: "all",
         rules: {
           validateClusterInput: function(val) {
-            if (val !== val.toLowerCase()) {
-              return "Value must be lowercase only";
+            if (val) {
+              if (val !== val.toLowerCase()) {
+                return "Value must be lowercase only";
+              }
+              if (/\s/.test(val)) {
+                return "Value cannot contain white spaces";
+              }
             }
-            if (val.indexOf(" ") > 0) {
-              return "Value cannot contain white space";
-            }
+
             return true;
           },
           isUUID(uuid) {

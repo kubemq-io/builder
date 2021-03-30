@@ -532,6 +532,7 @@ const transformMode = function() {
     }
   };
 };
+
 const sourceSingleSchema = {
   title: "Source Type",
   type: "object",
@@ -558,7 +559,8 @@ const sourceSingleSchema = {
 
             channel: {
               type: "string",
-              title: "Source Channel"
+              title: "Source Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -645,7 +647,8 @@ const sourceSingleSchema = {
 
             channel: {
               type: "string",
-              title: "Source Channel"
+              title: "Source Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -724,7 +727,8 @@ const sourceSingleSchema = {
             },
             channel: {
               type: "string",
-              title: "Source Channel"
+              title: "Source Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -794,7 +798,8 @@ const sourceSingleSchema = {
 
             channel: {
               type: "string",
-              title: "Source Channel"
+              title: "Source Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -865,7 +870,8 @@ const sourceSingleSchema = {
 
             channel: {
               type: "string",
-              title: "Source Channel"
+              title: "Source Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -935,7 +941,8 @@ const sourceSingleSchema = {
 
             channel: {
               type: "string",
-              title: "Source Channel"
+              title: "Source Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -1016,7 +1023,8 @@ const sourceMultiSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel"
+                title: "Source Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1108,7 +1116,8 @@ const sourceMultiSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel"
+                title: "Source Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1192,7 +1201,8 @@ const sourceMultiSchema = {
               },
               channel: {
                 type: "string",
-                title: "Source Channel"
+                title: "Source Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1267,7 +1277,8 @@ const sourceMultiSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel"
+                title: "Source Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1343,7 +1354,8 @@ const sourceMultiSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel"
+                title: "Source Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1418,7 +1430,8 @@ const sourceMultiSchema = {
 
               channel: {
                 type: "string",
-                title: "Source Channel"
+                title: "Source Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1496,7 +1509,8 @@ const targetSingleSchema = {
 
             channels: {
               type: "string",
-              title: "Target Channels"
+              title: "Target Channels",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -1581,7 +1595,8 @@ const targetSingleSchema = {
             },
             default_channel: {
               type: "string",
-              title: "Target Channel"
+              title: "Target Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -1643,7 +1658,8 @@ const targetSingleSchema = {
             },
             default_channel: {
               type: "string",
-              title: "Target Channel"
+              title: "Target Channel",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -1707,7 +1723,8 @@ const targetSingleSchema = {
 
             channels: {
               type: "string",
-              title: "Target Channels"
+              title: "Target Channels",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -1764,7 +1781,8 @@ const targetSingleSchema = {
 
             channels: {
               type: "string",
-              title: "Target Channels"
+              title: "Target Channels",
+              "x-rules": ["validateChannel"]
             },
             setDefaults: {
               type: "boolean",
@@ -1833,7 +1851,8 @@ const targetMultiSchema = {
 
               channels: {
                 type: "string",
-                title: "Target Channels"
+                title: "Target Channels",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1923,7 +1942,8 @@ const targetMultiSchema = {
               },
               default_channel: {
                 type: "string",
-                title: "Target Channel"
+                title: "Target Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -1990,7 +2010,8 @@ const targetMultiSchema = {
               },
               default_channel: {
                 type: "string",
-                title: "Target Channel"
+                title: "Target Channel",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -2059,7 +2080,8 @@ const targetMultiSchema = {
 
               channels: {
                 type: "string",
-                title: "Target Channels"
+                title: "Target Channels",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",
@@ -2121,7 +2143,8 @@ const targetMultiSchema = {
 
               channels: {
                 type: "string",
-                title: "Target Channels"
+                title: "Target Channels",
+                "x-rules": ["validateChannel"]
               },
               setDefaults: {
                 type: "boolean",

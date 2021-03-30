@@ -122,6 +122,14 @@ export default {
             } else {
               return true;
             }
+          },
+          validateChannel: function(val) {
+            if (val) {
+              if (/\s/.test(val)) {
+                return "Value cannot contain white spaces";
+              }
+            }
+            return true;
           }
         }
       }
