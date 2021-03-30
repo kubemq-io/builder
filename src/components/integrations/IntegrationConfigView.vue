@@ -149,6 +149,13 @@ export default {
 
     validateBindingName: function() {
       const val = this.bindingModel.Name;
+      if (!val) {
+        return "Value cannot be empty";
+      }
+
+      if (val.length <= 1) {
+        return "Value must have at least 2 characters";
+      }
       if (val !== val.toLowerCase()) {
         return "Value must be lowercase only";
       }
