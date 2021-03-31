@@ -18,10 +18,14 @@ class ClusterSecurityConfig extends ClusterConfigItem {
     super()
       .setName("Security")
       .setSchema(clusterSecuritySchema)
-      .setModel(clusterSecurityModel);
+      .setModel(clusterSecurityModel)
+      .setOptions(clusterSecurityOptions);
   }
 }
-
+const clusterSecurityOptions = {
+  initialValidation: "all",
+  idPrefix: "security"
+};
 const clusterSecurityModel = {
   mode: "disabled",
   cert: "",

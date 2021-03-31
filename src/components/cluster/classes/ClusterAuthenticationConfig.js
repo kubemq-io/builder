@@ -29,7 +29,10 @@ class ClusterAuthenticationConfig extends ClusterConfigItem {
       .setOptions(clusterAuthenticationOptions);
   }
 }
-const clusterAuthenticationOptions = {};
+const clusterAuthenticationOptions = {
+  initialValidation: "all",
+  idPrefix: "authentication"
+};
 const clusterAuthenticationModel = {
   publicKeyType: "HS256",
   publicKey: null,

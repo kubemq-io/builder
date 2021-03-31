@@ -14,10 +14,14 @@ class ClusterQueuesConfig extends ClusterConfigItem {
     super()
       .setName("Queues")
       .setSchema(clusterQueuesSchema)
-      .setModel(clusterQueuesModel);
+      .setModel(clusterQueuesModel)
+      .setOptions(clusterQueueOptions);
   }
 }
-
+const clusterQueueOptions = {
+  initialValidation: "all",
+  idPrefix: "queue"
+};
 const clusterQueuesModel = {
   mode: "default",
   maxReceiveMessagesRequest: 1024,

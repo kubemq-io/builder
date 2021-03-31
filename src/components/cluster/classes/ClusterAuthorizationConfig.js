@@ -29,20 +29,24 @@ class ClusterAuthorizationConfig extends ClusterConfigItem {
       .setName("Authorization")
       .setSchema(clusterAuthorizationSchema)
       .setModel(clusterAuthorizationModel)
-      .setOptions({
-        dialogProps: { minWidth: 500, maxWidth: 960 },
-        rules: {
-          validateRulesArray: function(array) {
-            if (array.length === 0) {
-              return "At least one policy rule must be defined";
-            } else {
-              return true;
-            }
-          }
-        }
-      });
+      .setOptions(clusterAuthorizationOptions);
   }
 }
+
+const clusterAuthorizationOptions = {
+  initialValidation: "all",
+  idPrefix: "authorization",
+  dialogProps: { minWidth: 500, maxWidth: 960 },
+  rules: {
+    validateRulesArray: function(array) {
+      if (array.length === 0) {
+        return "At least one policy rule must be defined";
+      } else {
+        return true;
+      }
+    }
+  }
+};
 const clusterAuthorizationModel = {
   mode: "disabled",
   policy: {

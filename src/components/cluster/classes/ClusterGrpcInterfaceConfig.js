@@ -29,6 +29,7 @@ class ClusterGrpcInterfaceConfig extends ClusterConfigItem {
 }
 const clusterGrpcInterfaceOptions = {
   initialValidation: "all",
+  idPrefix: "grpc",
   rules: {
     validateNodePort: function(val) {
       if (val === 0) {

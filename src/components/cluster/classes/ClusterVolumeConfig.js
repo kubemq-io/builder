@@ -15,10 +15,14 @@ class ClusterVolumeConfig extends ClusterConfigItem {
     super()
       .setName("Volumes")
       .setSchema(clusterVolumeSchema)
-      .setModel(clusterVolumeModel);
+      .setModel(clusterVolumeModel)
+      .setOptions(clusterVolumeOptions);
   }
 }
-
+const clusterVolumeOptions = {
+  initialValidation: "all",
+  idPrefix: "volume"
+};
 const clusterVolumeModel = {
   mode: "disabled",
   size: 1,

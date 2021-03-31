@@ -15,10 +15,14 @@ class ClusterHealthConfig extends ClusterConfigItem {
     super()
       .setName("Health")
       .setSchema(clusterHealthSchema)
-      .setModel(clusterHealthModel);
+      .setModel(clusterHealthModel)
+      .setOptions(clusterHealthOptions);
   }
 }
-
+const clusterHealthOptions = {
+  initialValidation: "all",
+  idPrefix: "health"
+};
 const clusterHealthModel = {
   mode: "disabled",
   initialDelaySeconds: 10,

@@ -15,10 +15,14 @@ class ClusterResourcesConfig extends ClusterConfigItem {
     super()
       .setName("Resources")
       .setSchema(clusterResourcesSchema)
-      .setModel(clusterResourcesModel);
+      .setModel(clusterResourcesModel)
+      .setOptions(clusterResourcesOptions);
   }
 }
-
+const clusterResourcesOptions = {
+  initialValidation: "all",
+  idPrefix: "resources"
+};
 const clusterResourcesModel = {
   mode: "disabled",
   limitsCpu: 0,

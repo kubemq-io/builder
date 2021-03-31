@@ -441,6 +441,10 @@ let integrationsLoggingModel = {
       this.Model.logLevel !== "No Logging" && this.Model.logLevel !== undefined
     );
   },
+  Options: {
+    initialValidation: "all",
+    idPrefix: "logging"
+  },
   Model: {},
   IsValid: false
 };
@@ -505,6 +509,10 @@ let integrationsRetriesModel = {
   Model: {
     mode: "disabled"
   },
+  Options: {
+    initialValidation: "all",
+    idPrefix: "retries"
+  },
   HasData: function() {
     return this.Model.mode !== "disabled";
   },
@@ -546,6 +554,10 @@ let integrationsRateLimiterModel = {
   },
   Model: {
     mode: "disabled"
+  },
+  Options: {
+    initialValidation: "all",
+    idPrefix: "rate"
   },
   HasData: function() {
     return this.Model.mode !== "disabled";

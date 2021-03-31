@@ -48,20 +48,6 @@ class BridgesBinding {
 
   getType() {
     return this._sourceSide.mode;
-    // const sourceConnections = this.SourceSide.getConnections().length;
-    // const targetConnections = this.TargetSide.getConnections().length;
-    // if (sourceConnections === 1 && targetConnections === 1) {
-    //   return "bridge";
-    // }
-    // if (sourceConnections === 1 && targetConnections > 1) {
-    //   return "replicate";
-    // }
-    // if (sourceConnections > 1 && targetConnections === 1) {
-    //   return "aggregate";
-    // }
-    // if (sourceConnections > 1 && targetConnections > 1) {
-    //   return "transform";
-    // }
   }
   constructor() {
     this._id = makeid(16);
@@ -349,6 +335,10 @@ let bridgesLoggingModel = {
     );
   },
   Model: {},
+  Options: {
+    initialValidation: "all",
+    idPrefix: "logging"
+  },
   IsValid: false
 };
 let bridgesRetriesModel = {
@@ -415,6 +405,10 @@ let bridgesRetriesModel = {
   HasData: function() {
     return this.Model.mode !== "disabled";
   },
+  Options: {
+    initialValidation: "all",
+    idPrefix: "retries"
+  },
   IsValid: false
 };
 let bridgesRateLimiterModel = {
@@ -456,6 +450,10 @@ let bridgesRateLimiterModel = {
   },
   HasData: function() {
     return this.Model.mode !== "disabled";
+  },
+  Options: {
+    initialValidation: "all",
+    idPrefix: "rate"
   },
   IsValid: false
 };

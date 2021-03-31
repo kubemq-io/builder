@@ -18,10 +18,14 @@ class ClusterImageConfig extends ClusterConfigItem {
     super()
       .setName("Image")
       .setSchema(clusterImageSchema)
-      .setModel(clusterImageModel);
+      .setModel(clusterImageModel)
+      .setOptions(clusterImageOptions);
   }
 }
-
+const clusterImageOptions = {
+  initialValidation: "all",
+  idPrefix: "image"
+};
 const defaultImage = "docker.io/kubemq/kubemq:latest";
 const defaultPullPolicy = "Always";
 

@@ -29,6 +29,7 @@ class ClusterRestInterfaceConfig extends ClusterConfigItem {
 }
 const clusterRestInterfaceOptions = {
   initialValidation: "all",
+  idPrefix: "rest",
   rules: {
     validateNodePort: function(val) {
       if (val === 0) {

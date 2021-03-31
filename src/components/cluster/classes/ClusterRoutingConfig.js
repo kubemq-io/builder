@@ -16,20 +16,23 @@ class ClusterRoutingConfig extends ClusterConfigItem {
       .setName("Routing")
       .setSchema(clusterRoutingSchema)
       .setModel(clusterRoutingModel)
-      .setOptions({
-        dialogProps: { maxWidth: 500 },
-        rules: {
-          validateRulesArray: function(array) {
-            if (array.length === 0) {
-              return "At least one routing rule must be defined";
-            } else {
-              return true;
-            }
-          }
-        }
-      });
+      .setOptions(clusterRoutingOptions);
   }
 }
+const clusterRoutingOptions = {
+  initialValidation: "all",
+  idPrefix: "routing",
+  dialogProps: { maxWidth: 500 },
+  rules: {
+    validateRulesArray: function(array) {
+      if (array.length === 0) {
+        return "At least one routing rule must be defined";
+      } else {
+        return true;
+      }
+    }
+  }
+};
 const clusterRoutingModel = {
   mode: "disabled",
   routes: {

@@ -15,10 +15,14 @@ class ClusterStoreConfig extends ClusterConfigItem {
     super()
       .setName("Store")
       .setSchema(clusterStoreSchema)
-      .setModel(clusterStoreModel);
+      .setModel(clusterStoreModel)
+      .setOptions(clusterStoreOptions);
   }
 }
-
+const clusterStoreOptions = {
+  initialValidation: "all",
+  idPrefix: "store"
+};
 const clusterStoreModel = {
   mode: "default",
   maxChannels: 0,

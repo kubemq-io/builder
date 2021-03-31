@@ -19,7 +19,11 @@
               ref="formMiddlewaresLogging"
               v-model="logging.IsValid"
             >
-              <v-jsf :value="logging.Model" :schema="logging.Schema" />
+              <v-jsf
+                :value="logging.Model"
+                :schema="logging.Schema"
+                :options="logging.Options"
+              />
             </v-form>
           </v-card-text>
         </v-card>
@@ -42,7 +46,11 @@
               ref="formMiddlewaresRetries"
               v-model="retries.IsValid"
             >
-              <v-jsf :value="retries.Model" :schema="retries.Schema" />
+              <v-jsf
+                :value="retries.Model"
+                :schema="retries.Schema"
+                :options="retries.Options"
+              />
             </v-form>
           </v-card-text>
         </v-card>
@@ -65,7 +73,11 @@
               ref="formMiddlewaresRate"
               v-model="rate.IsValid"
             >
-              <v-jsf :value="rate.Model" :schema="rate.Schema" />
+              <v-jsf
+                :value="rate.Model"
+                :schema="rate.Schema"
+                :options="rate.Options"
+              />
             </v-form>
           </v-card-text>
         </v-card>

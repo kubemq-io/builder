@@ -16,21 +16,23 @@ class ClusterNodesConfig extends ClusterConfigItem {
       .setName("Nodes")
       .setSchema(clusterNodesSchema)
       .setModel(clusterNodesModel)
-      .setOptions({
-        dialogProps: { maxWidth: 500 },
-        rules: {
-          validateNodesArray: function(array) {
-            if (array.length === 0) {
-              return "At least one key/value must be defined";
-            } else {
-              return true;
-            }
-          }
-        }
-      });
+      .setOptions(clusterNodesOptions);
   }
 }
-
+const clusterNodesOptions = {
+  initialValidation: "all",
+  idPrefix: "nodes",
+  dialogProps: { maxWidth: 500 },
+  rules: {
+    validateNodesArray: function(array) {
+      if (array.length === 0) {
+        return "At least one key/value must be defined";
+      } else {
+        return true;
+      }
+    }
+  }
+};
 const clusterNodesModel = {
   mode: "disabled",
   item: {

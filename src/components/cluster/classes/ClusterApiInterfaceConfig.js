@@ -29,6 +29,7 @@ class ClusterApiInterfaceConfig extends ClusterConfigItem {
 }
 const clusterApiInterfaceOptions = {
   initialValidation: "all",
+  idPrefix: "api",
   rules: {
     validateNodePort: function(val) {
       if (val === 0) {

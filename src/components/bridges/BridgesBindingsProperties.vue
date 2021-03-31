@@ -54,7 +54,7 @@
               <v-jsf
                 v-model="source.Model"
                 :schema="source.Schema"
-                :options="options"
+                :options="getOptions('source')"
               />
             </v-form>
           </v-card-text>
@@ -86,7 +86,7 @@
               <v-jsf
                 v-model="target.Model"
                 :schema="target.Schema"
-                :options="options"
+                :options="getOptions('target')"
               ></v-jsf>
             </v-form>
           </v-card-text>
@@ -109,30 +109,7 @@ export default {
     return {
       toggleMode: 0,
       showLocal: true,
-      currentMode: "",
-      options: {
-        initialValidation: "all",
-        checkboxProps: {
-          dense: true
-        },
-        rules: {
-          validateConnections: function(array) {
-            if (array.length === 0) {
-              return "At least one connection must be defined";
-            } else {
-              return true;
-            }
-          },
-          validateChannel: function(val) {
-            if (val) {
-              if (/\s/.test(val)) {
-                return "Value cannot contain white spaces";
-              }
-            }
-            return true;
-          }
-        }
-      }
+      currentMode: ""
     };
   },
   mounted() {
@@ -191,20 +168,37 @@ export default {
       this.$nextTick(() => {
         this.showLocal = true;
       });
+    },
+    getOptions: function(side) {
+      return {
+        initialValidation: "all",
+        idPrefix: side,
+        checkboxProps: {
+          dense: true
+        },
+        rules: {
+          validateConnections: function(array) {
+            if (array.length === 0) {
+              return "At least one connection must be defined";
+            } else {
+              return true;
+            }
+          },
+          validateChannel: function(val) {
+            if (val) {
+              if (/\s/.test(val)) {
+                return "Value cannot contain white spaces";
+              }
+            }
+            return true;
+          }
+        }
+      };
     }
   }
 };
 </script>
 <style scoped>
-/*.container {*/
-/*  border: 1px solid green;*/
-/*}*/
-/*.row {*/
-/*  border: 1px solid red;*/
-/*}*/
-/*.col {*/
-/*  border: 1px solid blue;*/
-/*}*/
 .side {
   flex-basis: 95%;
 }
