@@ -1,4 +1,6 @@
-# forms
+# Build & Deploy
+
+This repository powers [Build & Deploy](https://build.kubemq.io) site
 
 ## Project setup
 ```
@@ -14,6 +16,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
