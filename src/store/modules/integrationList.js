@@ -1043,6 +1043,72 @@ export default {
       }
     },
     {
+      kind: "stores.crate",
+      type: "targets",
+      name: "Crate",
+      category: "Store",
+      provider: "",
+      tags: ["db", "sql"],
+      schema: {
+        required: ["connection"],
+        properties: {
+          kind: {
+            type: "string",
+            const: "stores.crate"
+          },
+          connection: {
+            type: "string",
+            title: "Connection String",
+            default: "postgresql://crate@localhost:5432/doc?sslmode=disable",
+            description: "Set Crate Connection String"
+          },
+          setDefaults: {
+            type: "boolean",
+            title: "Set Defaults Properties",
+            default: true,
+            "x-display": "checkbox"
+          }
+        },
+        "x-class": "vjsf",
+        if: {
+          required: ["setDefaults"],
+          properties: {
+            setDefaults: {
+              const: false
+            }
+          }
+        },
+        then: {
+          properties: {
+            max_idle_connections: {
+              type: "integer",
+              title: "Max Idle Connections",
+              default: 10,
+              description: "Set Crate Max Idle Connections",
+              minimum: 1,
+              maximum: 2147483647
+            },
+            max_open_connections: {
+              type: "integer",
+              title: "Max Open Connections",
+              default: 100,
+              description: "Set Crate Max Open Connections",
+              minimum: 1,
+              maximum: 2147483647
+            },
+            connection_max_lifetime_seconds: {
+              type: "integer",
+              title: "Connection Lifetime (Seconds)",
+              default: 3600,
+              description: "Set Crate Connection Max Lifetime Seconds",
+              minimum: 1,
+              maximum: 2147483647
+            }
+          }
+        }
+      }
+    },
+    {
       kind: "aws.dynamodb",
       type: "targets",
       name: "DynamoDB",
@@ -1318,6 +1384,38 @@ export default {
             title: "Receive Type",
             oneOf: [
               {
+                title: "From Timestamp",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "from_timestamp"
+                  },
+                  time_stamp: {
+                    type: "integer",
+                    title: "Timestamp",
+                    default: 0,
+                    description:
+                      "Set Timestamp To Collect Events From (Rfc3339)",
+                    minimum: 0,
+                    maximum: 2147483647
+                  }
+                }
+              },
+              {
+                title: "With Consumer Group",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "with_consumer_group"
+                  },
+                  consumer_group: {
+                    type: "string",
+                    title: "Consumer Group",
+                    description: "Set The Consumer Group To Collect Events From"
+                  }
+                }
+              },
+              {
                 title: "With Epoch",
                 properties: {
                   key: {
@@ -1364,64 +1462,8 @@ export default {
                     description: "Set Starting Offset"
                   }
                 }
-              },
-              {
-                title: "From Timestamp",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "from_timestamp"
-                  },
-                  time_stamp: {
-                    type: "integer",
-                    title: "Timestamp",
-                    default: 0,
-                    description:
-                      "Set Timestamp To Collect Events From (Rfc3339)",
-                    minimum: 0,
-                    maximum: 2147483647
-                  }
-                }
-              },
-              {
-                title: "With Consumer Group",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "with_consumer_group"
-                  },
-                  consumer_group: {
-                    type: "string",
-                    title: "Consumer Group",
-                    description: "Set The Consumer Group To Collect Events From"
-                  }
-                }
               }
             ]
-          }
-        },
-        "x-class": "vjsf"
-      }
-    },
-    {
-      kind: "storage.filesystem",
-      type: "targets",
-      name: "File System",
-      category: "Storage",
-      provider: "",
-      tags: ["filesystem", "s3"],
-      schema: {
-        required: ["base_path"],
-        properties: {
-          kind: {
-            type: "string",
-            const: "storage.filesystem"
-          },
-          base_path: {
-            type: "string",
-            title: "Destination Path",
-            default: "./",
-            description: "Set Local File System Base Path"
           }
         },
         "x-class": "vjsf"
@@ -1485,6 +1527,30 @@ export default {
             }
           }
         }
+      }
+    },
+    {
+      kind: "storage.filesystem",
+      type: "targets",
+      name: "File System",
+      category: "Storage",
+      provider: "",
+      tags: ["filesystem", "s3"],
+      schema: {
+        required: ["base_path"],
+        properties: {
+          kind: {
+            type: "string",
+            const: "storage.filesystem"
+          },
+          base_path: {
+            type: "string",
+            title: "Destination Path",
+            default: "./",
+            description: "Set Local File System Base Path"
+          }
+        },
+        "x-class": "vjsf"
       }
     },
     {
@@ -1790,6 +1856,22 @@ export default {
             title: "Authentication Type",
             oneOf: [
               {
+                title: "Token",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "Token"
+                  },
+                  "": null,
+                  token: {
+                    type: "string",
+                    title: "Token",
+                    description: "Set Auth Token",
+                    "x-display": "textarea"
+                  }
+                }
+              },
+              {
                 title: "Basic",
                 properties: {
                   key: {
@@ -1817,22 +1899,6 @@ export default {
                     const: "No Auth"
                   },
                   "": null
-                }
-              },
-              {
-                title: "Token",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "Token"
-                  },
-                  "": null,
-                  token: {
-                    type: "string",
-                    title: "Token",
-                    description: "Set Auth Token",
-                    "x-display": "textarea"
-                  }
                 }
               }
             ]
@@ -3390,6 +3456,23 @@ export default {
             title: "Connection Type",
             oneOf: [
               {
+                title: "Direct",
+                properties: {
+                  key: {
+                    type: "string",
+                    const: "Direct"
+                  },
+                  "": null,
+                  connection: {
+                    type: "string",
+                    title: "Connection String",
+                    default:
+                      "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
+                    description: "Set Mysql Connection String"
+                  }
+                }
+              },
+              {
                 title: "Proxy",
                 properties: {
                   key: {
@@ -3422,23 +3505,6 @@ export default {
                     title: "Credentials",
                     description: "Set Mysql Credentials",
                     "x-display": "textarea"
-                  }
-                }
-              },
-              {
-                title: "Direct",
-                properties: {
-                  key: {
-                    type: "string",
-                    const: "Direct"
-                  },
-                  "": null,
-                  connection: {
-                    type: "string",
-                    title: "Connection String",
-                    default:
-                      "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
-                    description: "Set Mysql Connection String"
                   }
                 }
               }
