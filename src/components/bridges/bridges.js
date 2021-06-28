@@ -596,14 +596,6 @@ const sourceSingleSchema = {
                 description: "How many concurrent channel connections",
                 minimum: 1
               },
-              max_requeue: {
-                type: "integer",
-                title: "Max ReQueues",
-                default: 0,
-                description:
-                  "How many times to re-queue a message on target error",
-                minimum: 0
-              },
               batch_size: {
                 type: "integer",
                 title: "Pull Messages Batch Size",
@@ -614,90 +606,9 @@ const sourceSingleSchema = {
               wait_timeout: {
                 type: "integer",
                 title: "Pull Messages Timeout",
-                default: 60,
+                default: 5,
                 description:
                   "How long to wait for messages batch size on each request",
-                minimum: 1
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      title: "Queue Stream",
-      required: ["address", "channel"],
-      properties: {
-        kind: {
-          type: "string",
-          const: "source.queue-stream"
-        },
-        connections: {
-          type: "object",
-          required: ["address", "channel"],
-          description: "Queue Stream Source Connection",
-          properties: {
-            address: {
-              type: "string",
-              title: "Source gRPC Service Address",
-              default: "kubemq-cluster-grpc.kubemq:50000"
-            },
-
-            channel: {
-              type: "string",
-              title: "Source Channel",
-              "x-rules": ["validateChannel"]
-            },
-            setDefaults: {
-              type: "boolean",
-              "x-display": "checkbox",
-              title: "Set Default Properties",
-              default: true
-            }
-          },
-
-          if: {
-            required: ["setDefaults"],
-            properties: {
-              setDefaults: {
-                const: false
-              }
-            }
-          },
-          then: {
-            properties: {
-              client_id: {
-                type: "string",
-                title: "Client ID",
-                default: "",
-                description: "Connection Client ID"
-              },
-              auth_token: {
-                type: "string",
-                title: "Client Authentication Token",
-                default: "",
-                description: "Connection Authentication Token"
-              },
-              sources: {
-                type: "integer",
-                title: "Concurrent Connections",
-                default: 1,
-                description: "How many concurrent channel connections",
-                minimum: 1
-              },
-              visibilityTimeoutSeconds: {
-                type: "integer",
-                title: "Message Visibility Timeout (Seconds)",
-                default: 3600,
-                description:
-                  "How low to hold processing message before sending back to queue",
-                minimum: 1
-              },
-              wait_timeout: {
-                type: "integer",
-                title: "Push Messages Timeout",
-                default: 60,
-                description: "How long to wait for a message",
                 minimum: 1
               }
             }
@@ -1060,14 +971,6 @@ const sourceMultiSchema = {
                   description: "How many concurrent channel connections",
                   minimum: 1
                 },
-                max_requeue: {
-                  type: "integer",
-                  title: "Max ReQueues",
-                  default: 0,
-                  description:
-                    "How many times to re-queue a message on target error",
-                  minimum: 0
-                },
                 batch_size: {
                   type: "integer",
                   title: "Pull Messages Batch Size",
@@ -1078,95 +981,9 @@ const sourceMultiSchema = {
                 wait_timeout: {
                   type: "integer",
                   title: "Pull Messages Timeout",
-                  default: 60,
+                  default: 5,
                   description:
                     "How long to wait for messages batch size on each request",
-                  minimum: 1
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      title: "Queue Stream",
-      required: ["address", "channel"],
-      properties: {
-        kind: {
-          type: "string",
-          const: "source.queue-stream"
-        },
-        connections: {
-          type: "array",
-          title: "Add Queue Stream Source Connection",
-          "x-rules": ["validateConnections"],
-          items: {
-            type: "object",
-            required: ["address", "channel"],
-            description: "Queue Stream Source Connection",
-            properties: {
-              address: {
-                type: "string",
-                title: "Source gRPC Service Address",
-                default: "kubemq-cluster-grpc.kubemq:50000"
-              },
-
-              channel: {
-                type: "string",
-                title: "Source Channel",
-                "x-rules": ["validateChannel"]
-              },
-              setDefaults: {
-                type: "boolean",
-                "x-display": "checkbox",
-                title: "Set Default Properties",
-                default: true
-              }
-            },
-
-            if: {
-              required: ["setDefaults"],
-              properties: {
-                setDefaults: {
-                  const: false
-                }
-              }
-            },
-            then: {
-              properties: {
-                client_id: {
-                  type: "string",
-                  title: "Client ID",
-                  default: "",
-                  description: "Connection Client ID"
-                },
-                auth_token: {
-                  type: "string",
-                  title: "Client Authentication Token",
-                  default: "",
-                  description: "Connection Authentication Token"
-                },
-                sources: {
-                  type: "integer",
-                  title: "Concurrent Connections",
-                  default: 1,
-                  description: "How many concurrent channel connections",
-                  minimum: 1
-                },
-                visibilityTimeoutSeconds: {
-                  type: "integer",
-                  title: "Message Visibility Timeout (Seconds)",
-                  default: 3600,
-                  description:
-                    "How low to hold processing message before sending back to queue",
-                  minimum: 1
-                },
-                wait_timeout: {
-                  type: "integer",
-                  title: "Push Messages Timeout",
-                  default: 60,
-                  description: "How long to wait for a message",
                   minimum: 1
                 }
               }
