@@ -151,7 +151,7 @@ const clusterDeploymentSchema = {
         replicas: {
           type: "string",
           title: "Replicas",
-          enum: ["3 Nodes", "5 Nodes", "7 Nodes"],
+          enum: ["1 Node","3 Nodes", "5 Nodes", "7 Nodes"],
           "x-display": "radio",
           "x-cols": 6,
           default: "3 Nodes"
