@@ -1606,23 +1606,6 @@ export default {
             "title": "Receive Type",
             "oneOf": [
               {
-                "title": "From Timestamp",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "const": "from_timestamp"
-                  },
-                  "time_stamp": {
-                    "type": "integer",
-                    "title": "Timestamp",
-                    "default": 0,
-                    "description": "Set Timestamp To Collect Events From (Rfc3339)",
-                    "minimum": 0,
-                    "maximum": 2147483647
-                  }
-                }
-              },
-              {
                 "title": "With Consumer Group",
                 "properties": {
                   "key": {
@@ -1681,6 +1664,23 @@ export default {
                     "type": "string",
                     "title": "Starting Offset",
                     "description": "Set Starting Offset"
+                  }
+                }
+              },
+              {
+                "title": "From Timestamp",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "const": "from_timestamp"
+                  },
+                  "time_stamp": {
+                    "type": "integer",
+                    "title": "Timestamp",
+                    "default": 0,
+                    "description": "Set Timestamp To Collect Events From (Rfc3339)",
+                    "minimum": 0,
+                    "maximum": 2147483647
                   }
                 }
               }
@@ -2606,6 +2606,12 @@ export default {
               "title": "Client Key",
               "description": "Set Tls Client Key Pem Data",
               "x-display": "textarea"
+            },
+            "insecure": {
+              "type": "boolean",
+              "title": "Insecure",
+              "default": false,
+              "description": "Set Self-Signed Ssl Certificate"
             }
           }
         }
