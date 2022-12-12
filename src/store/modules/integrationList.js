@@ -2581,13 +2581,13 @@ export default {
             },
             "sasl_mechanism": {
               "type": "string",
-              "title": "Sasl Mechanism",
-              "description": "Set Sasl Mechanism"
+              "title": "SASL Mechanism",
+              "description": "Scram-Sha-256, Scram-Sha-512, Plain, 0auth Bearer, Or Gss-Api"
             },
             "security_protocol": {
               "type": "string",
               "title": "Security Protocol",
-              "description": "Set Security Protocol"
+              "description": "Plaintext, Sasl-Plaintext, Sasl-Ssl, Ssl"
             },
             "ca_cert": {
               "type": "string",
@@ -2680,13 +2680,13 @@ export default {
             },
             "sasl_mechanism": {
               "type": "string",
-              "title": "Sasl Mechanism",
-              "description": "Set Sasl Mechanism"
+              "title": "SASL Mechanism",
+              "description": "Scram-Sha-256, Scram-Sha-512, Plain, 0auth Bearer, Or Gss-Api"
             },
             "security_protocol": {
               "type": "string",
               "title": "Security Protocol",
-              "description": "Set Security Protocol"
+              "description": "Plaintext, Sasl-Plaintext, Sasl-Ssl, Ssl"
             },
             "ca_cert": {
               "type": "string",
@@ -4021,22 +4021,6 @@ export default {
             "title": "Connection Type",
             "oneOf": [
               {
-                "title": "Direct",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "const": "Direct"
-                  },
-                  "": null,
-                  "connection": {
-                    "type": "string",
-                    "title": "Connection String",
-                    "default": "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
-                    "description": "Set Mysql Connection String"
-                  }
-                }
-              },
-              {
                 "title": "Proxy",
                 "properties": {
                   "key": {
@@ -4069,6 +4053,22 @@ export default {
                     "title": "Credentials",
                     "description": "Set Mysql Credentials",
                     "x-display": "textarea"
+                  }
+                }
+              },
+              {
+                "title": "Direct",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "const": "Direct"
+                  },
+                  "": null,
+                  "connection": {
+                    "type": "string",
+                    "title": "Connection String",
+                    "default": "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
+                    "description": "Set Mysql Connection String"
                   }
                 }
               }
