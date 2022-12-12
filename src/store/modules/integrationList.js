@@ -1606,6 +1606,23 @@ export default {
             "title": "Receive Type",
             "oneOf": [
               {
+                "title": "From Timestamp",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "const": "from_timestamp"
+                  },
+                  "time_stamp": {
+                    "type": "integer",
+                    "title": "Timestamp",
+                    "default": 0,
+                    "description": "Set Timestamp To Collect Events From (Rfc3339)",
+                    "minimum": 0,
+                    "maximum": 2147483647
+                  }
+                }
+              },
+              {
                 "title": "With Consumer Group",
                 "properties": {
                   "key": {
@@ -1664,23 +1681,6 @@ export default {
                     "type": "string",
                     "title": "Starting Offset",
                     "description": "Set Starting Offset"
-                  }
-                }
-              },
-              {
-                "title": "From Timestamp",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "const": "from_timestamp"
-                  },
-                  "time_stamp": {
-                    "type": "integer",
-                    "title": "Timestamp",
-                    "default": 0,
-                    "description": "Set Timestamp To Collect Events From (Rfc3339)",
-                    "minimum": 0,
-                    "maximum": 2147483647
                   }
                 }
               }
@@ -2677,6 +2677,40 @@ export default {
               "type": "string",
               "title": "SASL Password",
               "description": "Set Kafka Password"
+            },
+            "sasl_mechanism": {
+              "type": "string",
+              "title": "Sasl Mechanism",
+              "description": "Set Sasl Mechanism"
+            },
+            "security_protocol": {
+              "type": "string",
+              "title": "Security Protocol",
+              "description": "Set Security Protocol"
+            },
+            "ca_cert": {
+              "type": "string",
+              "title": "Ca Cert",
+              "description": "Set Tls Ca Certificate",
+              "x-display": "textarea"
+            },
+            "client_certificate": {
+              "type": "string",
+              "title": "Client Certificate",
+              "description": "Set Tls Client Pem Data",
+              "x-display": "textarea"
+            },
+            "client_key": {
+              "type": "string",
+              "title": "Client Key",
+              "description": "Set Tls Client Key Pem Data",
+              "x-display": "textarea"
+            },
+            "insecure": {
+              "type": "boolean",
+              "title": "Insecure",
+              "default": false,
+              "description": "Set Self-Signed Ssl Certificate"
             }
           }
         }
