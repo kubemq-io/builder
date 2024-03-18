@@ -45,6 +45,11 @@ export default {
         },
         "then": {
           "properties": {
+            "username": {
+              "type": "string",
+              "title": "Username",
+              "description": "Set Amqp Username"
+            },
             "password": {
               "type": "string",
               "title": "Password",
@@ -1624,20 +1629,6 @@ export default {
             "title": "Receive Type",
             "oneOf": [
               {
-                "title": "With Starting Offset",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "const": "with_starting_offset"
-                  },
-                  "starting_offset": {
-                    "type": "string",
-                    "title": "Starting Offset",
-                    "description": "Set Starting Offset"
-                  }
-                }
-              },
-              {
                 "title": "From Timestamp",
                 "properties": {
                   "key": {
@@ -1699,6 +1690,20 @@ export default {
                     "description": "Set Prefetch Count To Collect Events From",
                     "minimum": 0,
                     "maximum": 2147483647
+                  }
+                }
+              },
+              {
+                "title": "With Starting Offset",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "const": "with_starting_offset"
+                  },
+                  "starting_offset": {
+                    "type": "string",
+                    "title": "Starting Offset",
+                    "description": "Set Starting Offset"
                   }
                 }
               }
@@ -4233,22 +4238,6 @@ export default {
             "title": "Connection Type",
             "oneOf": [
               {
-                "title": "Direct",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "const": "Direct"
-                  },
-                  "": null,
-                  "connection": {
-                    "type": "string",
-                    "title": "Connection String",
-                    "default": "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
-                    "description": "Set Mysql Connection String"
-                  }
-                }
-              },
-              {
                 "title": "Proxy",
                 "properties": {
                   "key": {
@@ -4281,6 +4270,22 @@ export default {
                     "title": "Credentials",
                     "description": "Set Mysql Credentials",
                     "x-display": "textarea"
+                  }
+                }
+              },
+              {
+                "title": "Direct",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "const": "Direct"
+                  },
+                  "": null,
+                  "connection": {
+                    "type": "string",
+                    "title": "Connection String",
+                    "default": "root:mysql@(localhost:3306)/store?charset=utf8\u0026parseTime=True\u0026loc=Local",
+                    "description": "Set Mysql Connection String"
                   }
                 }
               }
