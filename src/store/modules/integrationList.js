@@ -45,27 +45,22 @@ export default {
         },
         "then": {
           "properties": {
-            "skip_insecure": {
-              "type": "boolean",
-              "title": "Skip Insecure",
-              "default": false,
-              "description": "Set Skip Tls Certificate Verification"
-            },
-            "ca_cert": {
-              "type": "string",
-              "title": "Ca Cert",
-              "description": "Set Tls Ca Certificate",
-              "x-display": "textarea"
-            },
-            "username": {
-              "type": "string",
-              "title": "Username",
-              "description": "Set Amqp Username"
-            },
             "password": {
               "type": "string",
               "title": "Password",
               "description": "Set Amqp Password"
+            },
+            "skip_insecure": {
+              "type": "boolean",
+              "title": "Skip Insecure",
+              "default": false,
+              "description": "(Ssl) Set Skip Tls Certificate Verification"
+            },
+            "ca_cert": {
+              "type": "string",
+              "title": "Ca Cert",
+              "description": "(Ssl) Set Tls Ca Certificate",
+              "x-display": "textarea"
             }
           }
         }
@@ -1629,23 +1624,6 @@ export default {
             "title": "Receive Type",
             "oneOf": [
               {
-                "title": "With Prefetch Count",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "const": "with_prefetch_count"
-                  },
-                  "prefetch_count": {
-                    "type": "integer",
-                    "title": "Prefetch Count",
-                    "default": 0,
-                    "description": "Set Prefetch Count To Collect Events From",
-                    "minimum": 0,
-                    "maximum": 2147483647
-                  }
-                }
-              },
-              {
                 "title": "With Starting Offset",
                 "properties": {
                   "key": {
@@ -1702,6 +1680,23 @@ export default {
                     "title": "Epoch",
                     "default": 0,
                     "description": "Set Timestamp To Collect Events From (Epoch)",
+                    "minimum": 0,
+                    "maximum": 2147483647
+                  }
+                }
+              },
+              {
+                "title": "With Prefetch Count",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "const": "with_prefetch_count"
+                  },
+                  "prefetch_count": {
+                    "type": "integer",
+                    "title": "Prefetch Count",
+                    "default": 0,
+                    "description": "Set Prefetch Count To Collect Events From",
                     "minimum": 0,
                     "maximum": 2147483647
                   }
